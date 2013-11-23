@@ -11,7 +11,7 @@ Get QTrader
 You can download QTrader from the official web page
 (http://www.dailypips.org) or using Git:
 
-    $ git clone git://github.com/gaoxiaojun/qtrader.git
+    $ git clone git://www.dailypips.org:gxj/qtrader.git
 
 
 Dependencies
