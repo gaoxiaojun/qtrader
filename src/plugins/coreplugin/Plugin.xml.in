@@ -1,0 +1,14 @@
+<plugin name="${PLUGIN_NAME}" version="${PLUGINS_DEFAULT_VERSION}" compatVersion="${PLUGINS_DEFAULT_COMPAT_VERSION}">
+    <vendor>${PLUGINS_DEFAULT_VENDOR}</vendor>
+    <copyright>${PLUGINS_DEFAULT_COPYRIGHT}</copyright>
+    <license>${PLUGINS_DEFAULT_LICENSE}
+    </license>
+    <category>${PLUGINS_DEFAULT_CATEGORY}</category>
+    <description>${PLUGINS_DEFAULT_DESCRIPTION}</description>
+    <url>${PLUGINS_DEFAULT_URL}</url>
+    <argumentList>
+        <argument name="-color" parameter="color">Override selected UI color</argument>
+        <argument name="-presentationMode">Enable presentation mode with pop-ups for key combos</argument>
+    </argumentList>
+   ${PLUGIN_DEPENDENCYS}
+</plugin>

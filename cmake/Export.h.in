@@ -1,0 +1,13 @@
+#ifndef @MY_EXPORT_LIBNAME@_GLOBAL_H
+#define @MY_EXPORT_LIBNAME@_GLOBAL_H
+
+#include <qglobal.h>
+
+#if defined(@MY_EXPORT_LIBNAME@_LIBRARY)
+#  define @MY_LIBRARY_EXPORT_DIRECTIVE@ Q_DECL_EXPORT
+#else
+#  define @MY_LIBRARY_EXPORT_DIRECTIVE@ Q_DECL_IMPORT
+#endif
+
+#endif // @MY_EXPORT_LIBNAME@_GLOBAL_H
+

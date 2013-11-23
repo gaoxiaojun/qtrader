@@ -1,0 +1,24 @@
+Source: bluecherry-client
+Section: net
+Priority: optional
+Maintainer: Bluecherry <maintainers@bluecherry.net>
+Build-Depends: debhelper (>= 7), libgstreamer0.10-dev, libgstreamer-plugins-base0.10-dev, libdbus-1-dev
+Standards-Version: 3.8.4
+
+Package: bluecherry-client
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, gstreamer0.10-plugins-base,
+ gstreamer0.10-plugins-good, gstreamer0.10-ffmpeg, libssl0.9.8
+Conflicts: gstreamer0.10-vaapi
+Description: Bluecherry DVR Client
+ This package contains the client for the Bluecherry DVR system. It can
+ also be used to connect to remote instances of the Bluecherry DVR server.
+
+Package: bluecherry-client-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends:
+    bluecherry-client (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for bluecherry-client
+ This package contains the debugging symbols for Bluecherry DVR Client

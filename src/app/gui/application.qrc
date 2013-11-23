@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/application">
+        <file>logo/256/application.png</file>
+        <file>logo/128/application.png</file>
+        <file>logo/64/application.png</file>
+        <file>logo/32/application.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,14 @@
+{
+  "name" : "Find",
+  "version" : "3.0.0",
+  "compatVersion" : "3.0.0",    
+  "vendor" : "Digia Plc",
+  "category" : "Qt Creator",
+  "description" : "The core plugin for the Qt IDE.",
+  "url" : "http://www.qt-project.org",
+  "dependency": [
+		{ "name": "Core",
+		  "version":"3.0.0"
+		}
+	]
+}

@@ -1,0 +1,35 @@
+#ifndef __APP_CONFIG_H__
+#define __APP_CONFIG_H__
+
+#include <qglobal.h>
+
+namespace Application {
+namespace Constants {
+
+const quint16 APPLICATION_VERSION_MAJOR          =  ${APPLICATION_VERSION_MAJOR};
+const quint16 APPLICATION_VERSION_MINOR          =  ${APPLICATION_VERSION_MINOR};
+const quint16 APPLICATION_VERSION_PATCH          =  ${APPLICATION_VERSION_PATCH};
+
+const char * const APPLICATION_VERSION_REVISOR   = "${APPLICATION_VERSION_REVISOR}";
+const char * const APPLICATION_VERSION           = "${APPLICATION_VERSION}";
+
+const char * const APPLICATION_NAME              = "${APPLICATION_NAME}";
+const char * const APPLICATION_ORGANIZATION_NAME = "${APPLICATION_ORGANIZATION_NAME}";
+const char * const APPLICATION_COPYRIGHT         = "${APPLICATION_COPYRIGHT}";
+
+const char * const APPLICATION_PLUGINS_PATH      = "${APPLICATION_PLUGINS_PATH}";
+const char * const APPLICATION_DATA_PATH         = "${APPLICATION_DATA_PATH}";
+const char * const APPLICATION_DOC_PATH          = "${APPLICATION_DOC_PATH}";
+const char * const APPLICATION_LIBS_PATH         = "${APPLICATION_LIBS_PATH}";
+
+const char * const APPLICATION_CORE_PLUGIN_NAME  = "${APPLICATION_CORE_PLUGIN_NAME}";
+
+const char * const APPLICATION_CRASHREPORT_URL   = "${APPLICATION_CRASHREPORT_URL}";
+const char * const APPLICATION_UPDATE_CHECK_URL  = "${APPLICATION_UPDATE_CHECK_URL}";
+
+
+} // Constants
+} // Application
+
+#endif //__APP_CONFIG_H__
+

@@ -1,0 +1,187 @@
+bluecherry-client (1:2.1.6-2) lucid; urgency=low
+
+  * Bug: Crash reporter broken in 2.1.6 build
+  * Other: Update libav to 9.10 release
+
+ -- Piotr Galiszewski <pgaliszewski@corp.bluecherry.net>  Fri, 15 Nov 2013 22:17:50 +0200
+
+
+bluecherry-client (1:2.1.6-1) lucid; urgency=low
+
+  * Bug #59: Add an option to disable screensavers on Linux
+  * Bug #90: Next button resets playback speed to 1x
+  * Bug #169: .xsession-errors over 160GB in size
+  * Bug #170: Disable OpenGL by default
+  * Bug #189: Crashes in play event window
+  * Bug #192: Camera windows on the left side of view are partially cut off
+  * Bug #196: Events are loaded starting at the wrong time
+  * Feature: multilanguage support
+  * Feature: Russian, Norvegian, Spanish and Swedish translations added
+  * Other: breakpad update
+  * Other: GCC 4.8 compilation fixes
+
+ -- Piotr Galiszewski <pgaliszewski@corp.bluecherry.net>  Sun, 11 Nov 2013 23:17:50 +0200
+
+bluecherry-client (1:2.1.5-1) lucid; urgency=low
+
+  * Bug #147: Events view does not update list of cameras when server connects
+  * Bug #150: Improve sorting time of events in events window
+  * Bug #164: Switching video's stream mode fails
+  * Bug #171: Random crash
+  * Bug #173: Thousands of threads are created
+  * Bug #174: User have to wait for video to play for a long time
+
+ -- Rafał Malinowski <rafal.malinowski@corp.bluecherry.net>  Thu, 29 Aug 2013 16:35:28 +0200
+
+ bluecherry-client (1:2.1.4-1) lucid; urgency=low
+
+  * Bug #145: Server settings are not stored until program is closed
+  * Bug #148: Do not show passwords in log
+  * Bug #151: Increase timeout for video operations
+  * Bug #153: Client on Windows crashes when saving snapshot of playing video
+  * Bug #155: Disconnect LiveStream when not needed
+
+ -- Rafał Malinowski <rafal.malinowski@corp.bluecherry.net>  Fri, 12 Jul 2013 13:23:50 +0200
+
+bluecherry-client (1:2.1.3-1) lucid; urgency=low
+
+  * Bug #25: Event video snapshots are corrupted
+  * Bug #137: Snapshot in OS X fails with 'An error occurred while saving the snapshot image.'
+  * Bug #138: Windows client shuts down and automatically reopens when a snapshot is saved, 0 byte JPEG file saved
+  * Bug #143: FPS drops to 0 after a few minutes
+
+ -- Rafał Malinowski <rafal.malinowski@corp.bluecherry.net>  Fri, 05 Jul 2013 23:46:32 +0200
+
+bluecherry-client (1:2.1.2-1) lucid; urgency=low
+
+  * Bug #28: Timeline area off by several hours
+  * Bug #41: Integer overflow on event durations
+  * Bug #78: Live feeds still exist after deleting a server
+  * Bug #94: Only prompt for new updates when version < then installed version
+  * Bug #99: Playing in progress events crashes Windows client
+  * Bug #122: Server column should not be collapsed
+  * Bug #123: Memory leak on reconnect
+  * Bug #129: Do not allow to install bluecherry with gstreamer-vaapi
+  * Bug #135: On MacMini no live view is available when OpenGL is enabled
+  * Feature #29: Hide disabled devices from the main UI list
+  * Feature #32: Add Bluecherry icon to 12.04 desktop
+  * Feature #38: Sort servers alphabetically
+  * Feature #83: Port client from qmake to CMake
+
+ -- Rafał Malinowski <rafal.malinowski@corp.bluecherry.net>  Wed, 19 Jun 2013 11:40:00 +0200
+
+bluecherry-client (1:2.1.1-1) lucid; urgency=low
+
+  * Feature #94: Only report new version when it is greater that current
+  * Fixed issue with SSL handshake failures
+
+ -- Rafał Malinowski <rafal.malinowski@corp.bluecherry.net>  Fri, 26 Apr 2013 17:01:30 +0200
+
+bluecherry-client (1:2.1.0-1) lucid; urgency=low
+
+  * Licence changed to GPL2+
+  * Unit tests added
+  * Bug #1138: Crashes related to the configuration file
+  * Feature #1032: Advance to the next video after a video is finished
+  * Feature #1167: Minimize connected servers
+  * Feature #1105: Add server port status indicators during 'Configure a DVR Server'
+  * Feature #1178: Change default file name when saving videos
+  * Feature #1188: Support saving of multiple videos to disk
+
+ -- Rafał Malinowski <rafal.malinowski@corp.bluecherry.net>  Thu, 14 Feb 2013 23:17:57 +0100
+
+bluecherry-client (1:2.0.1-1) lucid; urgency=low
+
+  * Bug #1141: Connecting to a hostname can result in 'SSL Handshake Failed'
+  * Feature #481: Client: Automatic update checks
+
+ -- John Brooks <john.brooks@bluecherry.net>  Wed, 10 Oct 2012 13:27:00 -0600
+
+bluecherry-client (1:2.0.0-1) lucid; urgency=low
+
+  * Bug #628: Event search does not scale to servers with many events
+  * Bug #1085: Video playback fails on systems with no OpenGL support
+  * Bug #1096: Timeout RTP connections when no frames arrive
+  * Bug #1101: Advanced OpenGL doesn't handle resolution changes
+  * Bug #1104: Linux client does not append .mkv extension in 'Save event video' dialog
+  * Bug #1118: Video goes blank when closing second live view window
+  * Feature #991: Retain live view bandwidth settings
+  * Feature #1006: Alert the user if a server is not functional
+  * Feature #1045: Show active (in progress) events above all others in live event view
+  * Feature #1065: Detect if a server isn't configured and offer to configure it
+  * Feature #1122: Client-side configuration of RTSP port
+  * Other misc. changes
+
+ -- John Brooks <john.brooks@bluecherry.net>  Fri, 27 Jul 2012 18:10:00 -0400
+
+bluecherry-client (2.0.0-0beta8.1-1) lucid; urgency=low
+
+  * Bug #1094: Event browser does not work on some platforms
+  * Bug #1027: Bundled Qt may conflict with plugins on systems with standard installs of Qt 4.7
+
+ -- John Brooks <john.brooks@bluecherry.net>  Mon, 02 Apr 2012 14:46:00 -0600
+
+bluecherry-client (2.0.0-0beta8-1) lucid; urgency=low
+
+  * RTP live streaming
+  * Minor fixes
+
+ -- John Brooks <john.brooks@bluecherry.net>  Fri, 23 Mar 2012 15:35:00 -0600
+
+bluecherry-client (2.0.0-0beta7-1) lucid; urgency=low
+
+  * Bug #885: Labels Getting Messed Up
+  * Bug #895: Application freeze when saving live snapshot in some situations
+  * Bug #896: OS X crash at shutdown
+  * Bug #939: Qt linking issues on some Linux systems with conflicting installs
+  * Feature #390: Show current bandwidth usage in status bar
+  * Feature #846: Client: Support low bandwidth mode
+  * Feature #862: Show recording status on live view
+  * Feature #881: Strip spaces on hostname in 'Add new server' section
+  * Feature #892: Put version numbers in filenames for OS X and Windows installers
+  * Feature #893: Improve seeking with the mouse in event videos
+  * Feature #901: Display actual FPS of live feeds
+  * Feature #904: Improve appearance and convenience of the main UI window
+  * Feature #945: Update to Qt 4.7.4 for all platforms
+
+bluecherry-client (2.0.0-0beta6-1) lucid; urgency=low
+
+  * New release
+
+ -- John Brooks <john.brooks@bluecherry.net>  Fri, 01 Jul 2011 11:25:00 -0600
+
+bluecherry-client (2.0.0-0beta5-1) lucid; urgency=low
+
+  * New release
+
+ -- John Brooks <john.brooks@bluecherry.net>  Wed, 23 Mar 2011 14:15:00 -0600
+
+bluecherry-client (2.0.0-0beta4-1) lucid; urgency=low
+
+  * New release
+
+ -- John Brooks <john.brooks@bluecherry.net>  Fri, 26 Jan 2011 18:00:54 -0700
+
+bluecherry-client (2.0.0-0beta3) lucid; urgency=low
+
+  * New release
+
+ -- John Brooks <john.brooks@bluecherry.net>  Fri, 17 Dec 2010 17:36:46 -0700
+
+bluecherry-client (2.0.0-0beta2) lucid; urgency=low
+
+  * New release
+
+ -- John Brooks <john.brooks@bluecherry.net>  Tue, 23 Nov 2010 21:03:16 -0700
+
+bluecherry-client (2.0.0-0beta1-1) lucid; urgency=low
+
+  * New release
+
+ -- Ben Collins <bcollins@bluecherry.net>  Fri, 12 Nov 2010 14:05:16 -0500
+
+bluecherry-client (2.0.0-0beta1) unstable; urgency=low
+
+  * Initial packaging
+
+ -- Ben Collins <bcollins@bluecherry.net>  Mon, 19 Apr 2010 11:45:30 -0400
