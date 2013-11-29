@@ -18,6 +18,10 @@
 #ifndef __BREAKPAD_H__
 #define __BREAKPAD_H__
 
+namespace Utils {
+
 void setupBreakPadCrashHandler();
+
+} // namespace Utils
 
 #endif // __BREAKPAD_H__

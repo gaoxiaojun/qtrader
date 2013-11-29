@@ -1,7 +1,7 @@
 ###############################################################################
 # Open Trading Platform
 ###############################################################################
-set(PROJECT_NAME QTrader)
+set(PROJECT_NAME OpenTrade)
 
 ###############################################################################
 # project policies
@@ -47,21 +47,19 @@ include(cmake/macroBuildPlugin.cmake)
 include(cmake/macroBuildApp.cmake)
 include(cmake/macroSetupQt.cmake)
 include(cmake/macroGeneratePluginResourcefile.cmake)
-include(cmake/functionGeneratePluginXml.cmake)
 ###############################################################################
 # Project Info
 ###############################################################################
 set(APPLICATION_NAME ${PROJECT_NAME})
+string(TOLOWER ${APPLICATION_NAME} APPLICATION_NAME_LOWER)
 set(APPLICATION_ORGANIZATION_NAME "dailypips")
 set(APPLICATION_COPYRIGHT "2013 Xiaojun Gao <br/>http://www.dailypips.org")
-set(APPLICATION_CRASHREPORT_URL "http://www.dailypips.org/qtrader/crashreport.php")
-set(APPLICATION_UPDATE_CHECK_URL "http://www.dailypips.org/qtrader/v=")
+set(APPLICATION_CRASHREPORT_URL "http://www.dailypips.org/${APPLICATION_NAME_LOWER}/crashreport")
+set(APPLICATION_UPDATE_CHECK_URL "http://www.dailypips.org/${APPLICATION_NAME_LOWER}/v=")
 set(APPLICATION_CORE_PLUGIN_NAME "Core")
 # set the OS X Bundle specific CMake variables which will be used to populate the plist for
 # the application bundle
-string(TOLOWER ${APPLICATION_NAME} APPLICATION_NAME_LOWER)
 set(APPLICATION_BUNDLE_COPYRIGHT "2013 Xiaojun Gao")
-set(APPLICATION_BUNDLE_ICON_FILE "application.icns")
 set(APPLICATION_BUNDLE_IDENTIFIER "org.dailypips.${APPLICATION_NAME_LOWER}")
 file(READ ${CMAKE_SOURCE_DIR}/LICENSE APPLICATION_LICENSE)
 set(APPLICATION_LANGUAGES "zh_CN")
@@ -112,7 +110,7 @@ set(APPLICATION_VERSION "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINO
 #            Gloabl Compiler Options and Link Options                         #
 ###############################################################################
 # Verbose makefile
-set(CMAKE_VERBOSE_MAKEFILE OFF)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -150,10 +148,10 @@ endif()
 #            Project Compiler Options and Link Options                        #
 ###############################################################################
 # for Luajit in OSX required. see lj_alloc.c for mmap
-if (APPLE)
-  set ( CMAKE_EXE_LINKER_FLAGS "-pagezero_size 10000 -image_base 100000000 ${CMAKE_EXE_LINKER_FLAGS}" )
-  find_library(COCOA_LIBRARY Cocoa)
-endif()
+#if (APPLE)
+#  set ( CMAKE_EXE_LINKER_FLAGS "-pagezero_size 10000 -image_base 100000000 ${CMAKE_EXE_LINKER_FLAGS}" )
+#  find_library(COCOA_LIBRARY Cocoa)
+#endif()
 
 # Assume release build by default
 if(NOT CMAKE_BUILD_TYPE)
@@ -179,17 +177,17 @@ if(APPLE)
    set(APPLICATION_DATA_PATH "Resources")
    set(APPLICATION_DOC_PATH  "Resources/doc")
    set(APPLICATION_LIBS_PATH "lib")
-   set(APPLICATION_PLUGINS_PATH "${APPLICATION_LIBS_PATH}/Plugins")
+   set(APPLICATION_PLUGINS_PATH "PlugIns/${APPLICATION_NAME}")
 elseif(WIN32)
     set(APPLICATION_DATA_PATH "resources")
     set(APPLICATION_DOC_PATH  "resources/doc")
     set(APPLICATION_LIBS_PATH "lib")
-    set(APPLICATION_PLUGINS_PATH "${APPLICATION_LIBS_PATH}/plugins")
+    set(APPLICATION_PLUGINS_PATH "../plugins/${APPLICATION_NAME_LOWER}")
 else() # unix
     set(APPLICATION_DATA_PATH "share/${APPLICATION_NAME_LOWER}")
     set(APPLICATION_DOC_PATH  "share/doc/${APPLICATION_NAME_LOWER}")
     set(APPLICATION_LIBS_PATH "lib")
-    set(APPLICATION_PLUGINS_PATH "${APPLICATION_LIBS_PATH}/plugins")
+    set(APPLICATION_PLUGINS_PATH "../plugins/${APPLICATION_NAME_LOWER}")
 endif()
 set(APPLICATION_TRANSLATIONS_PATH "${APPLICATION_DATA_PATH}/translations")
 

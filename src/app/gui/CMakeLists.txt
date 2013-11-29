@@ -1,4 +1,4 @@
-set(PROJECT_NAME QTrader)
+set(PROJECT_NAME ${APPLICATION_NAME})
 
 project(${PROJECT_NAME} )
 
@@ -14,23 +14,16 @@ set(APP_INCLUDE_DIR
     ${BREAKPAD_INCLUDE_DIR}
 )
 
-if(APPLE)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
-  find_library(COREFOUND_LIBRARY CoreFoundation)
-  find_library(CORESERVICE_LIBRARY CoreServices)
-  SET(EXTRA_LIBS ${COREFOUND_LIBRARY} ${CORESERVICE_LIBRARY})
-endif()
-
 set( APP_SRC_FILES
-main.cpp
-../utils/qtsingleapplication/qtlocalpeer.h
-../utils/qtsingleapplication/qtlockedfile.h
-../utils/qtsingleapplication/qtsingleapplication.h
-../utils/qtsingleapplication/qtlocalpeer.cpp
-../utils/qtsingleapplication/qtlockedfile.cpp
-../utils/qtsingleapplication/qtsingleapplication.cpp
-../utils/breakpad/breakpad.cpp
-../utils/breakpad/crashreportdialog.cpp
+    main.cpp
+    ../utils/qtsingleapplication/qtlocalpeer.h
+    ../utils/qtsingleapplication/qtlockedfile.h
+    ../utils/qtsingleapplication/qtsingleapplication.h
+    ../utils/qtsingleapplication/qtlocalpeer.cpp
+    ../utils/qtsingleapplication/qtlockedfile.cpp
+    ../utils/qtsingleapplication/qtsingleapplication.cpp
+    ../utils/breakpad/breakpad.cpp
+    ../utils/breakpad/crashreportdialog.cpp
 )
 if(WIN32)
   list(APPEND APP_SRC_FILES ../utils/qtsingleapplication/qtlockedfile_win.cpp)
@@ -38,23 +31,36 @@ else()
   list(APPEND APP_SRC_FILES ../utils/qtsingleapplication/qtlockedfile_unix.cpp)
 endif()
 
-# breakpad
-list(APPEND APP_SRC_FILES ${BREAKPAD_SOURCE_FILES})
-
 # ui & qrc
 file (GLOB APP_UI_FILES *.ui)
 set (APP_QRC_FILES "application.qrc")
 
 if(APPLE)
     # icon files to copy in the bundle
-    set (OSX_ICON_FILES application.icns)
+    file(GLOB ICON_FILES *.icns)
+    list(LENGTH ICON_FILES _icon_files_count)
+    if(${_icon_files_count} GREATER 0)
+        list(GET ICON_FILES 0 APPLICATION_BUNDLE_ICON_FILE)
+        if(${_icon_files_count} GREATER 1)
+          message(STATUS "Warning:Found too many application icon file, using ${APPLICATION_BUNDLE_ICON_FILE}")
+        else()
+          message(STATUS "Application Icon: ${APPLICATION_BUNDLE_ICON_FILE}")
+        endif()
+    else()
+        message(FAULT_ERROR "Cann't found application icon file")
+    endif()
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+    find_library(COREFOUND_LIBRARY CoreFoundation)
+    find_library(CORESERVICE_LIBRARY CoreServices)
+    set(EXTRA_LIBS ${COREFOUND_LIBRARY} ${CORESERVICE_LIBRARY})
+
     # set where in the bundle to put the icns files
-    set_source_files_properties( ${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION ${APPLICATION_DATA_PATH})
+    set_source_files_properties( ${APPLICATION_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION ${APPLICATION_DATA_PATH})
     # include the icns files in the target
-    list(APPEND APP_SRC_FILES ${OSX_ICON_FILES})
+    list(APPEND APP_SRC_FILES ${APPLICATION_BUNDLE_ICON_FILE})
 endif(APPLE)
 
-set(APP_DEPEND_LIBS QtCore QtWidgets QtNetwork extensionsystem)
+set(APP_DEPEND_LIBS QtCore QtNetwork extensionsystem breakpad)
 
 MacroBuildApp(
     NAME ${PROJECT_NAME}

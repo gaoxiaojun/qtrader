@@ -1,0 +1,20 @@
+{
+    Name: "Tws",
+    Version: "0.0.1",
+    CompatVersion: "0.0.1",
+    Vendor: "dailypips",
+    Copyright: "",
+    License: "",
+    Description: "",
+    Url: "",
+    Dependendencies: [
+       	{
+	  	Name: "Core",
+	  	Version: "0.0.1"
+	},
+	{
+		Name: "OpenTrade",
+		Version: "0.0.1"
+	}
+    ]
+}

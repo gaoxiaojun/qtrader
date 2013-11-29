@@ -32,6 +32,8 @@
 
 #include <extensionsystem/iplugin.h>
 
+#include <QtPlugin>
+
 namespace Find {
 class SearchResultWindow;
 }

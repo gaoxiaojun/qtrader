@@ -20,13 +20,15 @@
 
 #include <QString>
 
+namespace Util {
+
 class Version
 {
 
 public:
     static Version fromString(const QString &string);
 
-    explicit Version(quint16 major, quint16 minor, quint16 patch, const QString &revisor);
+    explicit Version(unsigned int major, unsigned int minor, unsigned int patch, const QString &revisor);
 
     Version();
     Version(const Version &copyMe);
@@ -37,17 +39,19 @@ public:
     bool isValid() const;
     QString toString() const;
 
-    quint16 major() const;
-    quint16 minor() const;
-    quint16 patch() const;
+    unsigned int major() const;
+    unsigned int minor() const;
+    unsigned int patch() const;
     QString revisor() const;
 
 private:
-    quint16 m_major;
-    quint16 m_minor;
-    quint16 m_patch;
+    unsigned int m_major;
+    unsigned int m_minor;
+    unsigned int m_patch;
     QString m_revisor;
 
 };
+
+} // namespace Util
 
 #endif // VERSION_H

@@ -1,9 +1,0 @@
-<plugin name=\"Domain\" version=\"0.0.1\" compatVersion=\"0.0.1\">
-    <vendor>dailypips</vendor>
-    <copyright>(C) Xiaojun Gao</copyright>
-    <license>LGPL</license>
-    <description>Trading Domain Model</description>
-    <url>http://www.dailypips.com</url>
-    $$dependencyList
-</plugin>
-

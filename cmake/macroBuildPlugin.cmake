@@ -13,7 +13,7 @@
 macro(MacroBuildPlugin)
   MacroParseArguments(MY
     "NAME;EXPORT_DIRECTIVE;SRC_FILES;MOC_FILES;UI_FILES;QRC_FILES;DEPEND_LIBS;DEPEND_PLUGINS;DEPEND_OPT_PLUGINS;MERGE_TS_LIBS;INCLUDE_DIRECTORIES;TARGET_LIBRARIES;CACHED_RESOURCEFILES;OUTPUT_DIR;MOC_OPTIONS;"
-    "TEST_PLUGIN"
+    ""
     ${ARGN}
     )
 
@@ -22,18 +22,19 @@ macro(MacroBuildPlugin)
     message(FATAL_ERROR "NAME is mandatory")
   endif()
   if(NOT DEFINED MY_EXPORT_DIRECTIVE)
-    message(FATAL_ERROR "EXPORT_DIRECTIVE is mandatory")
+    string(TOUPPER ${MY_NAME} UPPER_NAME)
+    set(MY_EXPORT_DIRECTIVE "${UPPER_NAME}_EXPORT")
   endif()
   
   # Plugin are expected to be shared library
   set(MY_LIBRARY_TYPE "SHARED")
 
   # Define library name
-  set(lib_name ${MY_NAME})
+  set(plugin_name ${MY_NAME})
 
   # Plug-in target names must contain at leas one _
-  if(lib_name MATCHES _)
-    message(FATAL_ERROR "The plug-in project name ${lib_name} must not contain a '_' character")
+  if(plugin_name MATCHES _)
+    message(FATAL_ERROR "The plug-in project name ${plugin_name} must not contain a '_' character")
   endif()
   
   # --------------------------------------------------------------------------
@@ -55,12 +56,12 @@ macro(MacroBuildPlugin)
 
 
   # Add the generated manifest qrc file
-  set(manifest_qrc_src )
-  FunctionGeneratePluginXml(manifest_qrc_src
-    NAME ${lib_name}
-    REQUIRE_PLUGINS ${MY_DEPEND_PLUGINS}
-    OPTIONAL_PLUGINS ${MY_DEPEND_OPT_PLUGINS}
-    )
+  #set(manifest_qrc_src )
+  #FunctionGeneratePluginXml(manifest_qrc_src
+  #  NAME ${plugin_name}
+  #  REQUIRE_PLUGINS ${MY_DEPEND_PLUGINS}
+  #  OPTIONAL_PLUGINS ${MY_DEPEND_OPT_PLUGINS}
+  #  )
 
    #set_property(SOURCE ${manifest_qrc_src} APPEND
    #                PROPERTY OBJECT_DEPENDS "Plugin.xml.in")
@@ -99,8 +100,10 @@ macro(MacroBuildPlugin)
     ${CMAKE_MODULE_PATH}/Export.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADERNAME}_global.h
     )
-  set(dynamicHeaders
-    "${dynamicHeaders};${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADERNAME}_global.h")
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/${MY_NAME}.json.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${MY_NAME}.json
+    )
 
   # Make sure variable are cleared
   set(MY_MOC_CPP)
@@ -177,8 +180,8 @@ macro(MacroBuildPlugin)
   # Add any other additional resource files
   if(_plugin_cached_resources_in_source_tree OR _plugin_cached_resources_in_binary_tree)
     MacroGeneratePluginResourcefile(MY_QRC_SRCS
-      NAME ${lib_name}_cached.qrc
-      PREFIX ${lib_name}
+      NAME ${plugin_name}_cached.qrc
+      PREFIX ${plugin_name}
       RESOURCES ${_plugin_cached_resources_in_source_tree}
       BINARY_RESOURCES ${_plugin_cached_resources_in_binary_tree})
   endif()
@@ -202,7 +205,7 @@ macro(MacroBuildPlugin)
     set(CMAKE_AUTOMOC ON)
   endif()
 
-  add_library(${lib_name} ${MY_LIBRARY_TYPE}
+  add_library(Plugin_${plugin_name} ${MY_LIBRARY_TYPE}
     ${MY_SRC_FILES}
     ${MY_MOC_CPP}
     ${MY_UI_CPP}
@@ -210,59 +213,8 @@ macro(MacroBuildPlugin)
     ${_plugin_qm_files}
     )
 
-  # Set the output directory for the plugin
-  #if(MY_OUTPUT_DIR)
-  #  set(output_dir_suffix "/${MY_OUTPUT_DIR}")
-  #else()
-  #  set(output_dir_suffix "")
-  #endif()
-
-  #foreach(type RUNTIME LIBRARY ARCHIVE)
-    #if(NOT DEFINED CTK_PLUGIN_${type}_OUTPUT_DIRECTORY AND CMAKE_${type}_OUTPUT_DIRECTORY)
-      # Put plug-ins by default into a "plugins" subdirectory
-      #set(CTK_PLUGIN_${type}_OUTPUT_DIRECTORY "${CMAKE_${type}_OUTPUT_DIRECTORY}/plugins")
-    #endif()
-    
-    #if(IS_ABSOLUTE "${CTK_PLUGIN_${type}_OUTPUT_DIRECTORY}")
-      #set(plugin_${type}_output_dir "${CTK_PLUGIN_${type}_OUTPUT_DIRECTORY}${output_dir_suffix}")
-    #elseif(CMAKE_${type}_OUTPUT_DIRECTORY)
-      #set(plugin_${type}_output_dir "${CMAKE_${type}_OUTPUT_DIRECTORY}/${CTK_PLUGIN_${type}_OUTPUT_DIRECTORY}${output_dir_suffix}")
-    #else()
-      #set(plugin_${type}_output_dir "${CMAKE_CURRENT_BINARY_DIR}/${CTK_PLUGIN_${type}_OUTPUT_DIRECTORY}${output_dir_suffix}")
-    #endif()
-
-    #if(MY_TEST_PLUGIN)
-      # Test plug-ins will always be put in a separate directory
-      #if(CMAKE_${type}_OUTPUT_DIRECTORY)
-        #set(plugin_${type}_output_dir "${CMAKE_${type}_OUTPUT_DIRECTORY}/test_plugins")
-      #else()
-        #set(plugin_${type}_output_dir "${PROJECT_BINARY_DIR}/test_plugins")
-      #endif()
-    #endif()
-  #endforeach()
-
-  #set(plugin_compile_flags "-DQT_PLUGIN")
-  #ctkFunctionGetCompilerVisibilityFlags(plugin_compile_flags)
-
-  # Apply properties to the library target.
-  #set_target_properties(${lib_name} PROPERTIES
-    #COMPILE_FLAGS "${plugin_compile_flags}"
-    #RUNTIME_OUTPUT_DIRECTORY ${plugin_RUNTIME_output_dir}
-    #LIBRARY_OUTPUT_DIRECTORY ${plugin_LIBRARY_output_dir}
-    #ARCHIVE_OUTPUT_DIRECTORY ${plugin_ARCHIVE_output_dir}
-    #PREFIX "lib"
-    #)
-
-  #if(NOT MY_TEST_PLUGIN)
-    # Install rules
-    #install(TARGETS ${lib_name} EXPORT CTKExports
-      #RUNTIME DESTINATION ${CTK_INSTALL_PLUGIN_DIR} COMPONENT RuntimePlugins
-      #LIBRARY DESTINATION ${CTK_INSTALL_PLUGIN_DIR} COMPONENT RuntimePlugins
-      #ARCHIVE DESTINATION ${CTK_INSTALL_PLUGIN_DIR} COMPONENT Development)
-  #endif()
-
   # Set labels associated with the target.
-  set_target_properties(${lib_name} PROPERTIES LABELS ${lib_name})
+  set_target_properties(Plugin_${plugin_name} PROPERTIES OUTPUT_NAME ${plugin_name})
 
   set(my_libs
     ${MY_TARGET_LIBRARIES}
@@ -286,29 +238,19 @@ macro(MacroBuildPlugin)
     list(APPEND my_libs ssp) # add stack smash protection lib
   endif()
 
-  target_link_libraries(${lib_name} ${my_libs})
+  target_link_libraries(Plugin_${plugin_name} ${my_libs})
 
   if(${qcount} GREATER 0)
-      qt_use_modules(${lib_name} ${MY_QT_MODULES})
+      qt_use_modules(Plugin_${plugin_name} ${MY_QT_MODULES})
   endif()
 
-  string(TOUPPER ${lib_name} project_export)
-  set(${project_export}_PLUGIN_LIBRARIES ${lib_name} CACHE INTERNAL "" FORCE)
+  string(TOUPPER ${plugin_name} project_export)
+  set(${project_export}_PLUGIN_LIBRARIES Plugin_${plugin_name} CACHE INTERNAL "" FORCE)
   set(${project_export}_INCLUDE_DIR ${my_includes} CACHE INTERNAL "" FORCE)
   if(NOT DEFINED MY_PLUGIN_VERSION)
     set(MY_PLUGIN_VERSION ${PLUGINS_DEFAULT_VERSION})
   endif()
-  set(${project_export}_PLUGIN_VERSION ${MY_PLUGIN_VERSION} CACHE INTERNAL "Plugin Version" FORCE)
-
-  #if(NOT MY_TEST_PLUGIN)
-    # Install headers
-  #  file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/*.tpp")
-  #  install(FILES
-  #    ${headers}
-  #    ${dynamicHeaders}
-  #    DESTINATION ${CTK_INSTALL_PLUGIN_INCLUDE_DIR}/${Plugin-SymbolicName} COMPONENT Development
-  #    )
-  #endif()
+  set(${project_export}_PLUGIN_VERSION ${MY_PLUGIN_VERSION} CACHE INTERNAL "" FORCE)
 
 endmacro()
 

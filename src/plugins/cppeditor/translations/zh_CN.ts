@@ -264,27 +264,6 @@
     </message>
 </context>
 <context>
-    <name>LuaClassWizard</name>
-    <message>
-        <location filename="../luaclasswizard.cpp" line="179"/>
-        <source>Error while generating file contents.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LuaClassWizardDialog</name>
-    <message>
-        <location filename="../luaclasswizard.cpp" line="117"/>
-        <source>C++ Class Wizard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../luaclasswizard.cpp" line="119"/>
-        <source>Details</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LuaEditor::Internal::ClassNamePage</name>
     <message>
         <location filename="../luaclasswizard.cpp" line="58"/>
@@ -412,6 +391,27 @@
     </message>
 </context>
 <context>
+    <name>LuaEditor::Internal::LuaClassWizard</name>
+    <message>
+        <location filename="../luaclasswizard.cpp" line="179"/>
+        <source>Error while generating file contents.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LuaEditor::Internal::LuaClassWizardDialog</name>
+    <message>
+        <location filename="../luaclasswizard.cpp" line="117"/>
+        <source>C++ Class Wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../luaclasswizard.cpp" line="119"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LuaEditor::Internal::LuaEditorPlugin</name>
     <message>
         <location filename="../luaeditorplugin.cpp" line="175"/>
@@ -531,7 +531,7 @@
     </message>
 </context>
 <context>
-    <name>LuaEditorWidget</name>
+    <name>LuaEditor::Internal::LuaEditorWidget</name>
     <message>
         <location filename="../luaeditor.cpp" line="608"/>
         <source>Sort Alphabetically</source>
@@ -549,7 +549,7 @@
     </message>
 </context>
 <context>
-    <name>LuaOutlineTreeView</name>
+    <name>LuaEditor::Internal::LuaOutlineTreeView</name>
     <message>
         <location filename="../luaoutline.cpp" line="61"/>
         <source>Expand All</source>

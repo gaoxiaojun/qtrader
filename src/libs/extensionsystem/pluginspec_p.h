@@ -102,12 +102,7 @@ private:
     PluginSpec *q;
 
     bool reportError(const QString &err);
-    void readPluginSpec(QXmlStreamReader &reader);
-    void readDependencies(QXmlStreamReader &reader);
-    void readDependencyEntry(QXmlStreamReader &reader);
-    void readArgumentDescriptions(QXmlStreamReader &reader);
-    void readArgumentDescription(QXmlStreamReader &reader);
-    bool readBooleanValue(QXmlStreamReader &reader, const char *key);
+    bool parseMetaData(const QJsonObject& jobj, const QString& pluginName);
 
     static QRegExp &versionRegExp();
 };

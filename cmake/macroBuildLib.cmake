@@ -21,7 +21,8 @@ macro(MacroBuildLib)
     message(FATAL_ERROR "NAME is mandatory")
   endif()
   if(NOT DEFINED MY_EXPORT_DIRECTIVE)
-    message(FATAL_ERROR "EXPORT_DIRECTIVE is mandatory")
+    string(TOUPPER ${MY_NAME} UPPER_NAME)
+    set(MY_EXPORT_DIRECTIVE "${UPPER_NAME}_EXPORT")
   endif()
   if(NOT DEFINED MY_LIBRARY_TYPE)
     set(MY_LIBRARY_TYPE "SHARED")
@@ -74,8 +75,6 @@ macro(MacroBuildLib)
     ${CMAKE_MODULE_PATH}/Export.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADERNAME}_global.h
     )
-  set(dynamicHeaders
-    "${dynamicHeaders};${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADERNAME}_global.h")
 
   # Make sure variable are cleared
   set(MY_MOC_CPP)
@@ -162,7 +161,7 @@ macro(MacroBuildLib)
   endif()
 
 
-  add_library(${lib_name} ${MY_LIBRARY_TYPE}
+  add_library(Lib_${lib_name} ${MY_LIBRARY_TYPE}
     ${MY_SRC_FILES}
     ${MY_MOC_CPP}
     ${MY_UI_CPP}
@@ -171,7 +170,8 @@ macro(MacroBuildLib)
     )
 
   # Set labels associated with the target.
-  set_target_properties(${lib_name} PROPERTIES LABELS ${lib_name})
+  #set_target_properties(Lib_${lib_name} PROPERTIES LABELS ${lib_name})
+  set_target_properties(Lib_${lib_name} PROPERTIES OUTPUT_NAME ${lib_name})
 
   # Library properties specific to STATIC build
   if(MY_LIBRARY_TYPE STREQUAL "STATIC")
@@ -191,14 +191,14 @@ macro(MacroBuildLib)
   if(MINGW)
     list(APPEND my_libs ssp) # add stack smash protection lib
   endif()
-  target_link_libraries(${lib_name} ${my_libs})
+  target_link_libraries(Lib_${lib_name} ${my_libs})
 
   if(${qcount} GREATER 0)
-      qt_use_modules(${lib_name} ${MY_QT_MODULES})
+      qt_use_modules(Lib_${lib_name} ${MY_QT_MODULES})
   endif()
 
   string(TOUPPER ${lib_name} project_export)
-  set(${project_export}_LIBRARIES ${lib_name} CACHE INTERNAL "" FORCE)
+  set(${project_export}_LIBRARIES Lib_${lib_name} CACHE INTERNAL "" FORCE)
   set(${project_export}_INCLUDE_DIR ${my_includes} CACHE INTERNAL "" FORCE)
   set(${project_export}_TRANSLATION_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations" CACHE INTERNAL "" FORCE)
 

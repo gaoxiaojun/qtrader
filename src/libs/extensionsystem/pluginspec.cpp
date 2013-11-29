@@ -37,29 +37,14 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QXmlStreamReader>
 #include <QRegExp>
 #include <QCoreApplication>
 #include <QDebug>
-
-#ifdef Q_OS_LINUX
-// Using the patched version breaks on Fedora 10, KDE4.2.2/Qt4.5.
-#   define USE_UNPATCHED_QPLUGINLOADER 1
-#else
-#   define USE_UNPATCHED_QPLUGINLOADER 1
-#endif
-
-#if USE_UNPATCHED_QPLUGINLOADER
-
-#   include <QPluginLoader>
-    typedef QT_PREPEND_NAMESPACE(QPluginLoader) PluginLoader;
-
-#else
-
-#   include "patchedpluginloader.cpp"
-    typedef PatchedPluginLoader PluginLoader;
-
-#endif
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QPluginLoader>
 
 /*!
     \class ExtensionSystem::PluginDependency
@@ -457,29 +442,29 @@ QHash<PluginDependency, PluginSpec *> PluginSpec::dependencySpecs() const
 
 namespace {
     const char PLUGIN[] = "plugin";
-    const char PLUGIN_NAME[] = "name";
-    const char PLUGIN_VERSION[] = "version";
-    const char PLUGIN_COMPATVERSION[] = "compatVersion";
-    const char PLUGIN_EXPERIMENTAL[] = "experimental";
-    const char PLUGIN_DISABLED_BY_DEFAULT[] = "disabledByDefault";
-    const char VENDOR[] = "vendor";
-    const char COPYRIGHT[] = "copyright";
-    const char LICENSE[] = "license";
-    const char DESCRIPTION[] = "description";
-    const char URL[] = "url";
-    const char CATEGORY[] = "category";
-    const char PLATFORM[] = "platform";
-    const char DEPENDENCYLIST[] = "dependencyList";
-    const char DEPENDENCY[] = "dependency";
-    const char DEPENDENCY_NAME[] = "name";
-    const char DEPENDENCY_VERSION[] = "version";
-    const char DEPENDENCY_TYPE[] = "type";
-    const char DEPENDENCY_TYPE_SOFT[] = "optional";
-    const char DEPENDENCY_TYPE_HARD[] = "required";
-    const char ARGUMENTLIST[] = "argumentList";
-    const char ARGUMENT[] = "argument";
-    const char ARGUMENT_NAME[] = "name";
-    const char ARGUMENT_PARAMETER[] = "parameter";
+    const char PLUGIN_NAME[] = "Name";
+    const char PLUGIN_VERSION[] = "Version";
+    const char PLUGIN_COMPATVERSION[] = "CompatVersion";
+    const char PLUGIN_EXPERIMENTAL[] = "Experimental";
+    const char PLUGIN_DISABLED_BY_DEFAULT[] = "DisabledByDefault";
+    const char VENDOR[] = "Vendor";
+    const char COPYRIGHT[] = "Copyright";
+    const char LICENSE[] = "License";
+    const char DESCRIPTION[] = "Description";
+    const char URL[] = "Url";
+    const char CATEGORY[] = "Category";
+    const char PLATFORM[] = "Platform";
+    const char DEPENDENCYLIST[] = "DependencyList";
+    const char DEPENDENCY[] = "Dependency";
+    const char DEPENDENCY_NAME[] = "Name";
+    const char DEPENDENCY_VERSION[] = "Version";
+    const char DEPENDENCY_TYPE[] = "Type";
+    const char DEPENDENCY_TYPE_SOFT[] = "Optional";
+    const char DEPENDENCY_TYPE_HARD[] = "Required";
+    const char ARGUMENTLIST[] = "ArgumentList";
+    const char ARGUMENT[] = "Argument";
+    const char ARGUMENT_NAME[] = "Name";
+    const char ARGUMENT_PARAMETER[] = "Parameter";
 }
 /*!
     \internal
@@ -523,12 +508,6 @@ bool PluginSpecPrivate::read(const QString &fileName)
     QFileInfo fileInfo(fileName);
     location = fileInfo.absolutePath();
     filePath = fileInfo.absoluteFilePath();
-    QString resourcePrefix = fileInfo.baseName();
-    if (resourcePrefix.startsWith("lib"))
-    {
-      resourcePrefix = resourcePrefix.mid(3);
-    }
-    resourcePrefix = QString(":/") + resourcePrefix + "/META-INF/";
 
     // Load the plugin and cache the resources
 
@@ -539,31 +518,14 @@ bool PluginSpecPrivate::read(const QString &fileName)
                              .arg(pluginLoader.errorString()));
     }
 
-    QFile pluginXmlResource(resourcePrefix + "Plugin.xml");
-    if (!pluginXmlResource.open(QIODevice::ReadOnly))
-        return reportError(tr("Cannot open file %1 for reading: %2")
-                           .arg(QDir::toNativeSeparators(pluginXmlResource.fileName()), pluginXmlResource.errorString()));
+    QString pluginName = fileInfo.baseName();
+    if (pluginName.startsWith("lib"))
+      pluginName = pluginName.mid(3);
 
-    QByteArray manifest = pluginXmlResource.readAll();
-    pluginXmlResource.close();
 
-    QXmlStreamReader reader(manifest);
-    while (!reader.atEnd()) {
-        reader.readNext();
-        switch (reader.tokenType()) {
-        case QXmlStreamReader::StartElement:
-            readPluginSpec(reader);
-            break;
-        default:
-            break;
-        }
-    }
-    if (reader.hasError())
-        return reportError(tr("Error parsing file Plugin.xml: %1, at line %2, column %3")
-                .arg(reader.errorString())
-                .arg(reader.lineNumber())
-                .arg(reader.columnNumber()));
-    state = PluginSpec::Read;
+    if (parseMetaData(pluginLoader.metaData().value("MetaData").toObject(), pluginName))
+        state = PluginSpec::Read;
+
     return true;
 }
 
@@ -634,206 +596,93 @@ static inline QString msgUnexpectedToken()
 /*!
     \internal
 */
-void PluginSpecPrivate::readPluginSpec(QXmlStreamReader &reader)
+
+bool PluginSpecPrivate::parseMetaData(const QJsonObject& meta, const QString& PluginName)
 {
-    if (reader.name() != QLatin1String(PLUGIN)) {
-        reader.raiseError(QCoreApplication::translate("PluginSpec", "Expected element '%1' as top level element")
-                          .arg(QLatin1String(PLUGIN)));
-        return;
-    }
-    name = reader.attributes().value(QLatin1String(PLUGIN_NAME)).toString();
-    if (name.isEmpty()) {
-        reader.raiseError(msgAttributeMissing(PLUGIN, PLUGIN_NAME));
-        return;
-    }
-    version = reader.attributes().value(QLatin1String(PLUGIN_VERSION)).toString();
-    if (version.isEmpty()) {
-        reader.raiseError(msgAttributeMissing(PLUGIN, PLUGIN_VERSION));
-        return;
-    }
-    if (!isValidVersion(version)) {
-        reader.raiseError(msgInvalidFormat(PLUGIN_VERSION));
-        return;
-    }
-    compatVersion = reader.attributes().value(QLatin1String(PLUGIN_COMPATVERSION)).toString();
-    if (!compatVersion.isEmpty() && !isValidVersion(compatVersion)) {
-        reader.raiseError(msgInvalidFormat(PLUGIN_COMPATVERSION));
-        return;
-    } else if (compatVersion.isEmpty()) {
-        compatVersion = version;
-    }
-    disabledByDefault = readBooleanValue(reader, PLUGIN_DISABLED_BY_DEFAULT);
-    experimental = readBooleanValue(reader, PLUGIN_EXPERIMENTAL);
-    if (reader.hasError())
-        return;
-    if (experimental)
-        disabledByDefault = true;
-    enabledInSettings = !disabledByDefault;
-    while (!reader.atEnd()) {
-        reader.readNext();
-        switch (reader.tokenType()) {
-        case QXmlStreamReader::StartElement: {
-            const QStringRef element = reader.name();
-            if (element == QLatin1String(VENDOR))
-                vendor = reader.readElementText().trimmed();
-            else if (element == QLatin1String(COPYRIGHT))
-                copyright = reader.readElementText().trimmed();
-            else if (element == QLatin1String(LICENSE))
-                license = reader.readElementText().trimmed();
-            else if (element == QLatin1String(DESCRIPTION))
-                description = reader.readElementText().trimmed();
-            else if (element == QLatin1String(URL))
-                url = reader.readElementText().trimmed();
-            else if (element == QLatin1String(CATEGORY))
-                category = reader.readElementText().trimmed();
-            else if (element == QLatin1String(PLATFORM)) {
-                const QString platformSpec = reader.readElementText().trimmed();
-                if (!platformSpec.isEmpty()) {
-                    platformSpecification.setPattern(platformSpec);
-                    if (!platformSpecification.isValid())
-                        reader.raiseError(QLatin1String("Invalid platform specification \"")
-                                          + platformSpec + QLatin1String("\": ")
-                                          + platformSpecification.errorString());
-                }
-            } else if (element == QLatin1String(DEPENDENCYLIST))
-                readDependencies(reader);
-            else if (element == QLatin1String(ARGUMENTLIST))
-                readArgumentDescriptions(reader);
-            else
-                reader.raiseError(msgInvalidElement(element.toString()));
+    name = meta.value(QLatin1String(PLUGIN_NAME)).toString().trimmed();
+        if (name.isEmpty())
+            return reportError(tr("Error parsing plugin %1 meta data : %2")
+                               .arg(PluginName)
+                               .arg(msgAttributeMissing(PLUGIN, PLUGIN_NAME)));
+
+        version = meta.value(QLatin1String(PLUGIN_VERSION)).toString().trimmed();
+        if (version.isEmpty())
+            return reportError(tr("Error parsing plugin %1 meta data : %2")
+                               .arg(PluginName)
+                               .arg(msgAttributeMissing(PLUGIN, PLUGIN_VERSION)));
+
+        compatVersion = meta.value(QLatin1String(PLUGIN_COMPATVERSION)).toString().trimmed ();
+        if (compatVersion.isEmpty()) {
+            compatVersion = version;
         }
-            break;
-        case QXmlStreamReader::EndDocument:
-        case QXmlStreamReader::Comment:
-        case QXmlStreamReader::EndElement:
-        case QXmlStreamReader::Characters:
-            break;
-        default:
-            reader.raiseError(msgUnexpectedToken());
-            break;
+
+        disabledByDefault = meta.value(QLatin1String(PLUGIN_DISABLED_BY_DEFAULT)).toBool ();
+
+        experimental = meta.value(QLatin1String(PLUGIN_EXPERIMENTAL)).toBool ();
+
+        if (experimental)
+            disabledByDefault = true;
+        enabledInSettings = !disabledByDefault;
+
+        vendor = meta.value(QLatin1String(VENDOR)).toString().trimmed ();
+
+        copyright = meta.value(QLatin1String(COPYRIGHT)).toString().trimmed ();
+
+        license = meta.value(QLatin1String(LICENSE)).toString().trimmed ();
+
+        description = meta.value(QLatin1String(DESCRIPTION)).toString().trimmed ();
+
+        category = meta.value(QLatin1String(CATEGORY)).toString();
+
+        const QString platformSpec = meta.value(QLatin1String(PLATFORM)).toString().trimmed();
+        if (!platformSpec.isEmpty()) {
+            platformSpecification.setPattern(platformSpec);
+            if (!platformSpecification.isValid())
+                return reportError(tr("Error parsing plugin %1 meta data : Invalid platform specification %2: %3")
+                                   .arg(PluginName)
+                                   .arg(platformSpec + QLatin1String("\": "))
+                                   .arg(platformSpecification.errorString()));
         }
-    }
-}
 
-/*!
-    \internal
-*/
-void PluginSpecPrivate::readArgumentDescriptions(QXmlStreamReader &reader)
-{
-    while (!reader.atEnd()) {
-        reader.readNext();
-        switch (reader.tokenType()) {
-        case QXmlStreamReader::StartElement:
-            if (reader.name() == QLatin1String(ARGUMENT))
-                readArgumentDescription(reader);
-            else
-                reader.raiseError(msgInvalidElement(reader.name().toString()));
-            break;
-        case QXmlStreamReader::Comment:
-        case QXmlStreamReader::Characters:
-            break;
-        case QXmlStreamReader::EndElement:
-            if (reader.name() == QLatin1String(ARGUMENTLIST))
-                return;
-            reader.raiseError(msgUnexpectedClosing(reader.name().toString()));
-            break;
-        default:
-            reader.raiseError(msgUnexpectedToken());
-            break;
-        }
-    }
-}
+        QJsonArray meta_array = meta.value(QLatin1String(DEPENDENCY)).toArray();
 
-/*!
-    \internal
-*/
-void PluginSpecPrivate::readArgumentDescription(QXmlStreamReader &reader)
-{
-    PluginArgumentDescription arg;
-    arg.name = reader.attributes().value(QLatin1String(ARGUMENT_NAME)).toString();
-    if (arg.name.isEmpty()) {
-        reader.raiseError(msgAttributeMissing(ARGUMENT, ARGUMENT_NAME));
-        return;
-    }
-    arg.parameter = reader.attributes().value(QLatin1String(ARGUMENT_PARAMETER)).toString();
-    arg.description = reader.readElementText();
-    if (reader.tokenType() != QXmlStreamReader::EndElement)
-        reader.raiseError(msgUnexpectedToken());
-    argumentDescriptions.push_back(arg);
-}
-
-bool PluginSpecPrivate::readBooleanValue(QXmlStreamReader &reader, const char *key)
-{
-    const QStringRef valueString = reader.attributes().value(QLatin1String(key));
-    const bool isOn = valueString.compare(QLatin1String("true"), Qt::CaseInsensitive) == 0;
-    if (!valueString.isEmpty() && !isOn
-            && valueString.compare(QLatin1String("false"), Qt::CaseInsensitive) != 0) {
-        reader.raiseError(msgInvalidFormat(key));
-    }
-    return isOn;
-}
-
-/*!
-    \internal
-*/
-void PluginSpecPrivate::readDependencies(QXmlStreamReader &reader)
-{
-    while (!reader.atEnd()) {
-        reader.readNext();
-        switch (reader.tokenType()) {
-        case QXmlStreamReader::StartElement:
-            if (reader.name() == QLatin1String(DEPENDENCY))
-                readDependencyEntry(reader);
-            else
-                reader.raiseError(msgInvalidElement(reader.name().toString()));
-            break;
-        case QXmlStreamReader::Comment:
-        case QXmlStreamReader::Characters:
-            break;
-        case QXmlStreamReader::EndElement:
-            if (reader.name() == QLatin1String(DEPENDENCYLIST))
-                return;
-            reader.raiseError(msgUnexpectedClosing(reader.name().toString()));
-            break;
-        default:
-            reader.raiseError(msgUnexpectedToken());
-            break;
-        }
-    }
-}
-
-/*!
-    \internal
-*/
-void PluginSpecPrivate::readDependencyEntry(QXmlStreamReader &reader)
-{
-    PluginDependency dep;
-    dep.name = reader.attributes().value(QLatin1String(DEPENDENCY_NAME)).toString();
-    if (dep.name.isEmpty()) {
-        reader.raiseError(msgAttributeMissing(DEPENDENCY, DEPENDENCY_NAME));
-        return;
-    }
-    dep.version = reader.attributes().value(QLatin1String(DEPENDENCY_VERSION)).toString();
-    if (!dep.version.isEmpty() && !isValidVersion(dep.version)) {
-        reader.raiseError(msgInvalidFormat(DEPENDENCY_VERSION));
-        return;
-    }
-    dep.type = PluginDependency::Required;
-    if (reader.attributes().hasAttribute(QLatin1String(DEPENDENCY_TYPE))) {
-        const QStringRef typeValue = reader.attributes().value(QLatin1String(DEPENDENCY_TYPE));
-        if (typeValue == QLatin1String(DEPENDENCY_TYPE_HARD)) {
+        Q_FOREACH(const QJsonValue & value, meta_array)
+        {
+            PluginDependency dep;
+            QJsonObject metadep = value.toObject();
+            dep.name = metadep.value(QLatin1String(DEPENDENCY_NAME)).toString();
+            if (dep.name.isEmpty()) {
+                return  reportError(tr("Error parsing plugin %1 meta data : %2")
+                                    .arg(PluginName)
+                                    .arg(msgAttributeMissing(DEPENDENCY, DEPENDENCY_NAME)));
+            }
+            dep.version = metadep.value(QLatin1String(DEPENDENCY_VERSION)).toString();
+            if (!dep.version.isEmpty() && !isValidVersion(dep.version)) {
+                return reportError(tr("Error parsing plugin %1 meta data : %2")
+                                           .arg(PluginName)
+                                            .arg(msgInvalidFormat(DEPENDENCY_VERSION)));
+            }
             dep.type = PluginDependency::Required;
-        } else if (typeValue == QLatin1String(DEPENDENCY_TYPE_SOFT)) {
-            dep.type = PluginDependency::Optional;
-        } else {
-            reader.raiseError(msgInvalidFormat(DEPENDENCY_TYPE));
-            return;
+
+            if (metadep.constFind(QLatin1String(DEPENDENCY_TYPE)) != metadep.constEnd ()) {
+                const QString typeValue = metadep.value(QLatin1String(DEPENDENCY_TYPE)).toString ();
+                if (typeValue == QLatin1String(DEPENDENCY_TYPE_HARD)) {
+                    dep.type = PluginDependency::Required;
+                } else if (typeValue == QLatin1String(DEPENDENCY_TYPE_SOFT)) {
+                    dep.type = PluginDependency::Optional;
+                } else {
+                    return  reportError(tr("Error parsing plugin %1 meta data : %2")
+                                        .arg(PluginName)
+                                        .arg(msgInvalidFormat(DEPENDENCY_TYPE)));
+                }
+            }
+            dependencies.append(dep);
         }
-    }
-    dependencies.append(dep);
-    reader.readNext();
-    if (reader.tokenType() != QXmlStreamReader::EndElement)
-        reader.raiseError(msgUnexpectedToken());
+        //TODO:read argumemnt
+        //license = meta.value(QLatin1String(LICENSE)).toString();
+
+        //license = meta.value(QLatin1String(LICENSE)).toString();
+        return true;
 }
 
 /*!
@@ -976,7 +825,7 @@ bool PluginSpecPrivate::loadLibrary()
     QString libName = QString::fromLatin1("%1/lib%2.so").arg(location).arg(name);
 #endif
 
-    PluginLoader loader(libName);
+    QPluginLoader loader(libName);
     if (!loader.load()) {
         hasError = true;
         errorString = QDir::toNativeSeparators(libName)

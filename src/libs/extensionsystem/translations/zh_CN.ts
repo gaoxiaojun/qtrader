@@ -103,14 +103,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="544"/>
-        <source>Cannot open file %1 for reading: %2</source>
-        <translation>无法打开文件%1 来读取: %2</translation>
+        <location filename="../pluginspec.cpp" line="620"/>
+        <location filename="../pluginspec.cpp" line="626"/>
+        <location filename="../pluginspec.cpp" line="670"/>
+        <location filename="../pluginspec.cpp" line="676"/>
+        <location filename="../pluginspec.cpp" line="689"/>
+        <source>Error parsing file meta data %1: %2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="562"/>
-        <source>Error parsing file Plugin.xml: %1, at line %2, column %3</source>
+        <location filename="../pluginspec.cpp" line="657"/>
+        <source>Invalid platform specification %1: %2</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open file %1 for reading: %2</source>
+        <translation type="vanished">无法打开文件%1 来读取: %2</translation>
     </message>
 </context>
 <context>
@@ -309,82 +317,82 @@ Reason: %3</source>
 <context>
     <name>PluginSpec</name>
     <message>
-        <location filename="../pluginspec.cpp" line="611"/>
+        <location filename="../pluginspec.cpp" line="589"/>
         <source>&apos;%1&apos; misses attribute &apos;%2&apos;</source>
         <translation>&apos;%1&apos; 缺少属性 &apos;%2&apos; </translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="616"/>
+        <location filename="../pluginspec.cpp" line="594"/>
         <source>&apos;%1&apos; has invalid format</source>
         <translation>&apos;%1&apos; 格式无效</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="621"/>
+        <location filename="../pluginspec.cpp" line="599"/>
         <source>Invalid element &apos;%1&apos;</source>
         <translation>&apos;%1&apos; 无效元素</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="626"/>
+        <location filename="../pluginspec.cpp" line="604"/>
         <source>Unexpected closing element &apos;%1&apos;</source>
         <translation>未预料到的关闭元素 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="631"/>
+        <location filename="../pluginspec.cpp" line="609"/>
         <source>Unexpected token</source>
         <translation>未预料到的符号</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="640"/>
+        <location filename="../pluginspec.cpp" line="706"/>
         <source>Expected element &apos;%1&apos; as top level element</source>
         <translation> &apos;%1&apos; 应为顶层元素</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="899"/>
+        <location filename="../pluginspec.cpp" line="962"/>
         <source>Resolving dependencies failed because state != Read</source>
         <translation>解决依赖关系失败因为 state != Read</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="918"/>
+        <location filename="../pluginspec.cpp" line="981"/>
         <source>Could not resolve dependency &apos;%1(%2)&apos;</source>
         <translation>无法解决依赖 &apos;%1(%2)&apos;</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="966"/>
+        <location filename="../pluginspec.cpp" line="1029"/>
         <source>Loading the library failed because state != Resolved</source>
         <translation>载入库文件失败因为 state != Resolved</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="989"/>
+        <location filename="../pluginspec.cpp" line="1052"/>
         <source>Plugin is not valid (does not derive from IPlugin)</source>
         <translation>不是有效插件 (未从IPlugin继承)</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="1009"/>
+        <location filename="../pluginspec.cpp" line="1072"/>
         <source>Initializing the plugin failed because state != Loaded</source>
         <translation>初始化插件失败因为 state != Loaded</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="1014"/>
+        <location filename="../pluginspec.cpp" line="1077"/>
         <source>Internal error: have no plugin instance to initialize</source>
         <translation>内部错误：没有插件实例要初始化</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="1020"/>
+        <location filename="../pluginspec.cpp" line="1083"/>
         <source>Plugin initialization failed: %1</source>
         <translation>插件初始化失败: %1</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="1038"/>
+        <location filename="../pluginspec.cpp" line="1101"/>
         <source>Cannot perform extensionsInitialized because state != Initialized</source>
         <translation>无法进行扩展初始化因为 state != Initialized</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="1043"/>
+        <location filename="../pluginspec.cpp" line="1106"/>
         <source>Internal error: have no plugin instance to perform extensionsInitialized</source>
         <translation>内部错误:没有可进行扩展初始化的插件实例</translation>
     </message>
     <message>
-        <location filename="../pluginspec.cpp" line="1062"/>
+        <location filename="../pluginspec.cpp" line="1125"/>
         <source>Internal error: have no plugin instance to perform delayedInitialize</source>
         <translation>内部错误: 没有可进行延迟初始化的插件实例</translation>
     </message>

@@ -3,31 +3,26 @@ macro(MacroSetupQt)
 
   set(minimum_required_qt_version "5.2.0")
 
-  # workround qt5 Qt5CoreConfig.cmake symbol link path bug
+  # workround qt5 Qt5CoreConfig.cmake symbol link path bug on osx
   find_program(QT_QMAKE_EXECUTABLE_FINDQT NAMES qmake qmake5 qmake-qt5 qmake4 qmake-qt4
                PATHS "${QT_SEARCH_PATH}/bin" "$ENV{QTDIR}/bin")
   set(QT_QMAKE_EXECUTABLE ${QT_QMAKE_EXECUTABLE_FINDQT} CACHE PATH "Qt qmake program.")
 
-  exec_program(${QT_QMAKE_EXECUTABLE} ARGS "-query QT_VERSION" OUTPUT_VARIABLE QTVERSION)
+  exec_program(${QT_QMAKE_EXECUTABLE} ARGS "-query QT_VERSION" OUTPUT_VARIABLE _QT_VERSION)
 
-  if(QTVERSION MATCHES "5.*")
-      set(_qt_found 5)
-  elseif(QTVERSION MATCHES "4.*")
-      set(_qt_found 4)
-  else()
-      set(_qt_found 0)
-  endif()
+  string(REPLACE "." ";" __QT_VERSION_LIST ${_QT_VERSION})
+  list(GET __QT_VERSION_LIST 0 _QT_MAJOR_VERSION)
 
   exec_program(${QT_QMAKE_EXECUTABLE} ARGS "-query QT_INSTALL_PREFIX" OUTPUT_VARIABLE QT_INSTALL_PREFIX)
   set(CMAKE_PREFIX_PATH ${QT_INSTALL_PREFIX} ${CMAKE_PREFIX_PATH})
 
-  if(${QTVERSION} VERSION_LESS ${minimum_required_qt_version})
-    message(FATAL_ERROR "error: requires Qt >= ${minimum_required_qt_version} -- you cannot use Qt ${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}.${QT_VERSION_PATCH}.")
+  if(${_QT_VERSION} VERSION_LESS ${minimum_required_qt_version})
+    message(FATAL_ERROR "error: requires Qt >= ${minimum_required_qt_version} -- you cannot use Qt ${_QT_VERSION}")
   endif()
 
-  message(STATUS "Found Qt ${QTVERSION}")
+  message(STATUS "Found Qt ${_QT_VERSION}")
 
-  if (_qt_found EQUAL 4)
+  if (_QT_MAJOR_VERSION EQUAL 4)
     find_package(Qt4)
     set(QT_USE_QTNETWORK ON)
     set(QT_USE_QTOPENGL ON)
@@ -48,7 +43,7 @@ macro(MacroSetupQt)
     if(WIN32)
       get_filename_component(QT_INSTALLED_LIBRARY_DIR ${QT_QMAKE_EXECUTABLE} PATH)
     endif()
-  elseif(_qt_found EQUAL 5)
+  elseif(_QT_MAJOR_VERSION EQUAL 5)
     find_package(Qt5Core QUIET)
     find_package(Qt5Gui REQUIRED)
     find_package(Qt5Widgets REQUIRED)
@@ -61,7 +56,7 @@ macro(MacroSetupQt)
     find_package(Qt5Sql REQUIRED)
     find_package(Qt5LinguistTools REQUIRED)
   else()
-    message(FATAL_ERROR "Found unsuitable Qt ${QTVERSION}")
+    message(FATAL_ERROR "Found unsuitable Qt ${_QT_VERSION}")
   endif()
 
   find_program(QT_LUPDATE_EXECUTABLE lupdate lupdate5 lupdate-qt5 lupdate4 lupdate-qt4
@@ -77,6 +72,19 @@ macro(MacroSetupQt)
   endif()
 
   set(CMAKE_AUTOMOC ON)
+
+# set rpath
+  if (CMAKE_BUILD_TYPE STREQUAL Release)
+    add_definitions (-DQT_NO_WARNING_OUTPUT)
+    add_definitions (-DQT_NO_DEBUG_OUTPUT)
+  endif (CMAKE_BUILD_TYPE STREQUAL Release)
+
+  if (UNIX AND NOT APPLE)
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,${QT_LIBRARY_DIR}")
+  endif (UNIX AND NOT APPLE)
+
+  #add_definitions (-DQT_NO_CAST_FROM_ASCII)
+  #add_definitions (-DQT_NO_CAST_TO_ASCII)
 
 endmacro()
 

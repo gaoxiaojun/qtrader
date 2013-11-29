@@ -41,6 +41,8 @@
 #   include <QUrlQuery>
 #endif
 
+using namespace Utils;
+
 CrashReportDialog::CrashReportDialog(const QString& reportUrl, const QString &dumpFile, QWidget *parent)
     : QDialog(parent), m_reportUrl(reportUrl), m_dumpFile(dumpFile), m_uploadReply(0), m_finalResult(QDialog::Accepted)
 {

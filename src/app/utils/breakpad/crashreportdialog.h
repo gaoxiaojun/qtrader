@@ -30,6 +30,8 @@ class QNetworkReply;
 class QProgressBar;
 class QStackedLayout;
 
+namespace Utils {
+
 class CrashReportDialog : public QDialog
 {
     Q_OBJECT
@@ -77,5 +79,7 @@ private:
 
     void retranslateUI();
 };
+
+} // namespace Utils
 
 #endif // CRASHREPORTDIALOG_H

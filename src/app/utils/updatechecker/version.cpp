@@ -25,13 +25,13 @@ Version Version::fromString(const QString &string)
         return Version();
 
     bool ok;
-    quint16 major = parts.at(0).toUShort(&ok);
+    unsigned int major = parts.at(0).toUShort(&ok);
     if (!ok)
         return Version();
-    quint16 minor = parts.at(1).toUShort(&ok);
+    unsigned int minor = parts.at(1).toUShort(&ok);
     if (!ok)
         return Version();
-    quint16 patch = parts.at(2).toUShort(&ok);
+    unsigned int patch = parts.at(2).toUShort(&ok);
     if (!ok)
         return Version();
 
@@ -41,7 +41,7 @@ Version Version::fromString(const QString &string)
         return Version(major, minor, patch, QString());
 }
 
-Version::Version(quint16 major, quint16 minor, quint16 patch, const QString &revisor)
+Version::Version(unsigned int major, unsigned int minor, unsigned int patch, const QString &revisor)
     : m_major(major), m_minor(minor), m_patch(patch), m_revisor(revisor)
 {
 }
@@ -99,17 +99,17 @@ QString Version::toString() const
         return QString::fromLatin1("%1.%2.%3.%4").arg(m_major).arg(m_minor).arg(m_patch).arg(m_revisor);
 }
 
-quint16 Version::major() const
+unsigned int Version::major() const
 {
     return m_major;
 }
 
-quint16 Version::minor() const
+unsigned int Version::minor() const
 {
     return m_minor;
 }
 
-quint16 Version::patch() const
+unsigned int Version::patch() const
 {
     return m_patch;
 }

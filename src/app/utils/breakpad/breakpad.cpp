@@ -15,6 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "breakpad.h"
+
 #include <QString>
 #include <QFileInfo>
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -23,6 +25,7 @@
   #include <QStandardPaths>
 #endif
 
+using namespace Utils;
 
 #ifdef Q_OS_WIN
 /* Platform-specific code for Windows */
@@ -65,7 +68,7 @@ bool breakpadDumpCallback(const wchar_t *dump_path, const wchar_t *minidump_id, 
 #endif
 }
 
-void setupBreakPadCrashHandler()
+void Utils::setupBreakPadCrashHandler()
 {
     /* Store the path of the executable in case we crash; it might not be safe to do this later. */
     wchar_t buf[MAX_PATH];
@@ -113,7 +116,7 @@ bool breakpadDumpCallback(const char *dump_path, const char *minidump_id, void *
     return true;
 #endif
 }
-void setupBreakPadCrashHandler()
+void Utils::setupBreakPadCrashHandler()
 {
     quint32 size = 0;
     _NSGetExecutablePath(0, &size);
@@ -157,7 +160,7 @@ bool breakpadDumpCallback(const MinidumpDescriptor& descriptor, void *context, b
 #endif
 }
 
-void setupBreakPadCrashHandler()
+void Utils::setupBreakPadCrashHandler()
 {
     QFileInfo fi(QLatin1String("/proc/self/exe"));
     executablePath = fi.symLinkTarget().toLocal8Bit();
@@ -171,3 +174,5 @@ void setupBreakPadCrashHandler()
 }
 
 #endif /* !defined(Q_OS_MAC) */
+
+//} // namespace Utils
