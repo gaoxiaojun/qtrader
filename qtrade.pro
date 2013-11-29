@@ -618,7 +618,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
            3rd/KDUpdater/examples/kdupdater/firmwaredemo/application/mainwindow.h \
            3rd/KDUpdater/examples/kdupdater/simpleexample/application/mainwindow.h \
     cmake/Export.h.in \
-    src/app/utils/ApplicationHelper.h \
     src/libs/OpenUpdater/updater.h \
     src/libs/OpenUpdater/updaterapplication.h \
     src/libs/OpenUpdater/updaterfiledownloader_p.h \

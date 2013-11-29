@@ -365,7 +365,7 @@ int main(int argc, char **argv)
             + QLatin1String("/translations/");
 
     const QString &appResourceTrPath = QLatin1String(":/")
-            + QLatin1String(Application::Constants::APPLICATION_DATA_PATH)
+            + QLatin1String(Application::Constants::APPLICATION_NAME)
             + QLatin1String("/translations/");
 
     const QString &qtTrPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
@@ -380,7 +380,7 @@ int main(int argc, char **argv)
 #endif
         if (apptranslator.load(appTrFile + locale, appUserTrPath) ||
             apptranslator.load(appTrFile + locale, appExternalTrPath) ||
-            apptranslator.load(appTrFile + locale, appResourceTrPath)
+            apptranslator.load(locale, appResourceTrPath)
                 ) {
             const QString &qtTrFile = QLatin1String("qt_") + locale;
 
@@ -389,6 +389,7 @@ int main(int argc, char **argv)
                     ) {
                 app.installTranslator(&apptranslator);
                 app.installTranslator(&qtTranslator);
+                qDebug() << "application locale: " << locale;
                 app.setProperty("application_locale", locale);
                 break;
             }

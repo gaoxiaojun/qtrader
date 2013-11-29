@@ -359,7 +359,7 @@ QPrinter *ICore::printer()
 
 QString ICore::userInterfaceLanguage()
 {
-    return qApp->property("qtc_locale").toString();
+    return qApp->property("application_locale").toString();
 }
 
 QString ICore::resourcePath()

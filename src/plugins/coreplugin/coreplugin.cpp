@@ -43,6 +43,8 @@
 #include <QtPlugin>
 #include <QDebug>
 #include <QDateTime>
+#include <QTranslator>
+#include <QCoreApplication>
 
 using namespace Core;
 using namespace Core::Internal;
@@ -50,7 +52,6 @@ using namespace Core::Internal;
 CorePlugin::CorePlugin() : m_editMode(0), m_designMode(0)
 {
     qRegisterMetaType<Core::Id>();
-    m_mainWindow = new MainWindow;
 }
 
 CorePlugin::~CorePlugin()
@@ -84,6 +85,23 @@ void CorePlugin::parseArguments(const QStringList &arguments)
 
 bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
+    // load plugin translation file
+    const QString &locale = ICore::userInterfaceLanguage();
+
+    if (!locale.isEmpty()) {
+        QTranslator *qtr = new QTranslator(this);
+        const QString &externalTrPath = ICore::resourcePath()
+            + QLatin1String("/translations");
+        const QString resTrPath = QLatin1String(":/Core/translations/");
+        const QString trFile = QLatin1String("Core_") + locale;
+
+        if (qtr->load(trFile, externalTrPath) || qtr->load(locale, resTrPath)) {
+            qApp->installTranslator(qtr);
+        }
+    }
+
+    m_mainWindow = new MainWindow;
+
     qsrand(QDateTime::currentDateTime().toTime_t());
     parseArguments(arguments);
     const bool success = m_mainWindow->init(errorMessage);
