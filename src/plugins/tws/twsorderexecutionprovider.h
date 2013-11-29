@@ -16,10 +16,24 @@
 #ifndef TWSORDEREXECUTIONPROVIDER_H
 #define TWSORDEREXECUTIONPROVIDER_H
 
-class TwsOrderExecutionProvider : public IOrderExecutionProvider
+#include <opentrade/iorderexecutionprovider.h>
+#include <opentrade/order.h>
+
+namespace Tws {
+
+class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
 {
+    Q_OBJECT
+
 public:
     TwsOrderExecutionProvider();
+    ~TwsOrderExecutionProvider();
+
+public:
+    void send(const Order& order);
+    void cancel(const Order& order);
+    void replace(const Order& order, double newQty, double newPrice, double newStopPrice);
+
 };
 
 #endif // TWSORDEREXECUTIONPROVIDER_H

@@ -27,6 +27,13 @@ namespace Internal {
   };
 } // namespace Internal
 
+TwsClient *m_instance = 0;
+
+TwsClient *TwsClient::instance()
+{
+    return m_instance;
+}
+
 TwsClient::TwsClient(QObject *parent) :
     QObject(parent), m_tickId(1)
 {
@@ -69,7 +76,7 @@ TickerId TwsClient::tickId()
     return m_tickId.fetchAndAddOrdered(1);
 }
 
-void TwsClient::subscribe(const OpenTrade::Instrument& instrument)
+void TwsClient::subscribe(const OpenTrade::Instrument &instrument)
 {
     OpenTrade::Instrument* inst = const_cast<OpenTrade::Instrument*>(&instrument);
     if(m_subscribes.contains(inst))

@@ -18,6 +18,7 @@
 
 #include "IBJts/source/posixclient/src/EPosixClientSocket.h"
 #include <opentrade/instrument.h>
+#include <opentrade/order.h>
 
 #include <QObject>
 #include <QAtomicInt>
@@ -33,9 +34,11 @@ namespace Internal {
 class TwsClient : public QObject
 {
     Q_OBJECT
+
 public:
     explicit TwsClient(QObject *parent = 0);
     ~TwsClient();
+    TwsClient *instance();
 
 public:
     bool connect(const QString& host, unsigned int port, int clientId=0);
@@ -46,7 +49,16 @@ public:
     void unsubscribe(const OpenTrade::Instrument& instrument);
 
     // order execution
+    void send(const OpenTrade::Order& order);
+    void cancel(const OpenTrade::Order& order);
+    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
+
     // historical
+
+signals:
+    void connected();
+    void disconnected();
+
 private:
     TickerId tickId();
     void convertInstrumentToContract(const OpenTrade::Instrument& inst, Contract* contract);

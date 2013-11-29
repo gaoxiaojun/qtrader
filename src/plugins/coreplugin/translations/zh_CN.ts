@@ -939,7 +939,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="490"/>
         <source>&amp;Window</source>
-        <translation>控件(&amp;W)</translation>
+        <translation>窗口(&amp;W)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="501"/>

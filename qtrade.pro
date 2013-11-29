@@ -38,7 +38,7 @@ INCLUDEPATH += . \
                src/plugins/debugger/namedemangler \
                src/plugins/debugger/pdb \
                src/plugins/debugger/qml \
-               src/plugins/tws/shared \
+               src/plugins/tws/IBJts/shared \
                src/plugins/debugger/lldblib/guest \
 
 # Input
@@ -597,21 +597,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
            src/plugins/texteditor/snippets/snippetscollection.h \
            src/plugins/texteditor/snippets/snippetssettings.h \
            src/plugins/texteditor/snippets/snippetssettingspage.h \
-           src/plugins/tws/shared/CommissionReport.h \
-           src/plugins/tws/shared/CommonDefs.h \
-           src/plugins/tws/shared/Contract.h \
-           src/plugins/tws/shared/EClient.h \
-           src/plugins/tws/shared/EClientSocketBase.h \
-           src/plugins/tws/shared/EClientSocketBaseImpl.h \
-           src/plugins/tws/shared/EWrapper.h \
-           src/plugins/tws/shared/Execution.h \
-           src/plugins/tws/shared/IBString.h \
-           src/plugins/tws/shared/Order.h \
-           src/plugins/tws/shared/OrderState.h \
-           src/plugins/tws/shared/ScannerSubscription.h \
-           src/plugins/tws/shared/shared_ptr.h \
-           src/plugins/tws/shared/TagValue.h \
-           src/plugins/tws/shared/TwsSocketClientErrors.h \
            src/plugins/debugger/lldblib/guest/lldbengineguest.h \
            3rd/KDUpdater/examples/kdupdater/compatexample/application/mainwindow.h \
            3rd/KDUpdater/examples/kdupdater/firmwaredemo/application/helpdialog.h \
@@ -646,7 +631,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/domain/orderbook.h \
     src/plugins/domain/order.h \
     src/plugins/domain/ordermanager.h \
-    src/plugins/tws/EPosixClientSocket.h \
     src/plugins/domain/historicaldatarequest.h \
     src/plugins/tws/twsmarketdataprovier.h \
     src/plugins/tws/twsorderexecutionprovider.h \
@@ -1271,8 +1255,6 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/domain/orderbook.cpp \
     src/plugins/domain/order.cpp \
     src/plugins/domain/ordermanager.cpp \
-    src/plugins/tws/EClientSocketBase.cpp \
-    src/plugins/tws/EPosixClientSocket.cpp \
     src/plugins/domain/historicaldatarequest.cpp \
     src/plugins/tws/twsmarketdataprovier.cpp \
     src/plugins/tws/twsorderexecutionprovider.cpp \
@@ -1359,4 +1341,7 @@ OTHER_FILES += \
     src/plugins/opentrade/OpenTrade.json.in \
     src/plugins/opentrade/CMakeLists.txt \
     src/plugins/coreplugin/Core.json.in \
-    src/plugins/tws/Tws.json.in
+    src/plugins/tws/Tws.json.in \
+    src/plugins/coreplugin/translations/zh_CN.ts \
+    src/plugins/opentrade/translations/zh_CN.ts \
+    src/plugins/tws/translations/zh_CN.ts

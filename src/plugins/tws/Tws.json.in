@@ -9,10 +9,10 @@
     "Url" : "",
     "Dependendencies" : [
        {
-	"Name" : "Core"
+            "Name" : "Core"
        },
        {
-	"Name" : "OpenTrade"
-	}
+            "Name" : "OpenTrade"
+        }
     ]
 }
