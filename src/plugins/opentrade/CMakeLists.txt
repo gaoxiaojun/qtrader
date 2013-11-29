@@ -32,8 +32,6 @@ set( LIB_SRC_FILES
   historicalprovidermanager.cpp
   historicalprovidermanager.h
 )
-
-set(LIB_EXPORT_DIRECTIVE "OPENTRADE_EXPORT")
 file (GLOB_RECURSE LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)
 file (GLOB_RECURSE LIB_QRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.qrc)
 file (GLOB LIB_TS_FILES translations/*.ts)
@@ -42,7 +40,6 @@ set(LIB_DEPEND_LIBS QtCore QtWidgets extensionsystem)
 
 MacroBuildPlugin(
     NAME ${PLUGIN_NAME}
-    EXPORT_DIRECTIVE ${LIB_EXPORT_DIRECTIVE}
     SRC_FILES ${LIB_SRC_FILES}
     UI_FILES ${LIB_UI_FILES}
     QRC_FILES ${LIB_QRC_FILES}

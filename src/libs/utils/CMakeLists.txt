@@ -179,13 +179,10 @@ endif()
 file (GLOB LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)
 file (GLOB LIB_QRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.qrc)
 
-set(LIB_EXPORT_DIRECTIVE "UTILS_EXPORT")
-
 set(LIB_DEPEND_LIBS QtCore QtWidgets QtNetwork QtScript QtConcurrent extensionsystem)
 
 MacroBuildLib(
     NAME ${library_name}
-    EXPORT_DIRECTIVE ${LIB_EXPORT_DIRECTIVE}
     SRC_FILES ${LIB_SRC_FILES}
     UI_FILES ${LIB_UI_FILES}
     QRC_FILES ${LIB_QRC_FILES}

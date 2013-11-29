@@ -40,6 +40,9 @@ macro(MacroBuildApp)
   if(MY_LIB_MODULES)
      list(REMOVE_DUPLICATES MY_LIB_MODULES)
   endif()
+  if(MY_QT_MODULES)
+    set(CMAKE_AUTOMOC ON)
+  endif()
   # --------------------------------------------------------------------------
   # Include dirs
   set(my_includes
@@ -126,7 +129,7 @@ macro(MacroBuildApp)
 
   # Add any other additional resource files
   if(_plugin_cached_resources_in_source_tree OR _plugin_cached_resources_in_binary_tree)
-    MacroGeneratePluginResourcefile(MY_QRC_SRCS
+    MacroGenerateResourceFile(MY_QRC_SRCS
       NAME ${app_name}_cached.qrc
       PREFIX ${app_name}
       RESOURCES ${_plugin_cached_resources_in_source_tree}
@@ -145,13 +148,6 @@ macro(MacroBuildApp)
     ${MY_UI_CPP}
     ${_plugin_qm_files}
     )
-
-  list(LENGTH MY_QT_MODULES qcount)
-  list(LENGTH MY_MOC_FILES mcount)
-  if(${qcount} GREATER 0 AND ${mcount} EQUAL 0)
-    set(CMAKE_AUTOMOC ON)
-  endif()
-
 
   add_executable(${app_name} WIN32 MACOSX_BUNDLE
     ${MY_SRC_FILES}
@@ -184,7 +180,7 @@ macro(MacroBuildApp)
   endif()
   target_link_libraries(${app_name} ${my_libs})
 
-  if(${qcount} GREATER 0)
+  if(MY_QT_MODULES)
       qt_use_modules(${app_name} ${MY_QT_MODULES})
   endif()
 

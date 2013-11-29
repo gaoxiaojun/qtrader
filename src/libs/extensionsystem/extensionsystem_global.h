@@ -27,17 +27,15 @@
 **
 ****************************************************************************/
 
-#ifndef UTILS_GLOBAL_H
-#define UTILS_GLOBAL_H
+#ifndef EXTENSIONSYSTEM_GLOBAL_H
+#define EXTENSIONSYSTEM_GLOBAL_H
 
 #include <qglobal.h>
 
-#if defined(UTILS_LIB)
-#  define UTILS_EXPORT Q_DECL_EXPORT
-#elif  defined(QTCREATOR_UTILS_STATIC_LIB) // Abuse single files for manual tests
-#  define UTILS_EXPORT
+#if defined(EXTENSIONSYSTEM_LIBRARY)
+#  define EXTENSIONSYSTEM_EXPORT Q_DECL_EXPORT
 #else
-#  define UTILS_EXPORT Q_DECL_IMPORT
+#  define EXTENSIONSYSTEM_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // UTILS_GLOBAL_H
+#endif // EXTENSIONSYSTEM_GLOBAL_H

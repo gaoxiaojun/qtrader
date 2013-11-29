@@ -12,7 +12,7 @@
 #! \ingroup CMakeAPI
 macro(MacroBuildPlugin)
   MacroParseArguments(MY
-    "NAME;EXPORT_DIRECTIVE;SRC_FILES;MOC_FILES;UI_FILES;QRC_FILES;DEPEND_LIBS;DEPEND_PLUGINS;DEPEND_OPT_PLUGINS;MERGE_TS_LIBS;INCLUDE_DIRECTORIES;TARGET_LIBRARIES;CACHED_RESOURCEFILES;OUTPUT_DIR;MOC_OPTIONS;"
+    "NAME;SRC_FILES;MOC_FILES;UI_FILES;QRC_FILES;DEPEND_LIBS;DEPEND_PLUGINS;DEPEND_OPT_PLUGINS;MERGE_TS_LIBS;INCLUDE_DIRECTORIES;TARGET_LIBRARIES;CACHED_RESOURCEFILES;"
     ""
     ${ARGN}
     )
@@ -21,22 +21,10 @@ macro(MacroBuildPlugin)
   if(NOT DEFINED MY_NAME)
     message(FATAL_ERROR "NAME is mandatory")
   endif()
-  if(NOT DEFINED MY_EXPORT_DIRECTIVE)
-    string(TOUPPER ${MY_NAME} UPPER_NAME)
-    set(MY_EXPORT_DIRECTIVE "${UPPER_NAME}_EXPORT")
-  endif()
   
-  # Plugin are expected to be shared library
-  set(MY_LIBRARY_TYPE "SHARED")
-
   # Define library name
   set(plugin_name ${MY_NAME})
 
-  # Plug-in target names must contain at leas one _
-  if(plugin_name MATCHES _)
-    message(FATAL_ERROR "The plug-in project name ${plugin_name} must not contain a '_' character")
-  endif()
-  
   # --------------------------------------------------------------------------
   # Depends library
   set(MY_QT_MODULES )
@@ -54,17 +42,9 @@ macro(MacroBuildPlugin)
      list(REMOVE_DUPLICATES MY_LIB_MODULES)
   endif()
 
-
-  # Add the generated manifest qrc file
-  #set(manifest_qrc_src )
-  #FunctionGeneratePluginXml(manifest_qrc_src
-  #  NAME ${plugin_name}
-  #  REQUIRE_PLUGINS ${MY_DEPEND_PLUGINS}
-  #  OPTIONAL_PLUGINS ${MY_DEPEND_OPT_PLUGINS}
-  #  )
-
-   #set_property(SOURCE ${manifest_qrc_src} APPEND
-   #                PROPERTY OBJECT_DEPENDS "Plugin.xml.in")
+  if(MY_QT_MODULES)
+      set(CMAKE_AUTOMOC ON)
+  endif()
 
   # --------------------------------------------------------------------------
   # Include dirs
@@ -92,39 +72,34 @@ macro(MacroBuildPlugin)
     ${my_includes}
     )
 
+  # --------------------------------------------------------------------------
+  # Library definition
   string(TOUPPER ${MY_NAME} MY_EXPORT_LIBNAME)
-  string(TOLOWER ${MY_NAME} MY_EXPORT_HEADERNAME)
-  set(MY_LIBRARY_EXPORT_DIRECTIVE ${MY_EXPORT_DIRECTIVE})
   add_definitions(-D${MY_EXPORT_LIBNAME}_LIBRARY)
-  configure_file(
-    ${CMAKE_MODULE_PATH}/Export.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADERNAME}_global.h
-    )
+
+  # --------------------------------------------------------------------------
+  # Generator json
+  #set_property(SOURCE ${CMAKE_CURRENT_BINARY_DIR}/${MY_NAME}.json APPEND PROPERTY OBJECT_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/OpenTrade.json.in")
+
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/${MY_NAME}.json.in
     ${CMAKE_CURRENT_BINARY_DIR}/${MY_NAME}.json
-    )
+    @ONLY)
 
+  # --------------------------------------------------------------------------
+  # UI and Resource
   # Make sure variable are cleared
-  set(MY_MOC_CPP)
   set(MY_UI_CPP)
   set(MY_QRC_SRCS)
 
-  # Wrap
-  if(MY_MOC_FILES)
-    # this is a workaround for Visual Studio. The relative include paths in the generated
-    # moc files can get very long and can't be resolved by the MSVC compiler.
-    foreach(moc_src ${MY_MOC_FILES})
-      QT_WRAP_CPP(MY_MOC_CPP ${moc_src} OPTIONS -f${moc_src} ${MY_MOC_OPTIONS})
-    endforeach()
+  if(DEFINED MY_UI_FILES)
+    QT_WRAP_UI(MY_UI_CPP ${MY_UI_FILES})
   endif()
-  QT_WRAP_UI(MY_UI_CPP ${MY_UI_FILES})
+
   if(DEFINED MY_QRC_FILES)
     QT_ADD_RESOURCES(MY_QRC_SRCS ${MY_QRC_FILES})
   endif()
-
-  list(APPEND MY_QRC_SRCS ${manifest_qrc_src})
-
+  # --------------------------------------------------------------------------
   # Create translation files (.ts and .qm)
   set(_plugin_qm_files )
   set(_plugin_cached_resources_in_binary_tree )
@@ -164,6 +139,8 @@ macro(MacroBuildPlugin)
     endforeach()
   endif()
 
+  # --------------------------------------------------------------------------
+  # Resource
   set(_plugin_cached_resources_in_source_tree )
   if(MY_CACHED_RESOURCEFILES)
     foreach(_cached_resource ${MY_CACHED_RESOURCEFILES})
@@ -179,33 +156,16 @@ macro(MacroBuildPlugin)
 
   # Add any other additional resource files
   if(_plugin_cached_resources_in_source_tree OR _plugin_cached_resources_in_binary_tree)
-    MacroGeneratePluginResourcefile(MY_QRC_SRCS
+    MacroGenerateResourceFile(MY_QRC_SRCS
       NAME ${plugin_name}_cached.qrc
       PREFIX ${plugin_name}
       RESOURCES ${_plugin_cached_resources_in_source_tree}
       BINARY_RESOURCES ${_plugin_cached_resources_in_binary_tree})
   endif()
 
-  source_group("Resources" FILES
-    ${MY_QRC_FILES}
-    ${MY_UI_FILES}
-    ${MY_TS_FILES}
-    )
-
-  source_group("Generated" FILES
-    ${MY_QRC_SRCS}
-    ${MY_MOC_CPP}
-    ${MY_UI_CPP}
-    ${_plugin_qm_files}
-    )
-
-  list(LENGTH MY_QT_MODULES qcount)
-  list(LENGTH MY_MOC_FILES mcount)
-  if(${qcount} GREATER 0 AND ${mcount} EQUAL 0)
-    set(CMAKE_AUTOMOC ON)
-  endif()
-
-  add_library(Plugin_${plugin_name} ${MY_LIBRARY_TYPE}
+  # --------------------------------------------------------------------------
+  # Build plugin
+  add_library(Plugin_${plugin_name} SHARED
     ${MY_SRC_FILES}
     ${MY_MOC_CPP}
     ${MY_UI_CPP}
@@ -240,7 +200,7 @@ macro(MacroBuildPlugin)
 
   target_link_libraries(Plugin_${plugin_name} ${my_libs})
 
-  if(${qcount} GREATER 0)
+  if(MY_QT_MODULES)
       qt_use_modules(Plugin_${plugin_name} ${MY_QT_MODULES})
   endif()
 

@@ -1358,4 +1358,6 @@ OTHER_FILES += \
     src/app/gui/Info.plist.in \
     src/plugins/domain/CMakeLists.txt \
     src/plugins/opentrade/OpenTrade.json.in \
-    src/plugins/opentrade/CMakeLists.txt
+    src/plugins/opentrade/CMakeLists.txt \
+    src/plugins/coreplugin/Core.json.in \
+    src/plugins/tws/Tws.json.in

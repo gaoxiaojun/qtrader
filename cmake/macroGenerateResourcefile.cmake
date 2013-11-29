@@ -4,7 +4,7 @@
 #
 
 #! \ingroup CMakeUtilities
-macro(MacroGeneratePluginResourceFile QRC_SRCS)
+macro(MacroGenerateResourceFile QRC_SRCS)
 
   MacroParseArguments(MY
     "NAME;PREFIX;RESOURCES;BINARY_RESOURCES"

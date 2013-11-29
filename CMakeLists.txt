@@ -46,7 +46,7 @@ include(cmake/macroBuildLib.cmake)
 include(cmake/macroBuildPlugin.cmake)
 include(cmake/macroBuildApp.cmake)
 include(cmake/macroSetupQt.cmake)
-include(cmake/macroGeneratePluginResourcefile.cmake)
+include(cmake/macroGenerateResourcefile.cmake)
 ###############################################################################
 # Project Info
 ###############################################################################

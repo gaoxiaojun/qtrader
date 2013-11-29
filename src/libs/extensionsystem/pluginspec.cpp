@@ -509,19 +509,10 @@ bool PluginSpecPrivate::read(const QString &fileName)
     location = fileInfo.absolutePath();
     filePath = fileInfo.absoluteFilePath();
 
-    // Load the plugin and cache the resources
-
     QPluginLoader pluginLoader(filePath);
-    if (!pluginLoader.load())
-    {
-      return reportError(tr("The plugin \"%1\" could not be loaded: %2").arg(filePath)
-                             .arg(pluginLoader.errorString()));
-    }
-
     QString pluginName = fileInfo.baseName();
     if (pluginName.startsWith("lib"))
       pluginName = pluginName.mid(3);
-
 
     if (parseMetaData(pluginLoader.metaData().value("MetaData").toObject(), pluginName))
         state = PluginSpec::Read;
