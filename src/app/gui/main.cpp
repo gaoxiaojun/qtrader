@@ -389,7 +389,6 @@ int main(int argc, char **argv)
                     ) {
                 app.installTranslator(&apptranslator);
                 app.installTranslator(&qtTranslator);
-                qDebug() << "application locale: " << locale;
                 app.setProperty("application_locale", locale);
                 break;
             }

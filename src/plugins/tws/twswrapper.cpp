@@ -14,6 +14,7 @@
 ****************************************************************************/
 
 #include "twswrapper.h"
+#include <QDebug>
 
 using namespace TWS;
 using namespace TWS::Internal;
@@ -142,7 +143,7 @@ void TwsWrapper::execDetailsEnd( int reqId)
 
 void TwsWrapper::error(const int id, const int errorCode, const IBString errorString)
 {
-
+  qDebug() << "wrap error id:" << id << " errorCode:" << errorCode <<" errorString:" << QString::fromStdString(errorString); 
 }
 
 void TwsWrapper::updateMktDepth(TickerId id, int position, int operation, int side,

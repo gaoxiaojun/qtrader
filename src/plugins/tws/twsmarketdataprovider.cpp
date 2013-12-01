@@ -20,6 +20,18 @@ using namespace TWS;
 TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent) :
     OpenTrade::IMarketDataProvider(parent)
 {
+    TwsProviderInfo* info = new TwsProviderInfo();
+    info->m_id = 100;
+    info->m_description = "";
+    info->m_name = "";
+    info->m_compatVersion = "";
+    info->m_copyright = "";
+    info->m_license = "";
+    info->m_vendor = "";
+    info->m_version = "";
+    info->m_url = "";
+
+    m_info = info;
 }
 
 TwsMarketDataProvier::~TwsMarketDataProvier()
@@ -34,4 +46,30 @@ void TwsMarketDataProvier::subscribe(const OpenTrade::Instrument& instrument)
 void TwsMarketDataProvier::unsubscribe(const OpenTrade::Instrument& instrument)
 {
 
+}
+
+
+bool TwsMarketDataProvier::isConnected() const
+{
+    return m_client->isConnected();
+}
+
+void TwsMarketDataProvier::connect()
+{
+
+}
+
+void TwsMarketDataProvier::disonnect()
+{
+
+}
+
+void TwsMarketDataProvier::shutdown()
+{
+
+}
+
+OpenTrade::ProviderInfo* TwsMarketDataProvier::info() const
+{
+    return m_info;
 }

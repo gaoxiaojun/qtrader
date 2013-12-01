@@ -28,8 +28,8 @@ TwsPlugin::~TwsPlugin()
 
 bool TwsPlugin::initialize(const QStringList &, QString *)
 {
-
-    //addAutoReleasedObject(new TwsMarketDataProvier(this));
+    m_client = new TwsClient(this);
+    addAutoReleasedObject(new TwsMarketDataProvier(this));
     //addAutoReleasedObject(new TwsHistoricalProvider(this));
     //addAutoReleasedObject(new TwsOrderExecutionProvider(this));
     addAutoReleasedObject (new TwsOptionsPage(this));
@@ -38,7 +38,7 @@ bool TwsPlugin::initialize(const QStringList &, QString *)
 
 void TwsPlugin::extensionsInitialized()
 {
-
+    m_client->connect ("127.0.0.1", 4001, 1);
     readSettings();
 }
 

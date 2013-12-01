@@ -11,12 +11,14 @@
 #include <string.h>
 #include <errno.h>
 
+using namespace TWS;
+
 ///////////////////////////////////////////////////////////
 // member funcs
-EQtClientSocket::EQtClientSocket( EWrapper *ptr, bool autoReconnect) :
-    EClientSocketBase( ptr),
-    m_autoReconnect(autoReconnect)
+EQtClientSocket::EQtClientSocket( EWrapper *ptr) :
+    EClientSocketBase( ptr)
 {
+    qRegisterMetaType<QAbstractSocket::SocketError>();
     //connect(&m_socket, SIGNAL(connected()), this, SLOT(socketConnected()));
     connect(&m_socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
     connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
@@ -46,11 +48,13 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 {
     QMutexLocker locker(&m_login_mutex);
 
+    qDebug() << "eConnect..." << host << ":" << port << ":" << clientId;
 	// reset errno
     errno = 0;
 
 	// already connected?
     if( isSocketOK ()) {
+        qDebug() << "isconnected! error EISCONN";
 		errno = EISCONN;
 		getWrapper()->error( NO_VALID_ID, ALREADY_CONNECTED.code(), ALREADY_CONNECTED.msg());
 		return false;
@@ -65,7 +69,10 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 
     bool is_connected = m_socket.waitForConnected (1000);
 
+    qDebug() << "waited connect to Host";
+
     if (!is_connected) {
+        qDebug() << "not connected";
         getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
         return false;
     }
@@ -75,14 +82,22 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 
 	onConnectBase();
 
+    m_socket.waitForBytesWritten();
+
+    qDebug() << "after write to socket before checkMessages";
     while( isSocketOK() && !isConnected()) {
+        qDebug() << "socket ok , check message()";
+
+        m_socket.waitForReadyRead();
 		if ( !checkMessages()) {
 			getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
 			return false;
 		}
     }
 
-	// successfully connected
+    qDebug() << "eConnected! :" << isConnected();;
+
+    // successfully connected*/
 	return true;
 }
 
@@ -101,6 +116,7 @@ bool EQtClientSocket::isSocketOK() const
 /* EClientSocketBase sendBufferedData & bufferedSend call send */
 int EQtClientSocket::send(const char* buf, size_t sz)
 {
+    qDebug() << "write socket size:"<< sz << "content:" << *buf;
     if( sz <= 0)
             return 0;
 
@@ -120,10 +136,13 @@ int EQtClientSocket::send(const char* buf, size_t sz)
  */
 int EQtClientSocket::receive(char* buf, size_t sz)
 {
+    qDebug() << "try to read from socket";
     if( sz <= 0)
 		return 0;
 
     int nResult = m_socket.read(buf, sz);
+    qDebug() << "read socket " << nResult << " bytes";
+
 
 	if( nResult == -1 && !handleSocketError()) {
 		return -1;
@@ -219,7 +238,7 @@ void EQtClientSocket::socketDisconnected()
 
 void EQtClientSocket::socketError(QAbstractSocket::SocketError socketError)
 {
-
+    qDebug() << "error:" << socketError;
 }
 
 /*void EQtClientSocket::socketHostFound()
@@ -244,5 +263,8 @@ void EQtClientSocket::socketBytesWritten(qint64 bytes)
 
 void EQtClientSocket::socketReadyRead()
 {
-    checkMessages ();
+    if(isConnected()) {
+        qDebug() << "CB:socketReadyRead:" << m_socket.bytesAvailable ();
+        checkMessages ();
+    }
 }

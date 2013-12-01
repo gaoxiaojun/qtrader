@@ -3,6 +3,7 @@
 #define TWSPLUGIN_H
 
 #include "tws_global.h"
+#include "twsclient.h"
 
 #include <extensionsystem/iplugin.h>
 #include <coreplugin/actionmanager/command.h>
@@ -40,6 +41,7 @@ signals:
 private slots:
 
 private:
+    TwsClient *m_client;
 };
 
 } // namespace Internal

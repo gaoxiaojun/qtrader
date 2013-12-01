@@ -8,11 +8,14 @@
 
 class EWrapper;
 
+namespace TWS {
 class EQtClientSocket : public QObject, public EClientSocketBase
 {
+    Q_OBJECT
+
 public:
 
-    explicit EQtClientSocket( EWrapper *ptr, bool autoReconnect = true);
+    explicit EQtClientSocket( EWrapper *ptr);
     ~EQtClientSocket();
 
 	// override virtual funcs from EClient
@@ -39,13 +42,13 @@ private:
 
 
 private slots:
-    void socketConnected();
+    //void socketConnected();
     void socketDisconnected();
     void socketError(QAbstractSocket::SocketError socketError);
-    void socketHostFound();
-    void socketStateChanged(QAbstractSocket::SocketState socketState);
-    void socketAboutToClose();
-    void socketBytesWritten(qint64 bytes);
+    //void socketHostFound();
+    //void socketStateChanged(QAbstractSocket::SocketState socketState);
+    //void socketAboutToClose();
+    //void socketBytesWritten(qint64 bytes);
     void socketReadyRead();
 
 public:
@@ -56,7 +59,7 @@ private:
 
     QTcpSocket m_socket;
     QMutex m_login_mutex;
-    bool m_autoReconnect;
 };
 
+} // namespace TWS
 #endif

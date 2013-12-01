@@ -709,7 +709,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/twsapi/Shared/TwsSocketClientErrors.h \
     src/plugins/tws/twsapi/PosixSocketClient/src/EPosixClientSocket.h \
     src/plugins/tws/twsapi/PosixSocketClient/src/EPosixClientSocketPlatform.h \
-    src/plugins/tws/TwsSocket.hpp \
     src/plugins/tws/ib2/twsdebug.h \
     src/plugins/tws/ib2/qtwsclient.h \
     src/plugins/tws/ib2/EPosixClientSocket.h \
@@ -1356,7 +1355,6 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/tws/ib/qibreader.cpp \
     src/plugins/tws/twsapi/PosixSocketClient/src/EClientSocketBase.cpp \
     src/plugins/tws/twsapi/PosixSocketClient/src/EPosixClientSocket.cpp \
-    src/plugins/tws/TwsSocket.cpp \
     src/plugins/tws/ib2/twsdebug.cpp \
     src/plugins/tws/ib2/qtwsclient.cpp \
     src/plugins/tws/ib2/EClientSocketBase.cpp \
