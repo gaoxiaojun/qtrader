@@ -13,29 +13,23 @@
 **
 ****************************************************************************/
 
-#ifndef TWSORDEREXECUTIONPROVIDER_H
-#define TWSORDEREXECUTIONPROVIDER_H
+#include "TwsSocket.hpp"
 
-#include <opentrade/iorderexecutionprovider.h>
-#include <opentrade/order.h>
-
-namespace TWS {
-
-class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
+TwsSocket::TwsSocket(QObject *parent)
+    :m_socket(parent), m_thread(parent)
 {
-    Q_OBJECT
+}
 
-public:
-    explicit TwsOrderExecutionProvider(QObject *parent);
-    ~TwsOrderExecutionProvider();
+TwsSocket::connect(const QString &host, unsigned int port)
+{
+    m_socket.connectToHost (host, port);
+    if(!m_socket.waitForConnected (1000)) {
+        emit TwsSocketError(m_socket.errorString ());
+        return;
+    }
 
-public:
-    void send(const OpenTrade::Order& order);
-    void cancel(const OpenTrade::Order& order);
-    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
+    m_status = SocketConnected;
+    emit TwsSocketStatusChanged (m_status);
 
-};
 
-} // namespace TWS
-
-#endif // TWSORDEREXECUTIONPROVIDER_H
+}

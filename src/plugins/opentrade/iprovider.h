@@ -13,8 +13,8 @@
 **
 ****************************************************************************/
 
-#ifndef IPROVIDER_HPP
-#define IPROVIDER_HPP
+#ifndef __OPENTRADE_IPROVIDER_H__
+#define __OPENTRADE_IPROVIDER_H__
 
 #include "opentrade_global.h"
 
@@ -26,9 +26,9 @@ namespace OpenTrade {
 class Instrument;
 class Bar;
 
-namespace Internal {
+/*namespace Internal {
   class ProviderInfoPrivate;
-}
+}*/
 
 class OPENTRADE_EXPORT ProviderInfo
 {
@@ -81,4 +81,4 @@ signals:
 };
 
 } // namespace OpenTrade
-#endif // IPROVIDER_HPP
+#endif // __OPENTRADE_IPROVIDER_H__

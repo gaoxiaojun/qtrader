@@ -16,13 +16,14 @@
 #ifndef TWSCLIENT_H
 #define TWSCLIENT_H
 
-#include "IBJts/source/posixclient/src/EPosixClientSocket.h"
+#include "EQtClientSocket.h"
 #include <opentrade/instrument.h>
 #include <opentrade/order.h>
 
 #include <QObject>
 #include <QAtomicInt>
 #include <QMap>
+#include <QThread>
 
 namespace TWS {
 
@@ -43,6 +44,7 @@ public:
 public:
     bool connect(const QString& host, unsigned int port, int clientId=0);
     void disconnect();
+    bool isConnected() const;
 
     // market data
     void subscribe(const OpenTrade::Instrument& instrument);
@@ -65,9 +67,13 @@ private:
     void removeInfo(Internal::subscribeInfo *info);
 private:
     Internal::TwsWrapper* m_wrapper;
-    EPosixClientSocket* m_socket;
+    EQtClientSocket *m_socket;
     QAtomicInt m_tickId;
+    QAtomicInt m_clientId;
     QMap<OpenTrade::Instrument*, Internal::subscribeInfo*> m_subscribes;
+    QThread m_thread;
+    QString m_host;
+    unsigned int m_port;
 
 };
 

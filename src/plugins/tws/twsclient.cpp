@@ -38,7 +38,9 @@ TwsClient::TwsClient(QObject *parent) :
     QObject(parent), m_tickId(1)
 {
     m_wrapper = new Internal::TwsWrapper(this);
-    m_socket = new EPosixClientSocket(m_wrapper);
+    m_socket = new EQtClientSocket(m_wrapper);
+    m_socket->moveToThread (&m_thread);
+    m_thread.start();
 }
 
 TwsClient::~TwsClient()
@@ -48,8 +50,24 @@ TwsClient::~TwsClient()
         removeInfo(values.at(i));
     }
     m_subscribes.clear();
+
+    m_thread.quit();
+    m_thread.wait();
     delete m_socket;
     delete m_wrapper;
+}
+
+bool TwsClient::connect(const QString& host, unsigned int port, int clientId)
+{
+    m_host = host;
+    m_port = port;
+    m_clientId = clientId;
+    return m_socket->eConnect(m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered(1));
+}
+
+void TwsClient::disconnect()
+{
+    m_socket->eDisconnect ();
 }
 
 void TwsClient::convertInstrumentToContract(const OpenTrade::Instrument& inst, Contract *contract)
@@ -131,6 +149,11 @@ void TwsClient::unsubscribe(const OpenTrade::Instrument& instrument)
         removeInfo(info);
         m_subscribes.remove(inst);
     }
+}
+
+bool TwsClient::isConnected () const
+{
+    return true;
 }
 
 } // namespace TWS

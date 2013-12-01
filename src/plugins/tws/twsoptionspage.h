@@ -13,29 +13,26 @@
 **
 ****************************************************************************/
 
-#ifndef TWSORDEREXECUTIONPROVIDER_H
-#define TWSORDEREXECUTIONPROVIDER_H
+#ifndef TwsOptionsPage_H
+#define TwsOptionsPage_H
 
-#include <opentrade/iorderexecutionprovider.h>
-#include <opentrade/order.h>
+#include <coreplugin/dialogs/ioptionspage.h>
+
+#include <QObject>
 
 namespace TWS {
 
-class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
+class TwsOptionsPage : public Core::IOptionsPage
 {
     Q_OBJECT
-
 public:
-    explicit TwsOrderExecutionProvider(QObject *parent);
-    ~TwsOrderExecutionProvider();
+    explicit TwsOptionsPage(QObject *parent = 0);
+    ~TwsOptionsPage();
 
-public:
-    void send(const OpenTrade::Order& order);
-    void cancel(const OpenTrade::Order& order);
-    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
-
+    QWidget *createPage(QWidget *parent);
+    void apply();
+    void finish();
 };
 
 } // namespace TWS
-
-#endif // TWSORDEREXECUTIONPROVIDER_H
+#endif // TwsOptionsPage_H

@@ -13,29 +13,36 @@
 **
 ****************************************************************************/
 
-#ifndef TWSORDEREXECUTIONPROVIDER_H
-#define TWSORDEREXECUTIONPROVIDER_H
+#ifndef TWSSOCKET_HPP
+#define TWSSOCKET_HPP
 
-#include <opentrade/iorderexecutionprovider.h>
-#include <opentrade/order.h>
+#include <QTcpSocket>
+#include <QThread>
 
-namespace TWS {
-
-class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
+class TwsSocket : public QObject
 {
-    Q_OBJECT
-
 public:
-    explicit TwsOrderExecutionProvider(QObject *parent);
-    ~TwsOrderExecutionProvider();
+    enum TwsState {
+        SocketDisconnected,
+        SocketConnected,
+        TwsServerConnected,
+        TwsServerDisconnected,
+        SocketDisconnected
+    };
 
-public:
-    void send(const OpenTrade::Order& order);
-    void cancel(const OpenTrade::Order& order);
-    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
+    TwsSocket(QObject *parent);
 
+    connect(const QString& host, unsigned int port);
+    disconnect();
+
+signals:
+    void TwsSocketError(const QString& errMsg);
+    void TwsSocketStatusChanged(TwsState status);
+
+private:
+    QTcpSocket m_socket;
+    QThread m_thread;
+    TwsState m_status;
 };
 
-} // namespace TWS
-
-#endif // TWSORDEREXECUTIONPROVIDER_H
+#endif // TWSSOCKET_HPP

@@ -13,29 +13,29 @@
 **
 ****************************************************************************/
 
-#ifndef TWSORDEREXECUTIONPROVIDER_H
-#define TWSORDEREXECUTIONPROVIDER_H
+#ifndef IBOPTIONSWIDGET_H
+#define IBOPTIONSWIDGET_H
 
-#include <opentrade/iorderexecutionprovider.h>
-#include <opentrade/order.h>
+#include <QWidget>
+
+namespace Ui {
+   class IBOptionsWidget;
+}
 
 namespace TWS {
 
-class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
+class IBOptionsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TwsOrderExecutionProvider(QObject *parent);
-    ~TwsOrderExecutionProvider();
+    explicit IBOptionsWidget(QWidget *parent = 0);
+    ~IBOptionsWidget();
 
-public:
-    void send(const OpenTrade::Order& order);
-    void cancel(const OpenTrade::Order& order);
-    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
-
+private:
+    Ui::IBOptionsWidget *ui;
 };
 
 } // namespace TWS
 
-#endif // TWSORDEREXECUTIONPROVIDER_H
+#endif // IBOPTIONSWIDGET_H

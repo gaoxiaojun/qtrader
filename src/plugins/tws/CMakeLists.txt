@@ -15,14 +15,25 @@ set(LIB_INCLUDE_DIR
 add_definitions (-DIB_USE_STD_STRING)
 
 set( LIB_SRC_FILES
+    EQtClientSocket.h
+    EQtClientSocket.cpp
     twsclient.h
     twsclient.cpp
-    IBJts/source/posixclient/src/EClientSocketBase.cpp
-    IBJts/source/posixclient/src/EPosixClientSocket.cpp
+    EClientSocketBase.cpp
     twswrapper.h
     twswrapper.cpp
     twsplugin.h
     twsplugin.cpp
+    twsoptionspage.h
+    twsoptionspage.cpp
+    iboptionswidget.h
+    iboptionswidget.cpp
+    twsmarketdataprovider.h
+    twsmarketdataprovider.cpp
+    twshistoricalprovider.h
+    twshistoricalprovider.cpp
+    twsorderexecutionprovider.h
+    twsorderexecutionprovider.cpp
 )
 
 file (GLOB_RECURSE LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)

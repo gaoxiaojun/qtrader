@@ -13,13 +13,12 @@
 **
 ****************************************************************************/
 
-#ifndef IHISTORICALPROVIDER_HPP
-#define IHISTORICALPROVIDER_HPP
+#ifndef __OPENTRADE_IHISTORICAL_PROVIDER_H__
+#define __OPENTRADE_IHISTORICAL_PROVIDER_H__
 
 #include "opentrade_global.h"
 #include "iprovider.h"
 
-#include <QObject>
 #include <QString>
 #include <QDateTime>
 
@@ -35,6 +34,7 @@ public:
     explicit IHistoricalProvider(QObject *parent): IProvider(parent) {}
     virtual ~IHistoricalProvider() {}
 
+public:
     virtual void RequestHistoricalData(const HistoricalDataRequest& request ) = 0;
     virtual void CancelHistoricalData(const HistoricalDataRequest& request ) = 0;
 
@@ -52,4 +52,4 @@ signals:
 
 } // namespace OpenTrade
 
-#endif // IHISTORICALPROVIDER_HPP
+#endif // __OPENTRADE_IHISTORICAL_PROVIDER_H__

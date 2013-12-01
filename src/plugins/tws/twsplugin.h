@@ -5,34 +5,24 @@
 #include "tws_global.h"
 
 #include <extensionsystem/iplugin.h>
+#include <coreplugin/actionmanager/command.h>
+#include <coreplugin/icore.h>
 
 #include <QtPlugin>
 
-QT_BEGIN_NAMESPACE
-QT_END_NAMESPACE
-
-namespace Tws {
-class TwsPluginPrivate;
+namespace TWS {
 
 namespace Internal {
-class TwsToolBar;
-class CurrentDocumentTws;
-} // namespace Internal
 
-class TWS_EXPORT TwsPlugin : public ExtensionSystem::IPlugin
+class TwsPlugin : public ExtensionSystem::IPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "Tws.json")
 
 public:
+
     TwsPlugin();
     virtual ~TwsPlugin();
-    static TwsPlugin *instance();
-
-    enum TwsDirection {
-        TwsForwardDirection,
-        TwsBackwardDirection
-    };
 
     // IPlugin
     bool initialize(const QStringList &arguments, QString *errorMessage);
@@ -50,11 +40,9 @@ signals:
 private slots:
 
 private:
-
-    //variables
-    TwsPluginPrivate *d;
 };
 
-} // namespace Tws
+} // namespace Internal
+} // namespace TWS
 
 #endif // TWSPLUGIN_H

@@ -15,13 +15,14 @@
 
 #include "twshistoricalprovider.h"
 #include "twsproviderinfo.h"
+#include "twsclient.h"
 
 namespace TWS {
 
-TwsHistoricalProvider::TwsHistoricalProvider(QObject *parent, TwsClient *client) :
-        IHistoricalProvider(parent), m_client(client)
+TwsHistoricalProvider::TwsHistoricalProvider(QObject *parent) :
+        OpenTrade::IHistoricalProvider(parent)
 {
-    Q_ASSERT(m_client != 0);
+    //Q_ASSERT(m_client != 0);
 
     TwsProviderInfo* info = new TwsProviderInfo();
     info->m_id = 100;
@@ -36,10 +37,10 @@ TwsHistoricalProvider::TwsHistoricalProvider(QObject *parent, TwsClient *client)
 
     m_info = info;
 
-    connect(m_client, SIGNAL(twsConnected()),  this, SLOT(onTwsConnected()));
+    //connect(TwsClient::instance (), SIGNAL(twsConnected()),  this, SLOT(onTwsConnected()));
 }
 
-TwsHistoricalProvider::~IHistoricalProvider()
+TwsHistoricalProvider::~TwsHistoricalProvider()
 {
     delete m_info;
 }
@@ -74,7 +75,7 @@ void TwsHistoricalProvider::shutdown()
 
 }
 
-OpenTrade::ProviderInfo* TwsHistoricalProvider::info()
+OpenTrade::ProviderInfo* TwsHistoricalProvider::info() const
 {
     return m_info;
 }

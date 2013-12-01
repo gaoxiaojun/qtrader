@@ -40,9 +40,9 @@ public:
     virtual ~IMarketDataProvider() {}
 
 public:
-    virtual bool subscribe(const Instrument& instrument) = 0;
-    virtual bool unsubscribe(const Instrument& instrument) = 0;
-    virtual QString errorString() = 0;
+    virtual void subscribe(const Instrument& instrument) = 0;
+    virtual void unsubscribe(const Instrument& instrument) = 0;
+    //virtual QString errorString() = 0;
 
 signals:
     void newBar(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,

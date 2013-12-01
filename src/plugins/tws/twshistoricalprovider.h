@@ -18,16 +18,18 @@
 
 #include "twsclient.h"
 
-#include <domain/ihistoricalprovider.h>
+#include <opentrade/ihistoricalprovider.h>
+
+#include <QString>
 
 namespace TWS {
 
 class TwsHistoricalProvider : public OpenTrade::IHistoricalProvider
 {
 public:
-    TwsHistoricalProvider(QObject *parent, TwsClient *client);
+    explicit TwsHistoricalProvider(QObject *parent);
 
-    ~IHistoricalProvider();
+    ~TwsHistoricalProvider();
 
     // IProvider
     OpenTrade::ProviderInfo* info() const;
@@ -43,10 +45,10 @@ public:
     void CancelHistoricalData(const OpenTrade::HistoricalDataRequest& request );
 
 public slots:
-    OnTwsConnected();
-    OnTwsDisConnected();
-    OnTwsError(const QString& message);
-    OnTwsError(int errorCode, const QString& message);
+    void OnTwsConnected();
+    void OnTwsDisConnected();
+    void OnTwsError(const QString& message);
+    void OnTwsError(int errorCode, const QString& message);
 
 private:
     TwsClient* m_client;
@@ -54,4 +56,5 @@ private:
 };
 
 } // namespace TWS
+
 #endif // TWSHISTORICALPROVIDER_H

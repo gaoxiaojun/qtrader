@@ -16,19 +16,19 @@
 #ifndef TWSWRAPPER_H
 #define TWSWRAPPER_H
 
-#include "IBJts/source/posixclient/shared/EWrapper.h"
-#include "IBJts/source/posixclient/shared/EClient.h"
-#include "IBJts/source/posixclient/shared/CommissionReport.h"
-#include "IBJts/source/posixclient/shared/CommonDefs.h"
-#include "IBJts/source/posixclient/shared/Contract.h"
-#include "IBJts/source/posixclient/shared/EClientSocketBase.h"
-#include "IBJts/source/posixclient/shared/Execution.h"
-#include "IBJts/source/posixclient/shared/IBString.h"
-#include "IBJts/source/posixclient/shared/Order.h"
-#include "IBJts/source/posixclient/shared/OrderState.h"
-#include "IBJts/source/posixclient/shared/ScannerSubscription.h"
-#include "IBJts/source/posixclient/shared/TagValue.h"
-#include "IBJts/source/posixclient/shared/TwsSocketClientErrors.h"
+#include "shared/EWrapper.h"
+#include "shared/EClient.h"
+#include "shared/CommissionReport.h"
+#include "shared/CommonDefs.h"
+#include "shared/Contract.h"
+#include "shared/EClientSocketBase.h"
+#include "shared/Execution.h"
+#include "shared/IBString.h"
+#include "shared/Order.h"
+#include "shared/OrderState.h"
+#include "shared/ScannerSubscription.h"
+#include "shared/TagValue.h"
+#include "shared/TwsSocketClientErrors.h"
 
 namespace TWS {
 

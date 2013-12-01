@@ -5,6 +5,7 @@
 TEMPLATE = app
 TARGET = qtrade
 CONFIG += qt
+QT += network gui widgets
 
 INCLUDEPATH += . \
                src/app/utils/breakpad \
@@ -632,7 +633,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/domain/order.h \
     src/plugins/domain/ordermanager.h \
     src/plugins/domain/historicaldatarequest.h \
-    src/plugins/tws/twsmarketdataprovier.h \
     src/plugins/tws/twsorderexecutionprovider.h \
     src/plugins/domain/twshistoricalprovider.h \
     src/plugins/tws/twshistoricalprovider.h \
@@ -674,7 +674,82 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/IBJts/source/posixclient/src/EPosixClientSocket.h \
     src/plugins/tws/IBJts/source/posixclient/src/EPosixClientSocketPlatform.h \
     src/plugins/opentrade/opentrade_global.h \
-    src/plugins/tws/twswrapper.h
+    src/plugins/tws/twswrapper.h \
+    src/plugins/tws/ib/ib_order.h \
+    src/plugins/tws/ib/ib_tagvalue.h \
+    src/plugins/tws/ib/ib_shared_ptr.h \
+    src/plugins/tws/ib/ib_twssocketclienterrors.h \
+    src/plugins/tws/ib/ib_scannersubscription.h \
+    src/plugins/tws/ib/ib_orderstatus.h \
+    src/plugins/tws/ib/ib_execution.h \
+    src/plugins/tws/ib/ib_ewrapper.h \
+    src/plugins/tws/ib/ib_eclientsocketbaseimpl.h \
+    src/plugins/tws/ib/ib_eclientsocketbase.h \
+    src/plugins/tws/ib/ib_eclient.h \
+    src/plugins/tws/ib/ib_contract.h \
+    src/plugins/tws/ib/ib_commondefs.h \
+    src/plugins/tws/ib/ib_commissionreport.h \
+    src/plugins/tws/ib2/qtextstream_p.h \
+    src/plugins/tws/ib2/qtextstream.h \
+    src/plugins/tws/ib/qibreader.h \
+    src/plugins/tws/twsapi/Shared/CommissionReport.h \
+    src/plugins/tws/twsapi/Shared/CommonDefs.h \
+    src/plugins/tws/twsapi/Shared/Contract.h \
+    src/plugins/tws/twsapi/Shared/EClient.h \
+    src/plugins/tws/twsapi/Shared/EClientSocketBase.h \
+    src/plugins/tws/twsapi/Shared/EClientSocketBaseImpl.h \
+    src/plugins/tws/twsapi/Shared/EWrapper.h \
+    src/plugins/tws/twsapi/Shared/Execution.h \
+    src/plugins/tws/twsapi/Shared/IBString.h \
+    src/plugins/tws/twsapi/Shared/Order.h \
+    src/plugins/tws/twsapi/Shared/OrderState.h \
+    src/plugins/tws/twsapi/Shared/ScannerSubscription.h \
+    src/plugins/tws/twsapi/Shared/shared_ptr.h \
+    src/plugins/tws/twsapi/Shared/TagValue.h \
+    src/plugins/tws/twsapi/Shared/TwsSocketClientErrors.h \
+    src/plugins/tws/twsapi/PosixSocketClient/src/EPosixClientSocket.h \
+    src/plugins/tws/twsapi/PosixSocketClient/src/EPosixClientSocketPlatform.h \
+    src/plugins/tws/TwsSocket.hpp \
+    src/plugins/tws/ib2/twsdebug.h \
+    src/plugins/tws/ib2/qtwsclient.h \
+    src/plugins/tws/ib2/EPosixClientSocket.h \
+    src/plugins/tws/ib2/EPosixClientSocketPlatform.h \
+    src/plugins/tws/ib2/CommissionReport.h \
+    src/plugins/tws/ib2/CommonDefs.h \
+    src/plugins/tws/ib2/Contract.h \
+    src/plugins/tws/ib2/EClient.h \
+    src/plugins/tws/ib2/EClientSocketBase.h \
+    src/plugins/tws/ib2/EClientSocketBaseImpl.h \
+    src/plugins/tws/ib2/EWrapper.h \
+    src/plugins/tws/ib2/Execution.h \
+    src/plugins/tws/ib2/IBString.h \
+    src/plugins/tws/ib2/Order.h \
+    src/plugins/tws/ib2/OrderState.h \
+    src/plugins/tws/ib2/ScannerSubscription.h \
+    src/plugins/tws/ib2/shared_ptr.h \
+    src/plugins/tws/ib2/TagValue.h \
+    src/plugins/tws/ib2/TwsSocketClientErrors.h \
+    src/plugins/tws/ib2/encode_decode.h \
+    src/plugins/tws/ib2/EQtClientSocket.h \
+    src/plugins/tws/EQtClientSocket.h \
+    src/plugins/tws/shared/EClientSocketBaseImpl.h \
+    src/plugins/tws/shared/CommissionReport.h \
+    src/plugins/tws/shared/CommonDefs.h \
+    src/plugins/tws/shared/Contract.h \
+    src/plugins/tws/shared/EClient.h \
+    src/plugins/tws/shared/EClientSocketBase.h \
+    src/plugins/tws/shared/EWrapper.h \
+    src/plugins/tws/shared/Execution.h \
+    src/plugins/tws/shared/IBString.h \
+    src/plugins/tws/shared/Order.h \
+    src/plugins/tws/shared/OrderState.h \
+    src/plugins/tws/shared/ScannerSubscription.h \
+    src/plugins/tws/shared/shared_ptr.h \
+    src/plugins/tws/shared/TagValue.h \
+    src/plugins/tws/shared/TwsSocketClientErrors.h \
+    src/plugins/tws/twsoptionspage.h \
+    src/plugins/tws/iboptionswidget.h \
+    src/plugins/tws/twsmarketdataprovider.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -717,7 +792,8 @@ FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/plugins/texteditor/snippets/snippetssettingspage.ui \
          3rd/KDUpdater/examples/kdupdater/simpleexample/application/mainwindow.ui \
     src/libs/OpenUpdater/addupdatesourcedialog.ui \
-    src/libs/OpenUpdater/updatesdialog.ui
+    src/libs/OpenUpdater/updatesdialog.ui \
+    src/plugins/tws/IBOptionsWidget.ui
 SOURCES += src/app/gui/main.cpp \
            src/libs/extensionsystem/aggregate.cpp \
            src/libs/extensionsystem/invoker.cpp \
@@ -1256,7 +1332,6 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/domain/order.cpp \
     src/plugins/domain/ordermanager.cpp \
     src/plugins/domain/historicaldatarequest.cpp \
-    src/plugins/tws/twsmarketdataprovier.cpp \
     src/plugins/tws/twsorderexecutionprovider.cpp \
     src/plugins/domain/twshistoricalprovider.cpp \
     src/plugins/tws/twshistoricalprovider.cpp \
@@ -1276,7 +1351,22 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/opentrade/orderbook.cpp \
     src/plugins/tws/IBJts/source/posixclient/src/EClientSocketBase.cpp \
     src/plugins/tws/IBJts/source/posixclient/src/EPosixClientSocket.cpp \
-    src/plugins/tws/twswrapper.cpp
+    src/plugins/tws/twswrapper.cpp \
+    src/plugins/tws/ib2/qtextstream.cpp \
+    src/plugins/tws/ib/qibreader.cpp \
+    src/plugins/tws/twsapi/PosixSocketClient/src/EClientSocketBase.cpp \
+    src/plugins/tws/twsapi/PosixSocketClient/src/EPosixClientSocket.cpp \
+    src/plugins/tws/TwsSocket.cpp \
+    src/plugins/tws/ib2/twsdebug.cpp \
+    src/plugins/tws/ib2/qtwsclient.cpp \
+    src/plugins/tws/ib2/EClientSocketBase.cpp \
+    src/plugins/tws/ib2/EPosixClientSocket.cpp \
+    src/plugins/tws/ib2/EQtClientSocket.cpp \
+    src/plugins/tws/EQtClientSocket.cpp \
+    src/plugins/tws/EClientSocketBase.cpp \
+    src/plugins/tws/twsoptionspage.cpp \
+    src/plugins/tws/iboptionswidget.cpp \
+    src/plugins/tws/twsmarketdataprovider.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
@@ -1344,4 +1434,28 @@ OTHER_FILES += \
     src/plugins/tws/Tws.json.in \
     src/plugins/coreplugin/translations/zh_CN.ts \
     src/plugins/opentrade/translations/zh_CN.ts \
-    src/plugins/tws/translations/zh_CN.ts
+    src/plugins/tws/translations/zh_CN.ts \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/AnyWrapper.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/AnyWrapperMsgGenerator.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Builder.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/ComboLeg.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/CommissionReport.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Contract.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/ContractDetails.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/EClientErrors.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/EClientSocket.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/EReader.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/EWrapper.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/EWrapperMsgGenerator.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Execution.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/ExecutionFilter.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/IApiEnum.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/MarketDataType.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Order.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/OrderComboLeg.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/OrderState.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/ScannerSubscription.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/TagValue.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/TickType.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/UnderComp.java \
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Util.java

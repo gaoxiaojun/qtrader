@@ -15,6 +15,29 @@
 
 #include "twsorderexecutionprovider.h"
 
-TwsOrderExecutionProvider::TwsOrderExecutionProvider()
+using namespace TWS;
+
+TwsOrderExecutionProvider::TwsOrderExecutionProvider(QObject *parent) :
+    IOrderExecutionProvider(parent)
 {
+}
+
+TwsOrderExecutionProvider::~TwsOrderExecutionProvider()
+{
+
+}
+
+void TwsOrderExecutionProvider::send(const OpenTrade::Order& order)
+{
+
+}
+
+void TwsOrderExecutionProvider::cancel(const OpenTrade::Order& order)
+{
+
+}
+
+void TwsOrderExecutionProvider::replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice)
+{
+
 }

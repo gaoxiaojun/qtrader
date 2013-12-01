@@ -13,29 +13,25 @@
 **
 ****************************************************************************/
 
-#ifndef TWSORDEREXECUTIONPROVIDER_H
-#define TWSORDEREXECUTIONPROVIDER_H
+#include "twsmarketdataprovider.h"
 
-#include <opentrade/iorderexecutionprovider.h>
-#include <opentrade/order.h>
+using namespace TWS;
 
-namespace TWS {
-
-class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
+TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent) :
+    OpenTrade::IMarketDataProvider(parent)
 {
-    Q_OBJECT
+}
 
-public:
-    explicit TwsOrderExecutionProvider(QObject *parent);
-    ~TwsOrderExecutionProvider();
+TwsMarketDataProvier::~TwsMarketDataProvier()
+{
+}
 
-public:
-    void send(const OpenTrade::Order& order);
-    void cancel(const OpenTrade::Order& order);
-    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
+void TwsMarketDataProvier::subscribe(const OpenTrade::Instrument& instrument)
+{
+    //m_client->
+}
 
-};
+void TwsMarketDataProvier::unsubscribe(const OpenTrade::Instrument& instrument)
+{
 
-} // namespace TWS
-
-#endif // TWSORDEREXECUTIONPROVIDER_H
+}

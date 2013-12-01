@@ -1,96 +1,49 @@
 
 #include "twsplugin.h"
+#include <opentrade/iprovider.h>
 
-#include <coreplugin/actionmanager/actionmanager.h>
-#include <coreplugin/actionmanager/actioncontainer.h>
-#include <coreplugin/coreconstants.h>
-#include <coreplugin/icore.h>
-#include <coreplugin/id.h>
+#include "twsmarketdataprovider.h"
+#include "twsclient.h"
+#include "twsoptionspage.h"
+#include "twsorderexecutionprovider.h"
+#include "twshistoricalprovider.h"
+
 
 #include <extensionsystem/pluginmanager.h>
 
-#include <QMenu>
-#include <QStringListModel>
-#include <QAction>
-
-#include <QtPlugin>
 #include <QSettings>
+#include <QtPlugin>
 
-namespace Tws {
+namespace TWS {
 
-class TwsPluginPrivate {
-public:
-    explicit TwsPluginPrivate(TwsPlugin *q);
+namespace Internal {
 
-    //variables
-    static TwsPlugin *m_instance;
-
-    /*QHash<ITwsFilter *, QAction *> m_filterActions;
-
-    Internal::CurrentDocumentTws *m_currentDocumentTws;
-    Internal::TwsToolBar *m_twsToolBar;
-    Internal::TwsToolWindow *m_twsDialog;
-    TwsFlags m_twsFlags;
-    QStringListModel *m_twsCompletionModel;
-    QStringListModel *m_replaceCompletionModel;
-    QStringList m_twsCompletions;
-    QStringList m_replaceCompletions;
-    QAction *m_openTwsDialog;*/
-};
-
-TwsPluginPrivate::TwsPluginPrivate(TwsPlugin *q) //:
-    /*m_currentDocumentTws(0), m_twsToolBar(0), m_twsDialog(0),
-    m_twsCompletionModel(new QStringListModel(q)),
-    m_replaceCompletionModel(new QStringListModel(q))*/
+TwsPlugin::TwsPlugin()
 {
-}
-
-TwsPlugin *TwsPluginPrivate::m_instance = 0;
-
-TwsPlugin::TwsPlugin() : d(new TwsPluginPrivate(this))
-{
-    //QTC_ASSERT(!TwsPluginPrivate::m_instance, return);
-    TwsPluginPrivate::m_instance = this;
 }
 
 TwsPlugin::~TwsPlugin()
 {
-    TwsPluginPrivate::m_instance = 0;
-    //delete d->m_currentDocumentTws;
-    //delete d->m_twsToolBar;
-    //delete d->m_twsDialog;
-    delete d;
-}
-
-TwsPlugin *TwsPlugin::instance()
-{
-    return TwsPluginPrivate::m_instance;
 }
 
 bool TwsPlugin::initialize(const QStringList &, QString *)
 {
-    /*setupMenu();
 
-    d->m_currentDocumentTws = new Internal::CurrentDocumentTws;
-
-    d->m_twsToolBar = new Internal::TwsToolBar(this, d->m_currentDocumentTws);
-    d->m_twsDialog = new Internal::TwsToolWindow(this);
-    SearchResultWindow *searchResultWindow = new SearchResultWindow(d->m_twsDialog);
-    addAutoReleasedObject(searchResultWindow);*/
+    //addAutoReleasedObject(new TwsMarketDataProvier(this));
+    //addAutoReleasedObject(new TwsHistoricalProvider(this));
+    //addAutoReleasedObject(new TwsOrderExecutionProvider(this));
+    addAutoReleasedObject (new TwsOptionsPage(this));
     return true;
 }
 
 void TwsPlugin::extensionsInitialized()
 {
-    /*setupFilterMenuItems();*/
+
     readSettings();
 }
 
 ExtensionSystem::IPlugin::ShutdownFlag TwsPlugin::aboutToShutdown()
 {
-    //d->m_twsToolBar->setVisible(false);
-    //d->m_twsToolBar->setParent(0);
-    //d->m_currentDocumentTws->removeConnections();
     writeSettings();
     return SynchronousShutdown;
 }
@@ -188,8 +141,6 @@ void TwsPlugin::readSettings()
     emit twsFlagsChanged(); // would have been done in the setXXX methods above
 }
 
+} // namespace Internal
+} // namespace TWS
 
-} // namespace Tws
-
-
-Q_EXPORT_PLUGIN(Tws::TwsPlugin)

@@ -13,29 +13,40 @@
 **
 ****************************************************************************/
 
-#ifndef TWSORDEREXECUTIONPROVIDER_H
-#define TWSORDEREXECUTIONPROVIDER_H
+#include "twsoptionspage.h"
+#include "iboptionswidget.h"
 
-#include <opentrade/iorderexecutionprovider.h>
-#include <opentrade/order.h>
+#include <QIcon>
 
-namespace TWS {
+using namespace TWS;
 
-class TwsOrderExecutionProvider : public OpenTrade::IOrderExecutionProvider
+TwsOptionsPage::TwsOptionsPage(QObject *parent) :
+    Core::IOptionsPage(parent)
 {
-    Q_OBJECT
+    setId ("IBOptions");
+    setDisplayName (tr("IBOptions"));
+    setCategory ("Help");
+    setDisplayCategory (tr("Help"));
+    //setCategoryIcon (QIcon());
+}
 
-public:
-    explicit TwsOrderExecutionProvider(QObject *parent);
-    ~TwsOrderExecutionProvider();
+TwsOptionsPage::~TwsOptionsPage ()
+{
 
-public:
-    void send(const OpenTrade::Order& order);
-    void cancel(const OpenTrade::Order& order);
-    void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
+}
 
-};
 
-} // namespace TWS
+QWidget* TwsOptionsPage::createPage (QWidget *parent)
+{
+    return new IBOptionsWidget(parent);
+}
 
-#endif // TWSORDEREXECUTIONPROVIDER_H
+void TwsOptionsPage::apply ()
+{
+
+}
+
+void TwsOptionsPage::finish ()
+{
+
+}
