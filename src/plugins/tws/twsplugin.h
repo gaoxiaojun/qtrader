@@ -35,7 +35,8 @@ protected:
     void readSettings();
 
 public slots:
-
+    void connectAction();
+    void subscribeAction();
 signals:
     void twsFlagsChanged();
 private slots:

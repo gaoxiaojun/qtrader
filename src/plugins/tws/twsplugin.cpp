@@ -1,5 +1,6 @@
 
 #include "twsplugin.h"
+#include "twsconstants.h"
 #include <opentrade/iprovider.h>
 
 #include "twsmarketdataprovider.h"
@@ -8,9 +9,18 @@
 #include "twsorderexecutionprovider.h"
 #include "twshistoricalprovider.h"
 
-
+#include <coreplugin/icore.h>
+#include <coreplugin/icontext.h>
+#include <coreplugin/actionmanager/actionmanager.h>
+#include <coreplugin/actionmanager/command.h>
+#include <coreplugin/actionmanager/actioncontainer.h>
+#include <coreplugin/coreconstants.h>
 #include <extensionsystem/pluginmanager.h>
 
+#include <QAction>
+#include <QMessageBox>
+#include <QMainWindow>
+#include <QMenu>
 #include <QSettings>
 #include <QtPlugin>
 
@@ -28,6 +38,25 @@ TwsPlugin::~TwsPlugin()
 
 bool TwsPlugin::initialize(const QStringList &, QString *)
 {
+
+    QAction *connectAction = new QAction(tr("Connect"), this);
+    Core::Command *connectCmd = Core::ActionManager::registerAction(connectAction, Constants::TWS_CONNECT_ACTION_ID,
+                                                                 Core::Context(Core::Constants::C_GLOBAL));
+    connectCmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+C")));
+    connect(connectAction, SIGNAL(triggered()), this, SLOT(connectAction()));
+
+    QAction *subscribeAction = new QAction(tr("Subscribe"), this);
+    Core::Command *subscibeCmd = Core::ActionManager::registerAction(subscribeAction, Constants::TWS_SUBSCRIBE_ACTION_ID,
+                                                                 Core::Context(Core::Constants::C_GLOBAL));
+    subscibeCmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+S")));
+    connect(subscribeAction, SIGNAL(triggered()), this, SLOT(subscribeAction()));
+
+    Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::TWS_MENU_ID);
+    menu->menu()->setTitle(tr("TWS"));
+    menu->addAction(connectCmd);
+    menu->addAction (subscibeCmd);
+    Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
+
     m_client = new TwsClient(this);
     addAutoReleasedObject(new TwsMarketDataProvier(this));
     //addAutoReleasedObject(new TwsHistoricalProvider(this));
@@ -38,7 +67,6 @@ bool TwsPlugin::initialize(const QStringList &, QString *)
 
 void TwsPlugin::extensionsInitialized()
 {
-    m_client->connect ("127.0.0.1", 7496, 1);
     readSettings();
 }
 
@@ -139,6 +167,23 @@ void TwsPlugin::readSettings()
     //d->m_twsToolBar->readSettings();
     //d->m_twsDialog->readSettings();
     emit twsFlagsChanged(); // would have been done in the setXXX methods above
+}
+
+void TwsPlugin::connectAction()
+{
+    bool is_connect = m_client->connect ("127.0.0.1", 7496, 1);
+    QMessageBox::information(Core::ICore::mainWindow(),
+                             tr("Connect"),
+                             tr("isConnect? %1").arg (is_connect));
+}
+
+void TwsPlugin::subscribeAction()
+{
+    OpenTrade::Instrument inst("EUR", OpenTrade::Instrument::Forex);
+    qDebug() << inst.symbol ();
+    if( m_client->isConnected ()) {
+        m_client->subscribe (inst);
+    }
 }
 
 } // namespace Internal

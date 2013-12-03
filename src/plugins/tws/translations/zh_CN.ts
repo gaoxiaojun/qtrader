@@ -21,6 +21,33 @@
     </message>
 </context>
 <context>
+    <name>TWS::Internal::TwsPlugin</name>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Alt+Meta+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subscribe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Alt+Meta+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TWS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>isConnect? %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TWS::TwsOptionsPage</name>
     <message>
         <source>IBOptions</source>

@@ -14,6 +14,7 @@
 ****************************************************************************/
 
 #include "twswrapper.h"
+#include <coreplugin/messagemanager.h>
 
 #include <QDebug>
 #include <QDateTime>
@@ -213,7 +214,7 @@ void TwsWrapper::execDetailsEnd( int reqId)
 
 void TwsWrapper::error(const int id, const int errorCode, const IBString errorString)
 {
-  qDebug() << "[error]" << id << " errorCode" << errorCode <<" : " << QString::fromStdString(errorString);
+  qDebug() << Q_FUNC_INFO << id << " errorCode" << errorCode <<" : " << QString::fromStdString(errorString);
 }
 
 void TwsWrapper::updateMktDepth(TickerId id, int position, int operation, int side,

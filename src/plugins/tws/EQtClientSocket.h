@@ -21,40 +21,17 @@ public:
 	// override virtual funcs from EClient
 	bool eConnect( const char *host, unsigned int port, int clientId=0);
 	void eDisconnect();
-
-	bool isSocketOK() const;
-    //virtual bool checkMessages();
+    bool isSocketOK() const;
 private:
 
 	int send( const char* buf, size_t sz);
 	int receive( char* buf, size_t sz);
 
-public:
+public slots:
 	// callback from socket
 	void onReceive();
-	void onSend();
-	void onError();
-
-private:
-
-	void onConnect();
 	void onClose();
-
-
-private slots:
-    //void socketConnected();
-    void socketDisconnected();
-    void socketError(QAbstractSocket::SocketError socketError);
-    //void socketHostFound();
-    //void socketStateChanged(QAbstractSocket::SocketState socketState);
-    //void socketAboutToClose();
-    //void socketBytesWritten(qint64 bytes);
-    void socketReadyRead();
-
-public:
-	// helper
-	bool handleSocketError();
-
+    void socketError(QAbstractSocket::SocketError);
 private:
 
     QTcpSocket m_socket;

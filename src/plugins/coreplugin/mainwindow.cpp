@@ -97,11 +97,33 @@
 #include <QMenuBar>
 #include <QPushButton>
 #include <QStyleFactory>
+#include <qlogging.h>
 
 using namespace Core;
 using namespace Core::Internal;
 
 enum { debugMainWindow = 0 };
+
+void PluginMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString& msg)
+{
+    QString text;
+    switch (type)
+    {
+    case QtDebugMsg:
+        text = QString("Debug: %1").arg(msg);
+        break;
+    case QtWarningMsg:
+        text = QString("Warning: %1").arg(msg);
+        break;
+    case QtCriticalMsg:
+        text = QString("Critical: %1").arg(msg);
+        break;
+    case QtFatalMsg:
+        text = QString("Fatal: %1").arg(msg);
+        abort();
+    }
+    MessageManager::write (text);
+}
 
 MainWindow::MainWindow() :
     Utils::AppMainWindow(),
@@ -209,6 +231,8 @@ MainWindow::MainWindow() :
 #if defined(Q_OS_MAC)
     MacFullScreen::addFullScreen(this);
 #endif
+
+    //qInstallMessageHandler(PluginMessageOutput);
 }
 
 void MainWindow::setSidebarVisible(bool visible)

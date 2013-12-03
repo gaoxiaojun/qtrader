@@ -20,29 +20,20 @@ EQtClientSocket::EQtClientSocket( EWrapper *ptr) :
     EClientSocketBase( ptr)
 {
     qRegisterMetaType<QAbstractSocket::SocketError>();
-    //connect(&m_socket, SIGNAL(connected()), this, SLOT(socketConnected()));
-    connect(&m_socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
+    connect(&m_socket, SIGNAL(disconnected()), this, SLOT(onClose()));
     connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
-    //connect(&m_socket, SIGNAL(hostFound()), this, SLOT(socketHostFound()));
-    //connect(&m_socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
-    //connect(&m_socket, SIGNAL(aboutToClose()), this, SLOT(socketAboutToClose()));
-    //connect(&m_socket, SIGNAL(bytesWritten(qint64)), this, SLOT(socketBytesWritten(qint64)));
-    connect(&m_socket, SIGNAL(readyRead()), this, SLOT(socketReadyRead()));
+    connect(&m_socket, SIGNAL(readyRead()), this, SLOT(onReceive()));
 }
 
 EQtClientSocket::~EQtClientSocket()
 {
-    //disconnect(&m_socket, SIGNAL(connected()), this, SLOT(socketConnected()));
-    disconnect(&m_socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
+    disconnect(&m_socket, SIGNAL(disconnected()), this, SLOT(onClose()));
     disconnect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
-    //disconnect(&m_socket, SIGNAL(hostFound()), this, SLOT(socketHostFound()));
-    //disconnect(&m_socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
-    //disconnect(&m_socket, SIGNAL(aboutToClose()), this, SLOT(socketAboutToClose()));
-    //disconnect(&m_socket, SIGNAL(bytesWritten(qint64)), this, SLOT(socketBytesWritten(qint64)));
-    disconnect(&m_socket, SIGNAL(readyRead()), this, SLOT(socketReadyRead()));
+    disconnect(&m_socket, SIGNAL(readyRead()), this, SLOT(onReceive()));
 
-    if(m_socket.isValid ())
-        m_socket.close();
+    if(isConnected())
+        getWrapper()->connectionClosed();
+    eDisconnect();
 }
 
 bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientId)
@@ -50,11 +41,9 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
     QMutexLocker locker(&m_login_mutex);
 
     qDebug() << "eConnect..." << host << ":" << port << ":" << clientId;
-	// reset errno
-    errno = 0;
 
 	// already connected?
-    if( isSocketOK ()) {
+    if( isConnected ()) {
 		errno = EISCONN;
 		getWrapper()->error( NO_VALID_ID, ALREADY_CONNECTED.code(), ALREADY_CONNECTED.msg());
 		return false;
@@ -67,22 +56,21 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 
     m_socket.connectToHost (host, port);
 
-    bool is_connected = m_socket.waitForConnected (WAIT_TIME);
+    bool bConnected = m_socket.waitForConnected (WAIT_TIME);
 
-    if (!is_connected) {
-        qDebug() << "not connected";
+    if (!bConnected) {
         getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
         return false;
     }
 
-	// set client id
+    // set client id
 	setClientId( clientId);
 
 	onConnectBase();
 
     m_socket.waitForBytesWritten(WAIT_TIME);
 
-    while( isSocketOK() && !isConnected()) {
+    while(!isConnected()) {
         m_socket.waitForReadyRead(WAIT_TIME);
 		if ( !checkMessages()) {
 			getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
@@ -90,10 +78,7 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 		}
     }
 
-    qDebug() << "eConnected! :" << isConnected();;
-
-    // successfully connected*/
-	return true;
+    return isConnected();
 }
 
 void EQtClientSocket::eDisconnect()
@@ -105,157 +90,43 @@ void EQtClientSocket::eDisconnect()
 
 bool EQtClientSocket::isSocketOK() const
 {
-    return m_socket.isValid();
+    return m_socket.isValid ()  && m_socket.isOpen ();
 }
 
-/* EClientSocketBase sendBufferedData & bufferedSend call send */
+/* Call by EClientSocketBase::sendBufferedData & EClientSocketBase::bufferedSend */
 int EQtClientSocket::send(const char* buf, size_t sz)
 {
-    if( sz <= 0)
-            return 0;
-
-    int nResult = m_socket.write (buf, sz);
-
-    if( nResult == -1 && !handleSocketError()) {
-		return -1;
-	}
-	if( nResult <= 0) {
-		return 0;
-	}
-    return nResult;
+    return m_socket.write (buf, sz);
 }
 
-/* EClientSocketBase BufferRead call receive
- * BufferRead only called by checkMessages()
+/* Call by EClientSocketBase::BufferRead
+ * BufferRead only call by checkMessages()
  */
 int EQtClientSocket::receive(char* buf, size_t sz)
 {
-    if( sz <= 0)
-		return 0;
-
-    int nResult = m_socket.read(buf, sz);
-
-
-	if( nResult == -1 && !handleSocketError()) {
-		return -1;
-	}
-	if( nResult <= 0) {
-		return 0;
-	}
-    return nResult;
+    return m_socket.read(buf, sz);
 }
 
 ///////////////////////////////////////////////////////////
 // callbacks from socket
 
-void EQtClientSocket::onConnect()
-{
-	if( !handleSocketError())
-		return;
-
-	onConnectBase();
-}
-
 void EQtClientSocket::onReceive()
 {
-	if( !handleSocketError())
-		return;
-
 	checkMessages();
-}
-
-void EQtClientSocket::onSend()
-{
-	if( !handleSocketError())
-		return;
-
-	sendBufferedData();
 }
 
 void EQtClientSocket::onClose()
 {
-	if( !handleSocketError())
-		return;
-
 	eDisconnect();
 	getWrapper()->connectionClosed();
 }
 
-void EQtClientSocket::onError()
+void EQtClientSocket::socketError(QAbstractSocket::SocketError err)
 {
-	handleSocketError();
-}
-
-///////////////////////////////////////////////////////////
-// helper
-bool EQtClientSocket::handleSocketError()
-{
-	// no error
-    if( errno == 0)
-		return true;
-
-	// Socket is already connected
-	if( errno == EISCONN) {
-		return true;
-	}
-
-	if( errno == EWOULDBLOCK)
-		return false;
-
-	if( errno == ECONNREFUSED) {
-		getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
-	}
-	else {
-		getWrapper()->error( NO_VALID_ID, SOCKET_EXCEPTION.code(),
-			SOCKET_EXCEPTION.msg() + strerror(errno));
-	}
-	// reset errno
-	errno = 0;
-	eDisconnect();
-    return false;
-}
-
-////////////////////////////////////////////////////////////
-// slot
-void EQtClientSocket::socketDisconnected()
-{
-
-}
-
-/*void EQtClientSocket::socketConnected()
-{
-
-}*/
-
-
-void EQtClientSocket::socketError(QAbstractSocket::SocketError socketError)
-{
-    qDebug() << "error:" << socketError;
-}
-
-/*void EQtClientSocket::socketHostFound()
-{
-
-}
-
-void EQtClientSocket::socketStateChanged(QAbstractSocket::SocketState socketState)
-{
-
-}
-
-void EQtClientSocket::socketAboutToClose()
-{
-
-}
-
-void EQtClientSocket::socketBytesWritten(qint64 bytes)
-{
-
-}*/
-
-void EQtClientSocket::socketReadyRead()
-{
-    //if(isConnected()) {
-        checkMessages ();
-    //}
+    if (err != QAbstractSocket::RemoteHostClosedError)
+        if (isConnected ()) {
+            getWrapper()->error( NO_VALID_ID, SOCKET_EXCEPTION.code(),
+                SOCKET_EXCEPTION.msg() + m_socket.errorString ().toStdString ());
+            onClose();
+        }
 }

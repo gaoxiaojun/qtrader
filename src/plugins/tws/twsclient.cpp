@@ -64,23 +64,7 @@ bool TwsClient::connect(const QString& host, unsigned int port, int clientId)
     m_port = port;
     m_clientId = clientId;
     bool is_connected =  m_socket->eConnect(m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered(1));
-    if( is_connected) {
-        m_socket->reqCurrentTime ();
-        m_socket->reqAllOpenOrders ();
-        m_socket->reqIds (1000);
-        Contract c;
-        c.secType = "CASH";
-        c.symbol = "EUR";
-        c.exchange = "IDEALPRO";
-        c.currency = "USD";
-        m_socket->reqMktData (tickId(), c, "165", false);
-        m_socket->reqMktData (tickId(), c , "233,mdoff", false);
-        m_socket->reqMktDepth (tickId(), c, 10);
-        m_socket->reqNewsBulletins (true);
-        m_socket->reqRealTimeBars (tickId(), c, 5, "BID", false);
-        m_socket->reqRealTimeBars (tickId(), c, 5, "ASK", false);
-        m_socket->reqPositions ();
-    }
+
     return is_connected;
 }
 
@@ -147,9 +131,11 @@ void TwsClient::subscribe(const OpenTrade::Instrument &instrument)
 
 void TwsClient::removeInfo(Internal::subscribeInfo *info)
 {
-    m_socket->cancelMktData (info->marketData_id);
-    m_socket->cancelRealTimeBars (info->realtimeBar_bid_id);
-    m_socket->cancelRealTimeBars (info->realtimeBar_ask_id);
+    if (m_socket->isConnected ()) {
+        m_socket->cancelMktData (info->marketData_id);
+        m_socket->cancelRealTimeBars (info->realtimeBar_bid_id);
+        m_socket->cancelRealTimeBars (info->realtimeBar_ask_id);
+    }
     delete info;
 }
 
@@ -165,7 +151,7 @@ void TwsClient::unsubscribe(const OpenTrade::Instrument& instrument)
 
 bool TwsClient::isConnected () const
 {
-    return true;
+    return m_socket->isConnected ();
 }
 
 } // namespace TWS
