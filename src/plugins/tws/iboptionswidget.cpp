@@ -14,7 +14,7 @@
 ****************************************************************************/
 
 #include "iboptionswidget.h"
-#include "ui_IBOptionsWidget.h"
+#include "ui_iboptionswidget.h"
 
 namespace TWS {
 

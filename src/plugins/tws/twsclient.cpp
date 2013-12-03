@@ -23,7 +23,8 @@ namespace Internal {
   // save subscribeInfo for unsubscribe
   struct subscribeInfo {
     int marketData_id;
-    int realtimeBar_id;
+    int realtimeBar_bid_id;
+    int realtimeBar_ask_id;
   };
 } // namespace Internal
 
@@ -62,7 +63,25 @@ bool TwsClient::connect(const QString& host, unsigned int port, int clientId)
     m_host = host;
     m_port = port;
     m_clientId = clientId;
-    return m_socket->eConnect(m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered(1));
+    bool is_connected =  m_socket->eConnect(m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered(1));
+    if( is_connected) {
+        m_socket->reqCurrentTime ();
+        m_socket->reqAllOpenOrders ();
+        m_socket->reqIds (1000);
+        Contract c;
+        c.secType = "CASH";
+        c.symbol = "EUR";
+        c.exchange = "IDEALPRO";
+        c.currency = "USD";
+        m_socket->reqMktData (tickId(), c, "165", false);
+        m_socket->reqMktData (tickId(), c , "233,mdoff", false);
+        m_socket->reqMktDepth (tickId(), c, 10);
+        m_socket->reqNewsBulletins (true);
+        m_socket->reqRealTimeBars (tickId(), c, 5, "BID", false);
+        m_socket->reqRealTimeBars (tickId(), c, 5, "ASK", false);
+        m_socket->reqPositions ();
+    }
+    return is_connected;
 }
 
 void TwsClient::disconnect()
@@ -108,7 +127,7 @@ void TwsClient::subscribe(const OpenTrade::Instrument &instrument)
     IBString genericTicks;
     switch(instrument.type ()) {
     case OpenTrade::Instrument::Forex:
-        genericTicks = "233,165";
+        genericTicks = "165";
         break;
     default:
         genericTicks = "233,165";
@@ -117,27 +136,20 @@ void TwsClient::subscribe(const OpenTrade::Instrument &instrument)
 
     Internal::subscribeInfo *info = new Internal::subscribeInfo();
     info->marketData_id = tickId();
-    info->realtimeBar_id = tickId();
+    info->realtimeBar_bid_id = tickId();
+    info->realtimeBar_ask_id = tickId();
     m_subscribes.insert(inst, info);
     m_socket->reqMktData(info->marketData_id, contract, genericTicks, false);
 
-    // realtime bar
-    IBString whatToShow;
-    switch(instrument.type ()) {
-    case OpenTrade::Instrument::Forex:
-        whatToShow = "BID_ASK";
-        break;
-    default:
-        genericTicks = "BID_ASK";
-        break;
-    }
-    m_socket->reqRealTimeBars (info->realtimeBar_id, contract, 5, whatToShow, false);
+    m_socket->reqRealTimeBars (info->realtimeBar_bid_id, contract, 5, "BID", false);
+    m_socket->reqRealTimeBars (info->realtimeBar_ask_id, contract, 5, "ASK", false);
 }
 
 void TwsClient::removeInfo(Internal::subscribeInfo *info)
 {
     m_socket->cancelMktData (info->marketData_id);
-    m_socket->cancelRealTimeBars (info->realtimeBar_id);
+    m_socket->cancelRealTimeBars (info->realtimeBar_bid_id);
+    m_socket->cancelRealTimeBars (info->realtimeBar_ask_id);
     delete info;
 }
 

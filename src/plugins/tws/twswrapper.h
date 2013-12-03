@@ -30,6 +30,8 @@
 #include "shared/TagValue.h"
 #include "shared/TwsSocketClientErrors.h"
 
+#include <QString>
+
 namespace TWS {
 
 class TwsClient;
@@ -41,6 +43,8 @@ class TwsWrapper : public EWrapper
 public:
     TwsWrapper(TwsClient* client);
     ~TwsWrapper();
+
+    QString tickTypeString(TickType field);
 
     void tickPrice( TickerId tickerId, TickType field, double price, int canAutoExecute);
     void tickSize( TickerId tickerId, TickType field, int size);

@@ -1,7 +1,7 @@
 /* Copyright (C) 2013 Interactive Brokers LLC. All rights reserved. This code is subject to the terms
  * and conditions of the IB API Non-Commercial License or the IB API Commercial License, as applicable. */
 
-#include "EQtClientSocket.h"
+#include "eqtclientsocket.h"
 
 #include "shared/TwsSocketClientErrors.h"
 #include "shared/EWrapper.h"
@@ -13,6 +13,7 @@
 
 using namespace TWS;
 
+const int WAIT_TIME = 1000;
 ///////////////////////////////////////////////////////////
 // member funcs
 EQtClientSocket::EQtClientSocket( EWrapper *ptr) :
@@ -54,7 +55,6 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 
 	// already connected?
     if( isSocketOK ()) {
-        qDebug() << "isconnected! error EISCONN";
 		errno = EISCONN;
 		getWrapper()->error( NO_VALID_ID, ALREADY_CONNECTED.code(), ALREADY_CONNECTED.msg());
 		return false;
@@ -67,9 +67,7 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 
     m_socket.connectToHost (host, port);
 
-    bool is_connected = m_socket.waitForConnected (1000);
-
-    qDebug() << "waited connect to Host";
+    bool is_connected = m_socket.waitForConnected (WAIT_TIME);
 
     if (!is_connected) {
         qDebug() << "not connected";
@@ -82,13 +80,10 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 
 	onConnectBase();
 
-    m_socket.waitForBytesWritten();
+    m_socket.waitForBytesWritten(WAIT_TIME);
 
-    qDebug() << "after write to socket before checkMessages";
     while( isSocketOK() && !isConnected()) {
-        qDebug() << "socket ok , check message()";
-
-        m_socket.waitForReadyRead();
+        m_socket.waitForReadyRead(WAIT_TIME);
 		if ( !checkMessages()) {
 			getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
 			return false;
@@ -116,7 +111,6 @@ bool EQtClientSocket::isSocketOK() const
 /* EClientSocketBase sendBufferedData & bufferedSend call send */
 int EQtClientSocket::send(const char* buf, size_t sz)
 {
-    qDebug() << "write socket size:"<< sz << "content:" << *buf;
     if( sz <= 0)
             return 0;
 
@@ -136,12 +130,10 @@ int EQtClientSocket::send(const char* buf, size_t sz)
  */
 int EQtClientSocket::receive(char* buf, size_t sz)
 {
-    qDebug() << "try to read from socket";
     if( sz <= 0)
 		return 0;
 
     int nResult = m_socket.read(buf, sz);
-    qDebug() << "read socket " << nResult << " bytes";
 
 
 	if( nResult == -1 && !handleSocketError()) {
@@ -263,8 +255,7 @@ void EQtClientSocket::socketBytesWritten(qint64 bytes)
 
 void EQtClientSocket::socketReadyRead()
 {
-    if(isConnected()) {
-        qDebug() << "CB:socketReadyRead:" << m_socket.bytesAvailable ();
+    //if(isConnected()) {
         checkMessages ();
-    }
+    //}
 }

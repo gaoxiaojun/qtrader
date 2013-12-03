@@ -15,8 +15,8 @@ set(LIB_INCLUDE_DIR
 add_definitions (-DIB_USE_STD_STRING)
 
 set( LIB_SRC_FILES
-    EQtClientSocket.h
-    EQtClientSocket.cpp
+    eqtclientsocket.h
+    eqtclientsocket.cpp
     twsclient.h
     twsclient.cpp
     EClientSocketBase.cpp

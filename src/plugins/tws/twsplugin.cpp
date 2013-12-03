@@ -38,7 +38,7 @@ bool TwsPlugin::initialize(const QStringList &, QString *)
 
 void TwsPlugin::extensionsInitialized()
 {
-    m_client->connect ("127.0.0.1", 4001, 1);
+    m_client->connect ("127.0.0.1", 7496, 1);
     readSettings();
 }
 

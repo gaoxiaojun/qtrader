@@ -730,7 +730,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/ib2/TwsSocketClientErrors.h \
     src/plugins/tws/ib2/encode_decode.h \
     src/plugins/tws/ib2/EQtClientSocket.h \
-    src/plugins/tws/EQtClientSocket.h \
     src/plugins/tws/shared/EClientSocketBaseImpl.h \
     src/plugins/tws/shared/CommissionReport.h \
     src/plugins/tws/shared/CommonDefs.h \
@@ -748,7 +747,8 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/shared/TwsSocketClientErrors.h \
     src/plugins/tws/twsoptionspage.h \
     src/plugins/tws/iboptionswidget.h \
-    src/plugins/tws/twsmarketdataprovider.h
+    src/plugins/tws/twsmarketdataprovider.h \
+    src/plugins/tws/eqtclientsocket.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1360,11 +1360,11 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/tws/ib2/EClientSocketBase.cpp \
     src/plugins/tws/ib2/EPosixClientSocket.cpp \
     src/plugins/tws/ib2/EQtClientSocket.cpp \
-    src/plugins/tws/EQtClientSocket.cpp \
     src/plugins/tws/EClientSocketBase.cpp \
     src/plugins/tws/twsoptionspage.cpp \
     src/plugins/tws/iboptionswidget.cpp \
-    src/plugins/tws/twsmarketdataprovider.cpp
+    src/plugins/tws/twsmarketdataprovider.cpp \
+    src/plugins/tws/eqtclientsocket.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
