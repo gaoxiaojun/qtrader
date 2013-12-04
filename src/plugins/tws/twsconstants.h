@@ -25,7 +25,10 @@ const char TWS_MENU_CONNECT_ID[] = "Tws.Menu.Connect";
 const char TWS_MENU_SUBSCRIBE_ID[] = "Tws.Menu.Subscribe";
 
 const char TWS_CONNECT_ACTION_ID[] = "Tws.Connect";
-const char TWS_SUBSCRIBE_ACTION_ID[] = "Tws.subscribe";
+const char TWS_SUBSCRIBE_ACTION_ID[] = "Tws.Subscribe";
+
+const char TWS_DISCONNECT_ACTION_ID[] = "Tws.Disconnect";
+const char TWS_UNSUBSCRIBE_ACTION_ID[] = "Tws.Unsubscribe";
 
 } // namespace Constants
 } // namespace TWS

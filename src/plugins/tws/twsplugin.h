@@ -37,6 +37,8 @@ protected:
 public slots:
     void connectAction();
     void subscribeAction();
+    void disconnectAction();
+    void unsubscribeAction();
 signals:
     void twsFlagsChanged();
 private slots:

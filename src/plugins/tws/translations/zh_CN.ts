@@ -46,6 +46,22 @@
         <source>isConnect? %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unsubscribe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Alt+Meta+U</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Alt+Meta+D</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TWS::TwsOptionsPage</name>

@@ -32,9 +32,9 @@ namespace Internal {
 class InstrumentPrivate : public QSharedData
 {
 public:
-    InstrumentPrivate(const QString& symbol, Instrument::InstrumentType type) :
-        m_symbol(symbol), m_type(type), m_currency(QString("USD")),
-        m_description(QString()), m_exchange(QString("SMART")),
+    InstrumentPrivate(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange) :
+        m_symbol(symbol), m_type(type), m_currency(QString(currency)),
+        m_description(QString()), m_exchange(QString(exchange)),
         m_factory(1.0), m_group(QString("Unknow")),
         m_margin(0), m_maturity(QDateTime()), m_orderBook(OrderBook()),
         m_priceFormat(QString(".5f")), m_putCall(Instrument::Put),
@@ -61,8 +61,8 @@ public:
 
 } // namespace Internal
 
-Instrument::Instrument(const QString& symbol, InstrumentType type)
-    : d(new Internal::InstrumentPrivate(symbol, type))
+Instrument::Instrument(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange)
+    : d(new Internal::InstrumentPrivate(type, symbol, currency, exchange))
 {
 }
 

@@ -25,7 +25,7 @@ TwsHistoricalProvider::TwsHistoricalProvider(QObject *parent) :
     //Q_ASSERT(m_client != 0);
 
     TwsProviderInfo* info = new TwsProviderInfo();
-    info->m_id = 100;
+    info->m_id = 102;
     info->m_description = "";
     info->m_name = "";
     info->m_compatVersion = "";

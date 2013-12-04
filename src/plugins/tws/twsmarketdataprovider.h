@@ -29,7 +29,7 @@ class TwsMarketDataProvier : public OpenTrade::IMarketDataProvider
     Q_OBJECT
 
 public:
-    explicit TwsMarketDataProvier(QObject *parent);
+    TwsMarketDataProvier(QObject *parent, TwsClient *client);
     ~TwsMarketDataProvier();
 
     // IProvider

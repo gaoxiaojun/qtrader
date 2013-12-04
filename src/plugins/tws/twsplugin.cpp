@@ -51,14 +51,28 @@ bool TwsPlugin::initialize(const QStringList &, QString *)
     subscibeCmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+S")));
     connect(subscribeAction, SIGNAL(triggered()), this, SLOT(subscribeAction()));
 
+    QAction *unsubscribeAction = new QAction(tr("Unsubscribe"), this);
+    Core::Command *unsubscibeCmd = Core::ActionManager::registerAction(unsubscribeAction, Constants::TWS_UNSUBSCRIBE_ACTION_ID,
+                                                                 Core::Context(Core::Constants::C_GLOBAL));
+    unsubscibeCmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+U")));
+    connect(unsubscribeAction, SIGNAL(triggered()), this, SLOT(unsubscribeAction()));
+
+    QAction *disconnectAction = new QAction(tr("Disconnect"), this);
+    Core::Command *disconnectCmd = Core::ActionManager::registerAction(disconnectAction, Constants::TWS_DISCONNECT_ACTION_ID,
+                                                                 Core::Context(Core::Constants::C_GLOBAL));
+    disconnectCmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+D")));
+    connect(disconnectAction, SIGNAL(triggered()), this, SLOT(disconnectAction()));
+
     Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::TWS_MENU_ID);
     menu->menu()->setTitle(tr("TWS"));
     menu->addAction(connectCmd);
     menu->addAction (subscibeCmd);
+    menu->addAction(unsubscibeCmd);
+    menu->addAction(disconnectCmd);
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
 
     m_client = new TwsClient(this);
-    addAutoReleasedObject(new TwsMarketDataProvier(this));
+    addAutoReleasedObject(new TwsMarketDataProvier(this, m_client));
     //addAutoReleasedObject(new TwsHistoricalProvider(this));
     //addAutoReleasedObject(new TwsOrderExecutionProvider(this));
     addAutoReleasedObject (new TwsOptionsPage(this));
@@ -135,43 +149,19 @@ void TwsPlugin::setupFilterMenuItems()
 void TwsPlugin::writeSettings()
 {
     QSettings *settings = Core::ICore::settings();
-    settings->beginGroup(QLatin1String("Tws"));
-    /*settings->setValue(QLatin1String("Backward"), hasTwsFlag(TwsBackward));
-    settings->setValue(QLatin1String("CaseSensitively"), hasTwsFlag(TwsCaseSensitively));
-    settings->setValue(QLatin1String("WholeWords"), hasTwsFlag(TwsWholeWords));
-    settings->setValue(QLatin1String("RegularExpression"), hasTwsFlag(TwsRegularExpression));
-    settings->setValue(QLatin1String("PreserveCase"), hasTwsFlag(TwsPreserveCase));
-    settings->setValue(QLatin1String("TwsStrings"), d->m_twsCompletions);
-    settings->setValue(QLatin1String("ReplaceStrings"), d->m_replaceCompletions);*/
-    settings->endGroup();
-    //d->m_twsToolBar->writeSettings();
-    //d->m_twsDialog->writeSettings();
+    m_client->writeSettings (settings);
 }
 
 void TwsPlugin::readSettings()
 {
     QSettings *settings = Core::ICore::settings();
-    settings->beginGroup(QLatin1String("Tws"));
-    /*bool block = blockSignals(true);
-    setBackward(settings->value(QLatin1String("Backward"), false).toBool());
-    setCaseSensitive(settings->value(QLatin1String("CaseSensitively"), false).toBool());
-    setWholeWord(settings->value(QLatin1String("WholeWords"), false).toBool());
-    setRegularExpression(settings->value(QLatin1String("RegularExpression"), false).toBool());
-    setPreserveCase(settings->value(QLatin1String("PreserveCase"), false).toBool());
-    blockSignals(block);
-    d->m_twsCompletions = settings->value(QLatin1String("TwsStrings")).toStringList();
-    d->m_replaceCompletions = settings->value(QLatin1String("ReplaceStrings")).toStringList();
-    d->m_twsCompletionModel->setStringList(d->m_twsCompletions);
-    d->m_replaceCompletionModel->setStringList(d->m_replaceCompletions);*/
-    settings->endGroup();
-    //d->m_twsToolBar->readSettings();
-    //d->m_twsDialog->readSettings();
+    m_client->writeSettings (settings);
     emit twsFlagsChanged(); // would have been done in the setXXX methods above
 }
 
 void TwsPlugin::connectAction()
 {
-    bool is_connect = m_client->connect ("127.0.0.1", 7496, 1);
+    bool is_connect = m_client->connect ();
     QMessageBox::information(Core::ICore::mainWindow(),
                              tr("Connect"),
                              tr("isConnect? %1").arg (is_connect));
@@ -179,13 +169,28 @@ void TwsPlugin::connectAction()
 
 void TwsPlugin::subscribeAction()
 {
-    OpenTrade::Instrument inst("EUR", OpenTrade::Instrument::Forex);
+    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "USD", "SMART");
     qDebug() << inst.symbol ();
     if( m_client->isConnected ()) {
         m_client->subscribe (inst);
     }
 }
 
+void TwsPlugin::disconnectAction()
+{
+    m_client->disconnect ();
+}
+
+void TwsPlugin::unsubscribeAction()
+{
+    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "USD", "SMART");
+    qDebug() << inst.symbol ();
+    if( m_client->isConnected ()) {
+        m_client->unsubscribe (inst);
+    }
+}
+
 } // namespace Internal
+
 } // namespace TWS
 

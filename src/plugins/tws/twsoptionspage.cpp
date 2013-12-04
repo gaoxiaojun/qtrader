@@ -15,6 +15,7 @@
 
 #include "twsoptionspage.h"
 #include "iboptionswidget.h"
+#include "twsclient.h"
 
 #include <QIcon>
 
@@ -25,9 +26,9 @@ TwsOptionsPage::TwsOptionsPage(QObject *parent) :
 {
     setId ("IBOptions");
     setDisplayName (tr("IBOptions"));
-    setCategory ("Help");
-    setDisplayCategory (tr("Help"));
-    //setCategoryIcon (QIcon());
+    setCategory ("TWS");
+    setDisplayCategory (tr("TWS"));
+    setCategoryIcon (":/tws/images/ib.png");
 }
 
 TwsOptionsPage::~TwsOptionsPage ()
@@ -38,15 +39,22 @@ TwsOptionsPage::~TwsOptionsPage ()
 
 QWidget* TwsOptionsPage::createPage (QWidget *parent)
 {
-    return new IBOptionsWidget(parent);
+   m_pages = new IBOptionsWidget(parent);
+   m_pages->setHost(TwsClient::instance ()->host());
+   m_pages->setPort(TwsClient::instance()->port());
+
+   return m_pages;
 }
 
 void TwsOptionsPage::apply ()
 {
-
+    if(m_pages) {
+        TwsClient::instance ()->setHost (m_pages->host ());
+        TwsClient::instance ()->setPort (m_pages->port ());
+    }
 }
 
 void TwsOptionsPage::finish ()
 {
-
+    m_pages = 0;
 }

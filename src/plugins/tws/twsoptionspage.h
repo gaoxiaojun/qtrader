@@ -16,6 +16,7 @@
 #ifndef TwsOptionsPage_H
 #define TwsOptionsPage_H
 
+#include "iboptionswidget.h"
 #include <coreplugin/dialogs/ioptionspage.h>
 
 #include <QObject>
@@ -32,6 +33,8 @@ public:
     QWidget *createPage(QWidget *parent);
     void apply();
     void finish();
+private:
+     IBOptionsWidget * m_pages;
 };
 
 } // namespace TWS

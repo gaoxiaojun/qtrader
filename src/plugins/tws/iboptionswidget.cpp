@@ -30,4 +30,24 @@ IBOptionsWidget::~IBOptionsWidget()
     delete ui;
 }
 
+void IBOptionsWidget::setHost(const QString& host)
+{
+    ui->host->setPlainText (host);
+}
+
+void IBOptionsWidget::setPort(unsigned int port)
+{
+    ui->port->setValue (port);
+}
+
+QString IBOptionsWidget::host() const
+{
+    return ui->host->toPlainText ();
+}
+
+unsigned int IBOptionsWidget::port() const
+{
+    return ui->port->value ();
+}
+
 } // namespace TWS

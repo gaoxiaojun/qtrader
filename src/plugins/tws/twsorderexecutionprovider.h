@@ -16,6 +16,10 @@
 #ifndef TWSORDEREXECUTIONPROVIDER_H
 #define TWSORDEREXECUTIONPROVIDER_H
 
+#include "twsclient.h"
+#include "twsproviderinfo.h"
+
+#include <opentrade/iprovider.h>
 #include <opentrade/iorderexecutionprovider.h>
 #include <opentrade/order.h>
 
@@ -30,10 +34,22 @@ public:
     ~TwsOrderExecutionProvider();
 
 public:
+    // IProvider
+    OpenTrade::ProviderInfo* info() const;
+    bool isConnected() const;
+
+    void connect();
+    void disonnect();
+    void shutdown();
+
+public:
     void send(const OpenTrade::Order& order);
     void cancel(const OpenTrade::Order& order);
     void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
 
+private:
+    TwsClient* m_client;
+    TwsProviderInfo *m_info;
 };
 
 } // namespace TWS

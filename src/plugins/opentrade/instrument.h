@@ -56,7 +56,7 @@ public:
         Call = 1
     };
 
-    Instrument(const QString& symbol, InstrumentType type);
+    Instrument(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange);
     Instrument(const Instrument& other);
     ~Instrument();
 

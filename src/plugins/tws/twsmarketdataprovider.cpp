@@ -17,8 +17,8 @@
 
 using namespace TWS;
 
-TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent) :
-    OpenTrade::IMarketDataProvider(parent)
+TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent, TwsClient *client) :
+    OpenTrade::IMarketDataProvider(parent), m_client(client)
 {
     TwsProviderInfo* info = new TwsProviderInfo();
     info->m_id = 100;
@@ -56,12 +56,12 @@ bool TwsMarketDataProvier::isConnected() const
 
 void TwsMarketDataProvier::connect()
 {
-
+    m_client->connect ();
 }
 
 void TwsMarketDataProvier::disonnect()
 {
-
+    m_client->disconnect ();
 }
 
 void TwsMarketDataProvier::shutdown()

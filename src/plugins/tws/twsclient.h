@@ -24,6 +24,7 @@
 #include <QAtomicInt>
 #include <QMap>
 #include <QThread>
+#include <QSettings>
 
 namespace TWS {
 
@@ -39,12 +40,17 @@ class TwsClient : public QObject
 public:
     explicit TwsClient(QObject *parent = 0);
     ~TwsClient();
-    TwsClient *instance();
+    static TwsClient *instance();
 
 public:
-    bool connect(const QString& host, unsigned int port, int clientId=0);
+    bool connect();
     void disconnect();
     bool isConnected() const;
+
+    void setHost(const QString& host);
+    void setPort(unsigned int port);
+    QString host() const;
+    unsigned int port() const;
 
     // market data
     void subscribe(const OpenTrade::Instrument& instrument);
@@ -57,6 +63,9 @@ public:
 
     // historical
 
+public:
+    void readSettings(QSettings* settings);
+    void writeSettings(QSettings* settings);
 signals:
     void connected();
     void disconnected();

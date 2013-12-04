@@ -28,6 +28,9 @@ namespace Internal {
   };
 } // namespace Internal
 
+const int TWS_DEFAULT_PORT = 7496;
+const char* TWS_DEFAULT_HOST = "127.0.0.1";
+
 TwsClient *m_instance = 0;
 
 TwsClient *TwsClient::instance()
@@ -36,12 +39,14 @@ TwsClient *TwsClient::instance()
 }
 
 TwsClient::TwsClient(QObject *parent) :
-    QObject(parent), m_tickId(1)
+    QObject(parent), m_tickId(1), m_clientId(1),
+    m_host(TWS_DEFAULT_HOST), m_port(TWS_DEFAULT_PORT)
 {
     m_wrapper = new Internal::TwsWrapper(this);
     m_socket = new EQtClientSocket(m_wrapper);
     m_socket->moveToThread (&m_thread);
     m_thread.start();
+    m_instance = this;
 }
 
 TwsClient::~TwsClient()
@@ -58,14 +63,9 @@ TwsClient::~TwsClient()
     delete m_wrapper;
 }
 
-bool TwsClient::connect(const QString& host, unsigned int port, int clientId)
+bool TwsClient::connect()
 {
-    m_host = host;
-    m_port = port;
-    m_clientId = clientId;
-    bool is_connected =  m_socket->eConnect(m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered(1));
-
-    return is_connected;
+    return m_socket->eConnect(m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered(1));
 }
 
 void TwsClient::disconnect()
@@ -152,6 +152,42 @@ void TwsClient::unsubscribe(const OpenTrade::Instrument& instrument)
 bool TwsClient::isConnected () const
 {
     return m_socket->isConnected ();
+}
+
+void TwsClient::setHost(const QString &host)
+{
+    m_host = host;
+}
+
+void TwsClient::setPort(unsigned int port)
+{
+    m_port = port;
+}
+
+QString TwsClient::host() const
+{
+    return m_host;
+}
+
+unsigned int TwsClient::port () const
+{
+    return m_port;
+}
+
+void TwsClient::readSettings (QSettings* settings)
+{
+    settings->beginGroup(QLatin1String("Tws"));
+    m_host = settings->value(QLatin1String("Host"), TWS_DEFAULT_HOST).toString ();
+    m_port = settings->value(QLatin1String("Port"), TWS_DEFAULT_PORT).toInt ();
+    settings->endGroup();
+}
+
+void TwsClient::writeSettings (QSettings* settings)
+{
+    settings->beginGroup(QLatin1String("Tws"));
+    settings->setValue (QLatin1String("Host"), m_host);
+    settings->setValue (QLatin1String("Port"), m_port);
+    settings->endGroup();
 }
 
 } // namespace TWS

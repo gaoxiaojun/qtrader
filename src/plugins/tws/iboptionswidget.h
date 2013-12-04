@@ -32,6 +32,12 @@ public:
     explicit IBOptionsWidget(QWidget *parent = 0);
     ~IBOptionsWidget();
 
+public:
+    void setHost(const QString& host);
+    void setPort(unsigned int port);
+    QString host() const;
+    unsigned int port() const;
+
 private:
     Ui::IBOptionsWidget *ui;
 };
