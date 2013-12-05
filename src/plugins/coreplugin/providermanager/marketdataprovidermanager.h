@@ -16,7 +16,7 @@
 #ifndef MARKETDATAPROVIDERMANAGER_H
 #define MARKETDATAPROVIDERMANAGER_H
 
-#include "provider/imarketdataprovider.h"
+#include "imarketdataprovider.h"
 
 #include <QObject>
 

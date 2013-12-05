@@ -17,7 +17,7 @@
 #define OrderExecutionProviderManager_H
 
 #include <QObject>
-#include "provider/iorderexecutionprovider.h"
+#include "iorderexecutionprovider.h"
 
 namespace OpenTrade {
 

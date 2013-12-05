@@ -17,10 +17,9 @@
 #define HistoricalProviderManager_H
 
 #include <QObject>
-#include "provider/ihistoricalprovider.h"
+#include "ihistoricalprovider.h"
 
 namespace OpenTrade {
-
 
 class HistoricalProviderManager : public QObject
 {

@@ -18,7 +18,7 @@
 
 #include "twsclient.h"
 
-#include <coreplugin/provider/ihistoricalprovider.h>
+#include <coreplugin/providermanager/ihistoricalprovider.h>
 
 #include <QString>
 

@@ -751,7 +751,22 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/eqtclientsocket.h \
     src/plugins/tws/twsconstants.h \
     src/plugins/tws/twsconsolepane.h \
-    src/plugins/coreplugin/chartmode.h
+    src/plugins/coreplugin/chartmode.h \
+    src/plugins/coreplugin/model/bar.h \
+    src/plugins/coreplugin/model/historicalprovidermanager.h \
+    src/plugins/coreplugin/model/instrument.h \
+    src/plugins/coreplugin/model/marketdataprovidermanager.h \
+    src/plugins/coreplugin/model/opentradeplugin.h \
+    src/plugins/coreplugin/model/order.h \
+    src/plugins/coreplugin/model/orderbook.h \
+    src/plugins/coreplugin/model/orderexecutionprovidermanager.h \
+    src/plugins/coreplugin/model/ordermanager.h \
+    src/plugins/coreplugin/model/quote.h \
+    src/plugins/coreplugin/provider/historicaldatarequest.h \
+    src/plugins/coreplugin/provider/ihistoricalprovider.h \
+    src/plugins/coreplugin/provider/imarketdataprovider.h \
+    src/plugins/coreplugin/provider/iorderexecutionprovider.h \
+    src/plugins/coreplugin/provider/iprovider.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1369,7 +1384,18 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/tws/twsmarketdataprovider.cpp \
     src/plugins/tws/eqtclientsocket.cpp \
     src/plugins/tws/twsconsolepane.cpp \
-    src/plugins/coreplugin/chartmode.cpp
+    src/plugins/coreplugin/chartmode.cpp \
+    src/plugins/coreplugin/model/bar.cpp \
+    src/plugins/coreplugin/model/historicalprovidermanager.cpp \
+    src/plugins/coreplugin/model/instrument.cpp \
+    src/plugins/coreplugin/model/marketdataprovidermanager.cpp \
+    src/plugins/coreplugin/model/opentradeplugin.cpp \
+    src/plugins/coreplugin/model/order.cpp \
+    src/plugins/coreplugin/model/orderbook.cpp \
+    src/plugins/coreplugin/model/orderexecutionprovidermanager.cpp \
+    src/plugins/coreplugin/model/ordermanager.cpp \
+    src/plugins/coreplugin/model/quote.cpp \
+    src/plugins/coreplugin/provider/historicaldatarequest.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
@@ -1461,4 +1487,5 @@ OTHER_FILES += \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/TagValue.java \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/TickType.java \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/UnderComp.java \
-    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Util.java
+    src/plugins/tws/IBJts/source/javaclient/com/ib/client/Util.java \
+    src/plugins/coreplugin/model/OpenTrade.json.in

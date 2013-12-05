@@ -8,8 +8,6 @@
 #include "twsorderexecutionprovider.h"
 #include "twshistoricalprovider.h"
 
-#include <coreplugin/provider/iprovider.h>
-
 #include <coreplugin/icore.h>
 #include <coreplugin/icontext.h>
 #include <coreplugin/actionmanager/actionmanager.h>

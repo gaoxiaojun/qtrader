@@ -16,7 +16,7 @@
 #ifndef TWSPROVIDERINFO_H
 #define TWSPROVIDERINFO_H
 
-#include <coreplugin/provider/iprovider.h>
+#include <coreplugin/providermanager/iprovider.h>
 
 namespace TWS {
 

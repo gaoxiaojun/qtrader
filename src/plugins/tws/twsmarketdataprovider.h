@@ -19,7 +19,7 @@
 #include "twsclient.h"
 #include "twsproviderinfo.h"
 
-#include <coreplugin/provider/imarketdataprovider.h>
+#include <coreplugin/providermanager/imarketdataprovider.h>
 #include <coreplugin/model/instrument.h>
 
 namespace TWS {

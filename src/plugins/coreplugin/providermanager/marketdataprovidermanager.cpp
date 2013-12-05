@@ -14,10 +14,10 @@
 ****************************************************************************/
 
 #include "marketdataprovidermanager.h"
-#include "instrument.h"
-#include "order.h"
-#include "bar.h"
-#include "quote.h"
+#include "model/instrument.h"
+#include "model/order.h"
+#include "model/bar.h"
+#include "model/quote.h"
 
 #include <extensionsystem/pluginmanager.h>
 
