@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "coreplugin.h"
-#include "designmode.h"
+#include "chartmode.h"
 #include "editmode.h"
 #include "helpmanager.h"
 #include "mainwindow.h"
@@ -109,7 +109,7 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
         m_editMode = new EditMode;
         addObject(m_editMode);
         ModeManager::activateMode(m_editMode->id());
-        m_designMode = new DesignMode;
+        m_designMode = new ChartMode;
         InfoBar::initializeGloballySuppressed();
     }
 

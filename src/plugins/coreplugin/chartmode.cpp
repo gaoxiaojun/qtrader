@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "designmode.h"
+#include "chartmode.h"
 
 #include <coreplugin/icore.h>
 #include <coreplugin/modemanager.h>
@@ -43,7 +43,7 @@
 
 #include <QStackedWidget>
 
-static Core::DesignMode *m_instance = 0;
+static Core::ChartMode *m_instance = 0;
 
 namespace Core {
 
@@ -58,13 +58,13 @@ namespace Internal {
 class DesignModeCoreListener : public Core::ICoreListener
 {
 public:
-    DesignModeCoreListener(DesignMode* mode);
+    DesignModeCoreListener(ChartMode* mode);
     bool coreAboutToClose();
 private:
-    DesignMode *m_mode;
+    ChartMode *m_mode;
 };
 
-DesignModeCoreListener::DesignModeCoreListener(DesignMode *mode) :
+DesignModeCoreListener::DesignModeCoreListener(ChartMode *mode) :
         m_mode(mode)
 {
 }
@@ -88,7 +88,7 @@ struct DesignEditorInfo
 class DesignModePrivate
 {
 public:
-    explicit DesignModePrivate(DesignMode *q);
+    explicit DesignModePrivate(ChartMode *q);
 
 public:
     Internal::DesignModeCoreListener *m_coreListener;
@@ -100,7 +100,7 @@ public:
     Context m_activeContext;
 };
 
-DesignModePrivate::DesignModePrivate(DesignMode *q)
+DesignModePrivate::DesignModePrivate(ChartMode *q)
   : m_coreListener(new Internal::DesignModeCoreListener(q)),
     m_isActive(false),
     m_isRequired(false),
@@ -108,7 +108,7 @@ DesignModePrivate::DesignModePrivate(DesignMode *q)
 {
 }
 
-DesignMode::DesignMode()
+ChartMode::ChartMode()
     : d(new DesignModePrivate(this))
 {
     m_instance = this;
@@ -130,7 +130,7 @@ DesignMode::DesignMode()
             this, SLOT(updateContext(Core::IMode*,Core::IMode*)));
 }
 
-DesignMode::~DesignMode()
+ChartMode::~ChartMode()
 {
     ExtensionSystem::PluginManager::removeObject(d->m_coreListener);
     delete d->m_coreListener;
@@ -139,22 +139,22 @@ DesignMode::~DesignMode()
     delete d;
 }
 
-DesignMode *DesignMode::instance()
+ChartMode *ChartMode::instance()
 {
     return m_instance;
 }
 
-void DesignMode::setDesignModeIsRequired()
+void ChartMode::setDesignModeIsRequired()
 {
     d->m_isRequired = true;
 }
 
-bool DesignMode::designModeIsRequired() const
+bool ChartMode::designModeIsRequired() const
 {
     return d->m_isRequired;
 }
 
-QStringList DesignMode::registeredMimeTypes() const
+QStringList ChartMode::registeredMimeTypes() const
 {
     QStringList rc;
     foreach (const DesignEditorInfo *i, d->m_editors)
@@ -167,7 +167,7 @@ QStringList DesignMode::registeredMimeTypes() const
   * mimeTypes is opened. This also appends the additionalContext in ICore to
   * the context, specified here.
   */
-void DesignMode::registerDesignWidget(QWidget *widget,
+void ChartMode::registerDesignWidget(QWidget *widget,
                                       const QStringList &mimeTypes,
                                       const Context &context)
 {
@@ -182,7 +182,7 @@ void DesignMode::registerDesignWidget(QWidget *widget,
     d->m_editors.append(info);
 }
 
-void DesignMode::unregisterDesignWidget(QWidget *widget)
+void ChartMode::unregisterDesignWidget(QWidget *widget)
 {
     d->m_stackWidget->removeWidget(widget);
     foreach (DesignEditorInfo *info, d->m_editors) {
@@ -194,7 +194,7 @@ void DesignMode::unregisterDesignWidget(QWidget *widget)
 }
 
 // if editor changes, check if we have valid mimetype registered.
-void DesignMode::currentEditorChanged(Core::IEditor *editor)
+void ChartMode::currentEditorChanged(Core::IEditor *editor)
 {
     if (editor && (d->m_currentEditor.data() == editor))
         return;
@@ -239,12 +239,12 @@ void DesignMode::currentEditorChanged(Core::IEditor *editor)
     }
 }
 
-void DesignMode::updateActions()
+void ChartMode::updateActions()
 {
     emit actionsUpdated(d->m_currentEditor.data());
 }
 
-void DesignMode::updateContext(Core::IMode *newMode, Core::IMode *oldMode)
+void ChartMode::updateContext(Core::IMode *newMode, Core::IMode *oldMode)
 {
     if (newMode == this) {
         // Apply active context
@@ -255,7 +255,7 @@ void DesignMode::updateContext(Core::IMode *newMode, Core::IMode *oldMode)
     }
 }
 
-void DesignMode::setActiveContext(const Context &context)
+void ChartMode::setActiveContext(const Context &context)
 {
     if (d->m_activeContext == context)
         return;

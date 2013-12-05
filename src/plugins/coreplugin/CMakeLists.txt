@@ -16,7 +16,7 @@ basefilewizard.h
 core_global.h
 coreconstants.h
 coreplugin.h
-designmode.h
+chartmode.h
 documentmanager.h
 editmode.h
 editortoolbar.h
@@ -73,7 +73,7 @@ vcsmanager.h
 versiondialog.h
 basefilewizard.cpp
 coreplugin.cpp
-designmode.cpp
+chartmode.cpp
 documentmanager.cpp
 editmode.cpp
 editortoolbar.cpp
@@ -199,7 +199,6 @@ utils/tooltip/tooltip.cpp
 utils/appmainwindow.h
 utils/checkablemessagebox.h
 utils/environment.h
-utils/environmentmodel.h
 utils/fancylineedit.h
 utils/fancymainwindow.h
 utils/fileutils.h
@@ -222,7 +221,6 @@ utils/wizard.h
 utils/appmainwindow.cpp
 utils/checkablemessagebox.cpp
 utils/environment.cpp
-utils/environmentmodel.cpp
 utils/fancylineedit.cpp
 utils/fancymainwindow.cpp
 utils/fileutils.cpp

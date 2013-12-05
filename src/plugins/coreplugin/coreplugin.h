@@ -33,7 +33,7 @@
 #include <extensionsystem/iplugin.h>
 
 namespace Core {
-class DesignMode;
+class ChartMode;
 namespace Internal {
 
 class EditMode;
@@ -62,7 +62,7 @@ private:
 
     MainWindow *m_mainWindow;
     EditMode *m_editMode;
-    DesignMode *m_designMode;
+    ChartMode *m_designMode;
 };
 
 } // namespace Internal

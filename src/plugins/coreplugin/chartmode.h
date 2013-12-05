@@ -48,15 +48,15 @@ class DesignModeCoreListener;
 
 class DesignModePrivate;
 
-class CORE_EXPORT DesignMode : public Core::IMode
+class CORE_EXPORT ChartMode : public Core::IMode
 {
     Q_OBJECT
 
 public:
-    explicit DesignMode();
-    virtual ~DesignMode();
+    explicit ChartMode();
+    virtual ~ChartMode();
 
-    static DesignMode *instance();
+    static ChartMode *instance();
 
     void setDesignModeIsRequired();
     bool designModeIsRequired() const;

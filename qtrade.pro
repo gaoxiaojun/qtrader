@@ -750,7 +750,8 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/twsmarketdataprovider.h \
     src/plugins/tws/eqtclientsocket.h \
     src/plugins/tws/twsconstants.h \
-    src/plugins/tws/twsconsolepane.h
+    src/plugins/tws/twsconsolepane.h \
+    src/plugins/coreplugin/chartmode.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1367,7 +1368,8 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/tws/iboptionswidget.cpp \
     src/plugins/tws/twsmarketdataprovider.cpp \
     src/plugins/tws/eqtclientsocket.cpp \
-    src/plugins/tws/twsconsolepane.cpp
+    src/plugins/tws/twsconsolepane.cpp \
+    src/plugins/coreplugin/chartmode.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \

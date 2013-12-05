@@ -10,6 +10,14 @@
     </message>
 </context>
 <context>
+    <name>ChartMode</name>
+    <message>
+        <location filename="../chartmode.cpp" line="119"/>
+        <source>Design</source>
+        <translation type="unfinished">设计</translation>
+    </message>
+</context>
+<context>
     <name>Core</name>
     <message>
         <location filename="../coreconstants.h" line="217"/>
@@ -91,9 +99,8 @@
 <context>
     <name>Core::DesignMode</name>
     <message>
-        <location filename="../designmode.cpp" line="119"/>
         <source>Design</source>
-        <translation>设计</translation>
+        <translation type="vanished">设计</translation>
     </message>
 </context>
 <context>
@@ -2105,36 +2112,6 @@ to version control (%2)</source>
     <message>
         <location filename="../utils/checkablemessagebox.cpp" line="376"/>
         <source>Do not &amp;ask again</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Utils::EnvironmentModel</name>
-    <message>
-        <location filename="../utils/environmentmodel.cpp" line="52"/>
-        <source>&lt;UNSET&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../utils/environmentmodel.cpp" line="187"/>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../utils/environmentmodel.cpp" line="187"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../utils/environmentmodel.cpp" line="258"/>
-        <source>&lt;VARIABLE&gt;</source>
-        <extracomment>Name when inserting a new variable</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../utils/environmentmodel.cpp" line="260"/>
-        <source>&lt;VALUE&gt;</source>
-        <extracomment>Value when inserting a new variable</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
