@@ -28,13 +28,10 @@
 ****************************************************************************/
 
 #include "TwsConsolePane.h"
-#include "qmlconsoleview.h"
-#include "qmlconsoleproxymodel.h"
-#include "qmlconsoleitemdelegate.h"
 
 #include <coreplugin/icore.h>
 #include <coreplugin/findplaceholder.h>
-#include <utils/savedaction.h>
+#include <coreplugin/utils/savedaction.h>
 #include <aggregation/aggregate.h>
 #include <find/treeviewfind.h>
 

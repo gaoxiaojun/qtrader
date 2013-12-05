@@ -16,7 +16,7 @@
 #ifndef __BAR_H__
 #define __BAR_H__
 
-#include "opentrade_global.h"
+#include "core_global.h"
 
 #include <QSharedDataPointer>
 #include <QMetaType>
@@ -30,7 +30,7 @@ namespace Internal {
   class BarPrivate;
 }
 
-class OPENTRADE_EXPORT Bar
+class CORE_EXPORT Bar
 {
 public:
     enum BarType
@@ -123,7 +123,8 @@ private:
 } // namespace OpenTrade
 
 Q_DECLARE_SHARED(OpenTrade::Bar)
-QDebug OPENTRADE_EXPORT operator<<(QDebug, const OpenTrade::Bar &bar);
+
+QDebug CORE_EXPORT operator<<(QDebug, const OpenTrade::Bar &bar);
 //Q_DECLARE_METATYPE(OpenTrade::Bar *)
 
 #endif // __BAR_H__

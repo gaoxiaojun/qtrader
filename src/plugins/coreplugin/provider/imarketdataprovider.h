@@ -13,33 +13,38 @@
 **
 ****************************************************************************/
 
-#ifndef MARKETDATAPROVIDERMANAGER_H
-#define MARKETDATAPROVIDERMANAGER_H
+#ifndef IMARKETDATAPROVIDER_H
+#define IMARKETDATAPROVIDER_H
 
-#include "imarketdataprovider.h"
+#include "core_global.h"
+#include "iprovider.h"
+
+#include "model/bar.h"
+#include "model/instrument.h"
+#include "model/orderbook.h"
 
 #include <QObject>
+#include <QDateTime>
 
 namespace OpenTrade {
 
-class MarketDataProviderManager : public QObject
+class Instrument;
+class Bar;
+
+class CORE_EXPORT IMarketDataProvider : public IProvider
 {
     Q_OBJECT
+
 public:
-    static MarketDataProviderManager *instance();
+    explicit IMarketDataProvider(QObject *parent = 0) : IProvider(parent) {}
+    virtual ~IMarketDataProvider() {}
 
-    explicit MarketDataProviderManager(QObject *parent = 0);
-    ~MarketDataProviderManager();
+public:
+    virtual void subscribe(const Instrument& instrument) = 0;
+    virtual void unsubscribe(const Instrument& instrument) = 0;
+    //virtual QString errorString() = 0;
 
-    static QList<IMarketDataProvider *> getProviders();
-
-    void init();
-    void extensionsInitalized();
-
-private slots:
-    void objectAdded(QObject *obj);
-    void aboutToRemoveObject(QObject *obj);
-
+signals:
     void newBar(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
                 const QDateTime& end, double open, double hight, double low, double close, double volume);
 
@@ -55,14 +60,8 @@ private slots:
     void newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
                             OrderBook::OrderBookAction action, double price, int size, int position );
 
-
-private:
-    void connectToProvider(IMarketDataProvider *provider);
-    void disconnectToProvider(IMarketDataProvider *provider);
-
-    QList<IMarketDataProvider *> m_providers;
 };
 
 } // namespace OpenTrade
 
-#endif // MARKETDATAPROVIDERMANAGER_H
+#endif // IMARKETDATAPROVIDER_H

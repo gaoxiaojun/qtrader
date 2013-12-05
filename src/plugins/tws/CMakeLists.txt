@@ -41,7 +41,7 @@ file (GLOB_RECURSE LIB_QRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.qrc)
 file (GLOB LIB_TS_FILES translations/*.ts)
 
 set(LIB_DEPEND_LIBS QtCore QtWidgets QtNetwork QtScript QtConcurrent QtSql QtHelp QtXml QtPrintSupport extensionsystem)
-set(LIB_DEPEND_PLUGINS "OpenTrade" "Core" )
+set(LIB_DEPEND_PLUGINS "Core" )
 #set(LIB_DEPEND_OPT_PLUGINS "")
 #set(LIB_DEPEND_TS_LIBS "")
 

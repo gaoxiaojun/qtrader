@@ -1,13 +1,14 @@
 
 #include "twsplugin.h"
 #include "twsconstants.h"
-#include <opentrade/iprovider.h>
 
 #include "twsmarketdataprovider.h"
 #include "twsclient.h"
 #include "twsoptionspage.h"
 #include "twsorderexecutionprovider.h"
 #include "twshistoricalprovider.h"
+
+#include <coreplugin/provider/iprovider.h>
 
 #include <coreplugin/icore.h>
 #include <coreplugin/icontext.h>

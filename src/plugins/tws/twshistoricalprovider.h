@@ -18,7 +18,7 @@
 
 #include "twsclient.h"
 
-#include <opentrade/ihistoricalprovider.h>
+#include <coreplugin/provider/ihistoricalprovider.h>
 
 #include <QString>
 

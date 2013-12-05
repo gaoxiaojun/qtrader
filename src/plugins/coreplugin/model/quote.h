@@ -16,7 +16,7 @@
 #ifndef __QUOTE_H__
 #define __QUOTE_H__
 
-#include "opentrade_global.h"
+#include "core_global.h"
 
 #include <QSharedDataPointer>
 #include <QMetaType>
@@ -30,7 +30,7 @@ namespace Internal {
 class QuotePrivate;
 }
 
-class  OPENTRADE_EXPORT Quote
+class  CORE_EXPORT Quote
 {
 public:
     Quote(const QDateTime& dt, double bid, double bidSize, double ask, double askSize, unsigned providerId = 0);
@@ -67,7 +67,7 @@ private:
     friend class Internal::QuotePrivate;
 };
 
-QDebug OPENTRADE_EXPORT operator << (QDebug, const Quote &quote);
+QDebug CORE_EXPORT operator << (QDebug, const Quote &quote);
 
 } // namespace OpenTrade
 

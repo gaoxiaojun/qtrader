@@ -17,8 +17,8 @@
 #define TWSCLIENT_H
 
 #include "EQtClientSocket.h"
-#include <opentrade/instrument.h>
-#include <opentrade/order.h>
+#include <coreplugin/model/instrument.h>
+#include <coreplugin/model/order.h>
 
 #include <QObject>
 #include <QAtomicInt>

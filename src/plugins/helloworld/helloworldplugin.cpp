@@ -51,6 +51,7 @@ namespace Internal {
 
 class HelloMode : public Core::IMode
 {
+    Q_OBJECT
 public:
     HelloMode()
     {
@@ -153,5 +154,5 @@ void HelloWorldPlugin::sayHelloWorld()
 
 } // namespace Internal
 } // namespace HelloWorld
-
+#include "helloworldplugin.moc"
 Q_EXPORT_PLUGIN(HelloWorld::Internal::HelloWorldPlugin)

@@ -19,8 +19,8 @@
 #include "twsclient.h"
 #include "twsproviderinfo.h"
 
-#include <opentrade/imarketdataprovider.h>
-#include <opentrade/instrument.h>
+#include <coreplugin/provider/imarketdataprovider.h>
+#include <coreplugin/model/instrument.h>
 
 namespace TWS {
 

@@ -16,7 +16,7 @@
 #ifndef __OPENTRADE_IHISTORICAL_PROVIDER_H__
 #define __OPENTRADE_IHISTORICAL_PROVIDER_H__
 
-#include "opentrade_global.h"
+#include "core_global.h"
 #include "iprovider.h"
 
 #include <QString>
@@ -26,7 +26,7 @@ namespace OpenTrade {
 
 class HistoricalDataRequest;
 
-class OPENTRADE_EXPORT IHistoricalProvider: public IProvider
+class CORE_EXPORT IHistoricalProvider: public IProvider
 {
     Q_OBJECT
 

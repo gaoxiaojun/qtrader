@@ -16,7 +16,7 @@
 #ifndef __INSTRUMENT_H__
 #define __INSTRUMENT_H__
 
-#include "opentrade_global.h"
+#include "core_global.h"
 
 #include <QString>
 #include <QDateTime>
@@ -35,7 +35,7 @@ namespace Internal {
 /* TODO:
  * 确保是个immutable class 或者...
 */
-class OPENTRADE_EXPORT Instrument
+class CORE_EXPORT Instrument
 {
 public:
     enum InstrumentType {
@@ -130,7 +130,7 @@ private:
     QSharedDataPointer<Internal::InstrumentPrivate> d;
     friend class Internal::InstrumentPrivate;
 };
-QDebug OPENTRADE_EXPORT operator<<(QDebug, const OpenTrade::Instrument &instrument);
+QDebug CORE_EXPORT operator<<(QDebug, const OpenTrade::Instrument &instrument);
 
 } //namespace OpenTrade
 

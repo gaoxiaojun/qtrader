@@ -16,7 +16,7 @@
 #ifndef ORDER_H
 #define ORDER_H
 
-#include "opentrade_global.h"
+#include "core_global.h"
 #include "instrument.h"
 
 #include <QObject>
@@ -27,7 +27,7 @@ namespace Internal {
   class OrderPrivate;
 }
 
-class OPENTRADE_EXPORT Order : public QObject
+class CORE_EXPORT Order : public QObject
 {
     Q_OBJECT
 

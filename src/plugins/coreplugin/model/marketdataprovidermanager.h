@@ -13,38 +13,33 @@
 **
 ****************************************************************************/
 
-#ifndef IMARKETDATAPROVIDER_H
-#define IMARKETDATAPROVIDER_H
+#ifndef MARKETDATAPROVIDERMANAGER_H
+#define MARKETDATAPROVIDERMANAGER_H
 
-#include "opentrade_global.h"
-#include "iprovider.h"
-
-#include "bar.h"
-#include "instrument.h"
-#include "orderbook.h"
+#include "provider/imarketdataprovider.h"
 
 #include <QObject>
-#include <QDateTime>
 
 namespace OpenTrade {
 
-class Instrument;
-class Bar;
-
-class OPENTRADE_EXPORT IMarketDataProvider : public IProvider
+class MarketDataProviderManager : public QObject
 {
     Q_OBJECT
-
 public:
-    explicit IMarketDataProvider(QObject *parent = 0) : IProvider(parent) {}
-    virtual ~IMarketDataProvider() {}
+    static MarketDataProviderManager *instance();
 
-public:
-    virtual void subscribe(const Instrument& instrument) = 0;
-    virtual void unsubscribe(const Instrument& instrument) = 0;
-    //virtual QString errorString() = 0;
+    explicit MarketDataProviderManager(QObject *parent = 0);
+    ~MarketDataProviderManager();
 
-signals:
+    static QList<IMarketDataProvider *> getProviders();
+
+    void init();
+    void extensionsInitalized();
+
+private slots:
+    void objectAdded(QObject *obj);
+    void aboutToRemoveObject(QObject *obj);
+
     void newBar(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
                 const QDateTime& end, double open, double hight, double low, double close, double volume);
 
@@ -60,8 +55,14 @@ signals:
     void newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
                             OrderBook::OrderBookAction action, double price, int size, int position );
 
+
+private:
+    void connectToProvider(IMarketDataProvider *provider);
+    void disconnectToProvider(IMarketDataProvider *provider);
+
+    QList<IMarketDataProvider *> m_providers;
 };
 
 } // namespace OpenTrade
 
-#endif // IMARKETDATAPROVIDER_H
+#endif // MARKETDATAPROVIDERMANAGER_H

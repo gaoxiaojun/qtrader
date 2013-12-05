@@ -180,7 +180,23 @@ progressmanager/futureprogress.cpp
 progressmanager/progressbar.cpp
 progressmanager/progressmanager.cpp
 progressmanager/progressview.cpp
-
+model/quote.cpp
+model/bar.cpp
+model/orderbook.cpp
+model/instrument.cpp
+model/order.h
+model/order.cpp
+provider/iprovider.h
+provider/iorderexecutionprovider.h
+provider/imarketdataprovider.h
+provider/ihistoricalprovider.h
+provider/historicaldatarequest.cpp
+model/marketdataprovidermanager.h
+model/marketdataprovidermanager.cpp
+model/orderexecutionprovidermanager.h
+model/orderexecutionprovidermanager.cpp
+model/historicalprovidermanager.cpp
+model/historicalprovidermanager.h
 
 utils/tooltip/effects.h
 utils/tooltip/reuse.h

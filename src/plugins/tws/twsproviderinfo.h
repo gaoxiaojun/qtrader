@@ -16,7 +16,7 @@
 #ifndef TWSPROVIDERINFO_H
 #define TWSPROVIDERINFO_H
 
-#include <opentrade/iprovider.h>
+#include <coreplugin/provider/iprovider.h>
 
 namespace TWS {
 

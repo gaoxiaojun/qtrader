@@ -16,9 +16,9 @@
 #ifndef HISTORICALDATAREQUEST_H
 #define HISTORICALDATAREQUEST_H
 
-#include "opentrade_global.h"
+#include "core_global.h"
 
-#include "instrument.h"
+#include "model/instrument.h"
 
 #include <QMetaType>
 #include <QDateTime>
@@ -29,7 +29,7 @@ namespace Internal {
   class HistoricalDataRequestPrivate;
 }
 
-class OPENTRADE_EXPORT HistoricalDataRequest
+class CORE_EXPORT HistoricalDataRequest
 {
 public:
     enum RequestDataType {
