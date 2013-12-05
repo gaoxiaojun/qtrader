@@ -43,10 +43,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>isConnect? %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unsubscribe</source>
         <translation type="unfinished"></translation>
     </message>

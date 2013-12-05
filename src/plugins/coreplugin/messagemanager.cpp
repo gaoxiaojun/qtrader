@@ -34,11 +34,33 @@
 
 #include <QThread>
 #include <QCoreApplication>
+#include <qlogging.h>
 
 using namespace Core;
 
 static MessageManager *m_instance = 0;
 Internal::MessageOutputWindow *m_messageOutputWindow = 0;
+
+void PluginMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString& msg)
+{
+    QString text;
+    switch (type)
+    {
+    case QtDebugMsg:
+        text = QString("Debug: %1").arg(msg);
+        break;
+    case QtWarningMsg:
+        text = QString("Warning: %1").arg(msg);
+        break;
+    case QtCriticalMsg:
+        text = QString("Critical: %1").arg(msg);
+        break;
+    case QtFatalMsg:
+        text = QString("Fatal: %1").arg(msg);
+        abort();
+    }
+    MessageManager::write (text);
+}
 
 MessageManager *MessageManager::instance()
 {
@@ -56,8 +78,6 @@ MessageManager::MessageManager()
 
 MessageManager::~MessageManager()
 {
-    disconnect (this, SIGNAL(uiWrite(QString,Core::MessageManager::PrintToOutputPaneFlags)),
-             this, SLOT(write(QString,Core::MessageManager::PrintToOutputPaneFlags)));
     if (m_messageOutputWindow) {
         ExtensionSystem::PluginManager::removeObject(m_messageOutputWindow);
         delete m_messageOutputWindow;
@@ -69,6 +89,8 @@ void MessageManager::init()
 {
     m_messageOutputWindow = new Internal::MessageOutputWindow;
     ExtensionSystem::PluginManager::addObject(m_messageOutputWindow);
+
+    qInstallMessageHandler(PluginMessageOutput);
 }
 
 void MessageManager::showOutputPane()
