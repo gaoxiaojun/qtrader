@@ -123,7 +123,7 @@ void TwsClient::subscribe(const OpenTrade::Instrument &instrument)
     info->realtimeBar_bid_id = tickId();
     info->realtimeBar_ask_id = tickId();
     m_subscribes.insert(inst, info);
-    m_socket->reqMktData(info->marketData_id, contract, genericTicks, false);
+    m_socket->reqMktData(info->marketData_id, contract, "", false);
 
     m_socket->reqRealTimeBars (info->realtimeBar_bid_id, contract, 5, "BID", false);
     m_socket->reqRealTimeBars (info->realtimeBar_ask_id, contract, 5, "ASK", false);

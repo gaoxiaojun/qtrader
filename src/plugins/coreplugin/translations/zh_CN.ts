@@ -2095,4 +2095,423 @@ to version control (%2)</source>
         <translation>普通文本编辑器</translation>
     </message>
 </context>
+<context>
+    <name>Utils::CheckableMessageBox</name>
+    <message>
+        <location filename="../utils/checkablemessagebox.cpp" line="85"/>
+        <source>Do not ask again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/checkablemessagebox.cpp" line="376"/>
+        <source>Do not &amp;ask again</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::EnvironmentModel</name>
+    <message>
+        <location filename="../utils/environmentmodel.cpp" line="52"/>
+        <source>&lt;UNSET&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/environmentmodel.cpp" line="187"/>
+        <source>Variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/environmentmodel.cpp" line="187"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/environmentmodel.cpp" line="258"/>
+        <source>&lt;VARIABLE&gt;</source>
+        <extracomment>Name when inserting a new variable</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/environmentmodel.cpp" line="260"/>
+        <source>&lt;VALUE&gt;</source>
+        <extracomment>Value when inserting a new variable</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::FancyMainWindow</name>
+    <message>
+        <location filename="../utils/fancymainwindow.cpp" line="74"/>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fancymainwindow.cpp" line="76"/>
+        <source>Reset to Default Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::FileNameValidatingLineEdit</name>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="111"/>
+        <source>Name is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="121"/>
+        <source>Name contains white space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="123"/>
+        <source>Invalid character &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="133"/>
+        <source>Invalid characters &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="143"/>
+        <source>Name matches MS Windows device. (%1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="182"/>
+        <source>File extension %1 is required:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filenamevalidatinglineedit.cpp" line="184"/>
+        <source>File extensions %1 are required:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::FileUtils</name>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="72"/>
+        <source>Refusing to remove root directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="79"/>
+        <source>Refusing to remove your home directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="93"/>
+        <source>Failed to remove directory &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="101"/>
+        <source>Failed to remove file &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="136"/>
+        <source>Failed to create directory &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="155"/>
+        <source>Could not copy file &apos;%1&apos; to &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="313"/>
+        <source>Cannot open %1 for reading: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="319"/>
+        <source>Cannot read %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="340"/>
+        <location filename="../utils/fileutils.cpp" line="378"/>
+        <source>File Error</source>
+        <translation type="unfinished">文件错误</translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="399"/>
+        <source>Cannot write file %1. Disk full?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="435"/>
+        <source>Cannot overwrite file %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="435"/>
+        <source>Cannot create file %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/fileutils.cpp" line="466"/>
+        <source>Cannot create temporary file in %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::FileWizardDialog</name>
+    <message>
+        <location filename="../utils/filewizarddialog.cpp" line="51"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::FilterLineEdit</name>
+    <message>
+        <location filename="../utils/filterlineedit.cpp" line="55"/>
+        <source>Filter</source>
+        <translation type="unfinished">过滤器</translation>
+    </message>
+    <message>
+        <location filename="../utils/filterlineedit.cpp" line="56"/>
+        <source>Clear text</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::LinearProgressWidget</name>
+    <message>
+        <location filename="../utils/wizard.cpp" line="135"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::PathChooser</name>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="62"/>
+        <source>Choose...</source>
+        <translation type="unfinished">选择...</translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="64"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="387"/>
+        <source>Choose Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="392"/>
+        <source>Choose Executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="397"/>
+        <location filename="../utils/pathchooser.cpp" line="402"/>
+        <location filename="../utils/pathchooser.cpp" line="408"/>
+        <source>Choose File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="464"/>
+        <source>The path must not be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="470"/>
+        <source>The path &apos;%1&apos; expanded to an empty string.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="480"/>
+        <location filename="../utils/pathchooser.cpp" line="492"/>
+        <location filename="../utils/pathchooser.cpp" line="506"/>
+        <source>The path &apos;%1&apos; does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="485"/>
+        <location filename="../utils/pathchooser.cpp" line="518"/>
+        <source>The path &apos;%1&apos; is not a directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="499"/>
+        <source>The directory &apos;%1&apos; does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="511"/>
+        <location filename="../utils/pathchooser.cpp" line="525"/>
+        <source>Cannot execute &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="539"/>
+        <source>The path &lt;b&gt;%1&lt;/b&gt; is not a directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="547"/>
+        <location filename="../utils/pathchooser.cpp" line="555"/>
+        <source>The path &lt;b&gt;%1&lt;/b&gt; is not a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="563"/>
+        <source>The path &lt;b&gt;%1&lt;/b&gt; is not an executable file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="577"/>
+        <source>Full path: &lt;b&gt;%1&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/pathchooser.cpp" line="583"/>
+        <source>Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::SynchronousProcess</name>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="130"/>
+        <source>The command &apos;%1&apos; finished successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="132"/>
+        <source>The command &apos;%1&apos; terminated with exit code %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="134"/>
+        <source>The command &apos;%1&apos; terminated abnormally.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="136"/>
+        <source>The command &apos;%1&apos; could not be started.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="138"/>
+        <source>The command &apos;%1&apos; did not respond within the timeout limit (%2 ms).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="431"/>
+        <source>Process not Responding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="433"/>
+        <source>The process is not responding.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="434"/>
+        <source>The process &apos;%1&apos; is not responding.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/synchronousprocess.cpp" line="436"/>
+        <source>Would you like to terminate it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::TextFileFormat</name>
+    <message>
+        <location filename="../utils/textfileformat.cpp" line="221"/>
+        <location filename="../utils/textfileformat.cpp" line="284"/>
+        <source>Out of memory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/textfileformat.cpp" line="230"/>
+        <location filename="../utils/textfileformat.cpp" line="300"/>
+        <source>An encoding error was encountered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::WizardPage</name>
+    <message>
+        <location filename="../utils/filewizardpage.ui" line="14"/>
+        <source>Choose the Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filewizardpage.ui" line="20"/>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/filewizardpage.ui" line="30"/>
+        <source>Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils::fileDeletedPrompt</name>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="90"/>
+        <source>File has been removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="94"/>
+        <source>The file %1 has been removed outside Qt Creator. Do you want to save it under a different name, or close the editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="99"/>
+        <source>The file %1 was removed. Do you want to save it under a different name, or close the editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="106"/>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="109"/>
+        <source>C&amp;lose All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="112"/>
+        <source>Save &amp;as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="115"/>
+        <source>&amp;Save</source>
+        <translation type="unfinished">保存(&amp;S)</translation>
+    </message>
+</context>
+<context>
+    <name>Utils::reloadPrompt</name>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="44"/>
+        <source>File Changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="48"/>
+        <source>The unsaved file &lt;i&gt;%1&lt;/i&gt; has changed outside Qt Creator. Do you want to reload it and discard your changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/reloadpromptutils.cpp" line="52"/>
+        <source>The file &lt;i&gt;%1&lt;/i&gt; has changed outside Qt Creator. Do you want to reload it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

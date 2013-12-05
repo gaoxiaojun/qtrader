@@ -202,7 +202,7 @@ public:
     QAction *m_closeOtherEditorsContextAction;
     QAction *m_closeAllEditorsExceptVisibleContextAction;
     QAction *m_openGraphicalShellAction;
-    QAction *m_openTerminalAction;
+    //QAction *m_openTerminalAction;
     QAction *m_findInDirectoryAction;
     DocumentModel::Entry *m_contextMenuEntry;
 
@@ -245,7 +245,7 @@ EditorManagerPrivate::EditorManagerPrivate(QWidget *parent) :
     m_closeOtherEditorsContextAction(new QAction(EditorManager::tr("Close Others"), parent)),
     m_closeAllEditorsExceptVisibleContextAction(new QAction(EditorManager::tr("Close All Except Visible"), parent)),
     m_openGraphicalShellAction(new QAction(FileUtils::msgGraphicalShellAction(), parent)),
-    m_openTerminalAction(new QAction(FileUtils::msgTerminalAction(), parent)),
+    //m_openTerminalAction(new QAction(FileUtils::msgTerminalAction(), parent)),
     m_findInDirectoryAction(new QAction(FileUtils::msgFindInDirectory(), parent)),
     m_windowPopup(0),
     m_coreListener(0),
@@ -351,7 +351,7 @@ EditorManager::EditorManager(QWidget *parent) :
     connect(d->m_closeAllEditorsExceptVisibleContextAction, SIGNAL(triggered()), this, SLOT(closeAllEditorsExceptVisible()));
 
     connect(d->m_openGraphicalShellAction, SIGNAL(triggered()), this, SLOT(showInGraphicalShell()));
-    connect(d->m_openTerminalAction, SIGNAL(triggered()), this, SLOT(openTerminal()));
+    //connect(d->m_openTerminalAction, SIGNAL(triggered()), this, SLOT(openTerminal()));
     connect(d->m_findInDirectoryAction, SIGNAL(triggered()), this, SLOT(findInDirectory()));
 
     // Goto Previous In History Action
@@ -819,10 +819,10 @@ void EditorManager::addNativeDirActions(QMenu *contextMenu, DocumentModel::Entry
     QTC_ASSERT(contextMenu, return);
     bool enabled = entry && !entry->fileName().isEmpty();
     d->m_openGraphicalShellAction->setEnabled(enabled);
-    d->m_openTerminalAction->setEnabled(enabled);
+    //d->m_openTerminalAction->setEnabled(enabled);
     d->m_findInDirectoryAction->setEnabled(enabled);
     contextMenu->addAction(d->m_openGraphicalShellAction);
-    contextMenu->addAction(d->m_openTerminalAction);
+    //contextMenu->addAction(d->m_openTerminalAction);
     contextMenu->addAction(d->m_findInDirectoryAction);
 }
 
@@ -973,12 +973,12 @@ void EditorManager::showInGraphicalShell()
     Core::FileUtils::showInGraphicalShell(ICore::mainWindow(), d->m_contextMenuEntry->fileName());
 }
 
-void EditorManager::openTerminal()
+/*void EditorManager::openTerminal()
 {
     if (!d->m_contextMenuEntry || d->m_contextMenuEntry->fileName().isEmpty())
         return;
     Core::FileUtils::openTerminal(QFileInfo(d->m_contextMenuEntry->fileName()).path());
-}
+}*/
 
 void EditorManager::findInDirectory()
 {

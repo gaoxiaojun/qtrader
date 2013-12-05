@@ -169,7 +169,7 @@ void TwsPlugin::connectAction()
 
 void TwsPlugin::subscribeAction()
 {
-    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "USD", "SMART");
+    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
     qDebug() << inst.symbol ();
     if( m_client->isConnected ()) {
         m_client->subscribe (inst);
@@ -183,7 +183,7 @@ void TwsPlugin::disconnectAction()
 
 void TwsPlugin::unsubscribeAction()
 {
-    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "USD", "SMART");
+    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
     qDebug() << inst.symbol ();
     if( m_client->isConnected ()) {
         m_client->unsubscribe (inst);

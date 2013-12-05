@@ -70,7 +70,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help</source>
+        <source>TWS</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

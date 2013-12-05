@@ -514,7 +514,7 @@ bool PluginSpecPrivate::read(const QString &fileName)
     if (pluginName.startsWith("lib"))
       pluginName = pluginName.mid(3);
 
-    qDebug() << pluginName  << ":" << pluginLoader.metaData();
+    //qDebug() << pluginName  << ":" << pluginLoader.metaData();
     if (parseMetaData(pluginLoader.metaData().value("MetaData").toObject(), pluginName))
         state = PluginSpec::Read;
 

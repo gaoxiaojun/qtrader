@@ -9,5 +9,5 @@ endif()
 SET(PROJECT_LIBS_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}"  CACHE INTERNAL "" FORCE)
 
 add_subdirectory(extensionsystem)
-add_subdirectory(utils)
+#add_subdirectory(utils)
 #add_subdirectory(luajit)

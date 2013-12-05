@@ -186,6 +186,77 @@ progressmanager/futureprogress.cpp
 progressmanager/progressbar.cpp
 progressmanager/progressmanager.cpp
 progressmanager/progressview.cpp
+
+
+utils/tooltip/effects.h
+utils/tooltip/reuse.h
+utils/tooltip/tipcontents.h
+utils/tooltip/tips.h
+utils/tooltip/tooltip.h
+utils/tooltip/tipcontents.cpp
+utils/tooltip/tips.cpp
+utils/tooltip/tooltip.cpp
+utils/appmainwindow.h
+utils/checkablemessagebox.h
+utils/environment.h
+utils/environmentmodel.h
+utils/fancylineedit.h
+utils/fancymainwindow.h
+utils/fileutils.h
+utils/filewizarddialog.h
+utils/filterlineedit.h
+utils/headerviewstretcher.h
+utils/historycompleter.h
+utils/pathchooser.h
+utils/proxyaction.h
+utils/qtcassert.h
+utils/qtcolorbutton.h
+utils/reloadpromptutils.h
+utils/stringutils.h
+utils/styledbar.h
+utils/stylehelper.h
+utils/synchronousprocess.h
+utils/textfileformat.h
+utils/utils_global.h
+utils/wizard.h
+utils/appmainwindow.cpp
+utils/checkablemessagebox.cpp
+utils/environment.cpp
+utils/environmentmodel.cpp
+utils/fancylineedit.cpp
+utils/fancymainwindow.cpp
+utils/fileutils.cpp
+utils/filewizarddialog.cpp
+utils/filterlineedit.cpp
+utils/headerviewstretcher.cpp
+utils/historycompleter.cpp
+utils/pathchooser.cpp
+utils/proxyaction.cpp
+utils/qtcassert.cpp
+utils/qtcolorbutton.cpp
+utils/reloadpromptutils.cpp
+utils/stringutils.cpp
+utils/styledbar.cpp
+utils/stylehelper.cpp
+utils/synchronousprocess.cpp
+utils/textfileformat.cpp
+utils/wizard.cpp
+utils/hostosinfo.h
+utils/hostosinfo.cpp
+utils/savefile.h
+utils/savefile.cpp
+utils/osspecificaspects.h
+utils/filewizardpage.h
+utils/filewizardpage.cpp
+utils/basevalidatinglineedit.h
+utils/basevalidatinglineedit.cpp
+utils/outputformatter.cpp
+utils/outputformatter.h
+utils/filenamevalidatinglineedit.h
+utils/filenamevalidatinglineedit.cpp
+utils/ansiescapecodehandler.h
+utils/ansiescapecodehandler.cpp
+utils/outputformat.h
 )
 
 if(WIN32)
@@ -200,7 +271,7 @@ file (GLOB_RECURSE LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)
 file (GLOB_RECURSE LIB_QRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.qrc)
 file (GLOB LIB_TS_FILES translations/*.ts)
 
-set(LIB_DEPEND_LIBS utils QtCore QtWidgets QtNetwork QtScript QtConcurrent QtSql QtHelp QtXml QtPrintSupport extensionsystem)
+set(LIB_DEPEND_LIBS  QtCore QtWidgets QtNetwork QtScript QtConcurrent QtSql QtHelp QtXml QtPrintSupport extensionsystem)
 #set(LIB_DEPEND_PLUGINS "")
 #set(LIB_DEPEND_OPT_PLUGINS "")
 #set(LIB_DEPEND_TS_LIBS "")

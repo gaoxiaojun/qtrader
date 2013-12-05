@@ -116,7 +116,7 @@ void FileUtils::showInGraphicalShell(QWidget *parent, const QString &pathIn)
     }
 }
 
-void FileUtils::openTerminal(const QString &path)
+/*void FileUtils::openTerminal(const QString &path)
 {
     // Get terminal application
     QString terminalEmulator;
@@ -138,7 +138,7 @@ void FileUtils::openTerminal(const QString &path)
                                                  fileInfo.absoluteFilePath() :
                                                  fileInfo.absolutePath());
     QProcess::startDetached(terminalEmulator, args, pwd);
-}
+}*/
 
 QString FileUtils::msgFindInDirectory()
 {

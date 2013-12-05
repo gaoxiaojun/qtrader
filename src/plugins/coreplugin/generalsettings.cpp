@@ -34,7 +34,7 @@
 #include "editormanager/editormanager.h"
 
 #include <utils/checkablemessagebox.h>
-#include <utils/consoleprocess.h>
+//#include <utils/consoleprocess.h>
 #include <utils/hostosinfo.h>
 #include <utils/stylehelper.h>
 #include <utils/unixutils.h>
@@ -112,18 +112,18 @@ QWidget *GeneralSettings::createPage(QWidget *parent)
 
     m_page->colorButton->setColor(StyleHelper::requestedBaseColor());
     m_page->reloadBehavior->setCurrentIndex(EditorManager::reloadSetting());
-    if (HostOsInfo::isAnyUnixHost()) {
+    /*if (HostOsInfo::isAnyUnixHost()) {
         QSettings *settings = Core::ICore::settings();
         const QStringList availableTerminals = ConsoleProcess::availableTerminalEmulators();
         const QString currentTerminal = ConsoleProcess::terminalEmulator(settings, false);
         m_page->terminalComboBox->addItems(availableTerminals);
         m_page->terminalComboBox->lineEdit()->setText(currentTerminal);
         m_page->terminalComboBox->lineEdit()->setPlaceholderText(ConsoleProcess::defaultTerminalEmulator());
-    } else {
+    } else {*/
         m_page->terminalLabel->hide();
         m_page->terminalComboBox->hide();
         m_page->resetTerminalButton->hide();
-    }
+    //}
 
     if (HostOsInfo::isAnyUnixHost() && !HostOsInfo::isMacHost()) {
         QSettings *settings = Core::ICore::settings();
@@ -181,14 +181,14 @@ void GeneralSettings::apply()
     // Apply the new base color if accepted
     StyleHelper::setBaseColor(m_page->colorButton->color());
     EditorManager::setReloadSetting(IDocument::ReloadSetting(m_page->reloadBehavior->currentIndex()));
-    if (HostOsInfo::isAnyUnixHost()) {
+    /*if (HostOsInfo::isAnyUnixHost()) {
         ConsoleProcess::setTerminalEmulator(Core::ICore::settings(),
                                             m_page->terminalComboBox->lineEdit()->text());
         if (!HostOsInfo::isMacHost()) {
             Utils::UnixUtils::setFileBrowser(Core::ICore::settings(),
                                              m_page->externalFileBrowserEdit->text());
         }
-    }
+    }*/
     EditorManager::setAutoSaveEnabled(m_page->autoSaveCheckBox->isChecked());
     EditorManager::setAutoSaveInterval(m_page->autoSaveInterval->value());
 }

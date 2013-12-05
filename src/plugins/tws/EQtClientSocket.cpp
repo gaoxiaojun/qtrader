@@ -40,8 +40,6 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 {
     QMutexLocker locker(&m_login_mutex);
 
-    qDebug() << "eConnect..." << host << ":" << port << ":" << clientId;
-
 	// already connected?
     if( isConnected ()) {
 		errno = EISCONN;
