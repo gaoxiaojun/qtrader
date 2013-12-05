@@ -267,6 +267,8 @@ utils/ansiescapecodehandler.cpp
 utils/outputformat.h
 utils/filesystemwatcher.h
 utils/filesystemwatcher.cpp
+utils/unixutils.cpp
+utils/unixutils.h
 )
 
 if(WIN32)

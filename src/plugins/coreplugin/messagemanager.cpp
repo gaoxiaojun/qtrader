@@ -34,7 +34,10 @@
 
 #include <QThread>
 #include <QCoreApplication>
+#include <QMetaObject>
+#include <QDebug>
 #include <qlogging.h>
+#include <QRegExp>
 
 using namespace Core;
 
@@ -43,20 +46,23 @@ Internal::MessageOutputWindow *m_messageOutputWindow = 0;
 
 void PluginMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString& msg)
 {
+    QString name = QString(context.file).section ('/', -1, -1, QString::SectionSkipEmpty);
+    QString prefix = QString("%1:%2").arg(name).arg(context.line);
+
     QString text;
     switch (type)
     {
     case QtDebugMsg:
-        text = QString("Debug: %1").arg(msg);
+        text = QString("[D]%1: %2").arg(prefix).arg(msg);
         break;
     case QtWarningMsg:
-        text = QString("Warning: %1").arg(msg);
+        text = QString("[W]%1: %2").arg(prefix).arg(msg);
         break;
     case QtCriticalMsg:
-        text = QString("Critical: %1").arg(msg);
+        text = QString("[C]%1: %2").arg(prefix).arg(msg);
         break;
     case QtFatalMsg:
-        text = QString("Fatal: %1").arg(msg);
+        text = QString("[F]%1: %2").arg(prefix).arg(msg);
         abort();
     }
     MessageManager::write (text);
@@ -72,8 +78,6 @@ MessageManager::MessageManager()
     m_instance = this;
     m_messageOutputWindow = 0;
     qRegisterMetaType<Core::MessageManager::PrintToOutputPaneFlags>();
-    connect (this, SIGNAL(uiWrite(QString,Core::MessageManager::PrintToOutputPaneFlags)),
-             this, SLOT(write(QString,Core::MessageManager::PrintToOutputPaneFlags)));
 }
 
 MessageManager::~MessageManager()
@@ -99,11 +103,6 @@ void MessageManager::showOutputPane()
         m_messageOutputWindow->popup(IOutputPane::ModeSwitch);
 }
 
-void MessageManager::emitWrite (const QString &text, MessageManager::PrintToOutputPaneFlags flags)
-{
-    emit uiWrite (text, flags);
-}
-
 void MessageManager::write(const QString &text)
 {
     write(text, NoModeSwitch);
@@ -115,7 +114,10 @@ void MessageManager::write(const QString &text, PrintToOutputPaneFlags flags)
         return;
 
     if (QThread::currentThread () != qApp->thread ()) {
-        MessageManager::instance()->emitWrite(text, flags);
+        QMetaObject::invokeMethod (MessageManager::instance (), "write",
+                                   Qt::QueuedConnection,
+                                   Q_ARG(QString, text),
+                                   Q_ARG(Core::MessageManager::PrintToOutputPaneFlags, flags));
         return;
     }
 
