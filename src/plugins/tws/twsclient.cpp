@@ -154,6 +154,16 @@ bool TwsClient::isConnected () const
     return m_socket->isConnected ();
 }
 
+unsigned int TwsClient::serverVersion()
+{
+    return m_socket->serverVersion ();
+}
+
+QString TwsClient::connectionTime()
+{
+    return QString::fromStdString (m_socket->TwsConnectionTime ());
+}
+
 void TwsClient::setHost(const QString &host)
 {
     m_host = host;
@@ -173,13 +183,15 @@ unsigned int TwsClient::port () const
 {
     return m_port;
 }
-
+// TODO: maybe bug in readSettings
 void TwsClient::readSettings (QSettings* settings)
 {
+    qDebug() << Q_FUNC_INFO << " start";
     settings->beginGroup(QLatin1String("Tws"));
     m_host = settings->value(QLatin1String("Host"), TWS_DEFAULT_HOST).toString ();
     m_port = settings->value(QLatin1String("Port"), TWS_DEFAULT_PORT).toInt ();
     settings->endGroup();
+    qDebug() << Q_FUNC_INFO << " end";
 }
 
 void TwsClient::writeSettings (QSettings* settings)
@@ -188,6 +200,12 @@ void TwsClient::writeSettings (QSettings* settings)
     settings->setValue (QLatin1String("Host"), m_host);
     settings->setValue (QLatin1String("Port"), m_port);
     settings->endGroup();
+}
+
+
+void TwsClient::syncTime (long time)
+{
+
 }
 
 } // namespace TWS

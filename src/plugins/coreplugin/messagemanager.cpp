@@ -32,12 +32,15 @@
 
 #include <extensionsystem/pluginmanager.h>
 
+#include <QThread>
+#include <QCoreApplication>
+
 using namespace Core;
 
 static MessageManager *m_instance = 0;
 Internal::MessageOutputWindow *m_messageOutputWindow = 0;
 
-QObject *MessageManager::instance()
+MessageManager *MessageManager::instance()
 {
     return m_instance;
 }
@@ -47,10 +50,14 @@ MessageManager::MessageManager()
     m_instance = this;
     m_messageOutputWindow = 0;
     qRegisterMetaType<Core::MessageManager::PrintToOutputPaneFlags>();
+    connect (this, SIGNAL(uiWrite(QString,Core::MessageManager::PrintToOutputPaneFlags)),
+             this, SLOT(write(QString,Core::MessageManager::PrintToOutputPaneFlags)));
 }
 
 MessageManager::~MessageManager()
 {
+    disconnect (this, SIGNAL(uiWrite(QString,Core::MessageManager::PrintToOutputPaneFlags)),
+             this, SLOT(write(QString,Core::MessageManager::PrintToOutputPaneFlags)));
     if (m_messageOutputWindow) {
         ExtensionSystem::PluginManager::removeObject(m_messageOutputWindow);
         delete m_messageOutputWindow;
@@ -70,6 +77,11 @@ void MessageManager::showOutputPane()
         m_messageOutputWindow->popup(IOutputPane::ModeSwitch);
 }
 
+void MessageManager::emitWrite (const QString &text, MessageManager::PrintToOutputPaneFlags flags)
+{
+    emit uiWrite (text, flags);
+}
+
 void MessageManager::write(const QString &text)
 {
     write(text, NoModeSwitch);
@@ -79,6 +91,12 @@ void MessageManager::write(const QString &text, PrintToOutputPaneFlags flags)
 {
     if (!m_messageOutputWindow)
         return;
+
+    if (QThread::currentThread () != qApp->thread ()) {
+        MessageManager::instance()->emitWrite(text, flags);
+        return;
+    }
+
     if (flags & Flash) {
         m_messageOutputWindow->flash();
     } else if (flags & Silent) {

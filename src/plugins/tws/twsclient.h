@@ -63,12 +63,18 @@ public:
 
     // historical
 
+    // client info
+    unsigned int serverVersion();
+    QString connectionTime();
 public:
     void readSettings(QSettings* settings);
     void writeSettings(QSettings* settings);
 signals:
     void connected();
     void disconnected();
+
+private slots:
+    void syncTime(long time);
 
 private:
     TickerId tickId();

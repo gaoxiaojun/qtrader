@@ -49,7 +49,7 @@
 using namespace Core;
 using namespace Core::Internal;
 
-CorePlugin::CorePlugin() : m_editMode(0), m_designMode(0)
+CorePlugin::CorePlugin() : m_editMode(0), m_designMode(0), m_mainWindow(0)
 {
     qRegisterMetaType<Core::Id>();
 }
@@ -67,7 +67,8 @@ CorePlugin::~CorePlugin()
         delete m_designMode;
     }
 
-    delete m_mainWindow;
+    if (m_mainWindow)
+        delete m_mainWindow;
 }
 
 void CorePlugin::parseArguments(const QStringList &arguments)

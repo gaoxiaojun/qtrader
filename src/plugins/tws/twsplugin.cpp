@@ -160,16 +160,15 @@ void TwsPlugin::readSettings()
 
 void TwsPlugin::connectAction()
 {
-    bool is_connect = m_client->connect ();
-    QMessageBox::information(Core::ICore::mainWindow(),
-                             tr("Connect"),
-                             tr("isConnect? %1").arg (is_connect));
+    if (m_client->connect ()) {
+        qDebug() << "serverVersion:" << m_client->serverVersion ();
+    }
 }
 
 void TwsPlugin::subscribeAction()
 {
     OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
-    qDebug() << inst.symbol ();
+    qDebug() << inst.symbol () << "." << inst.currency ();
     if( m_client->isConnected ()) {
         m_client->subscribe (inst);
     }
@@ -183,7 +182,7 @@ void TwsPlugin::disconnectAction()
 void TwsPlugin::unsubscribeAction()
 {
     OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
-    qDebug() << inst.symbol ();
+    qDebug() << inst.symbol () << "." << inst.currency ();
     if( m_client->isConnected ()) {
         m_client->unsubscribe (inst);
     }

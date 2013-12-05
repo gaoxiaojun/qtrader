@@ -14,6 +14,8 @@
 using namespace TWS;
 
 const int WAIT_TIME = 1000;
+const int RESERVE_ORDER_ID = 100000;
+
 ///////////////////////////////////////////////////////////
 // member funcs
 EQtClientSocket::EQtClientSocket( EWrapper *ptr) :
@@ -38,19 +40,13 @@ EQtClientSocket::~EQtClientSocket()
 
 bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientId)
 {
-    QMutexLocker locker(&m_login_mutex);
+    QMutexLocker locker(&m_mutex);
 
 	// already connected?
     if( isConnected ()) {
-		errno = EISCONN;
 		getWrapper()->error( NO_VALID_ID, ALREADY_CONNECTED.code(), ALREADY_CONNECTED.msg());
 		return false;
 	}
-
-    // use local machine if no host passed in
-    if ( !( host && *host)) {
-        host = "127.0.0.1";
-    }
 
     m_socket.connectToHost (host, port);
 
@@ -76,11 +72,15 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
 		}
     }
 
+    if(isConnected())
+        onConnect();
+
     return isConnected();
 }
 
 void EQtClientSocket::eDisconnect()
 {
+    QMutexLocker locker(&m_mutex);
     if (m_socket.isValid ())
         m_socket.close ();
     eDisconnectBase();
@@ -107,6 +107,14 @@ int EQtClientSocket::receive(char* buf, size_t sz)
 
 ///////////////////////////////////////////////////////////
 // callbacks from socket
+void EQtClientSocket::onConnect()
+{
+    // DETAIL LEVEL, log everything
+    setServerLogLevel (5);
+
+    reqIds (RESERVE_ORDER_ID);
+    reqCurrentTime ();
+}
 
 void EQtClientSocket::onReceive()
 {

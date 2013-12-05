@@ -14,10 +14,13 @@
 ****************************************************************************/
 
 #include "twswrapper.h"
+#include "twsclient.h"
+
 #include <coreplugin/messagemanager.h>
 
 #include <QDebug>
 #include <QDateTime>
+#include <QThread>
 
 
 using namespace TWS;

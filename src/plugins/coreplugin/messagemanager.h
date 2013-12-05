@@ -45,7 +45,7 @@ class CORE_EXPORT MessageManager : public QObject
     Q_OBJECT
 
 public:
-    static QObject *instance();
+    static MessageManager *instance();
 
     static void showOutputPane();
 
@@ -64,6 +64,12 @@ public:
 
 public slots:
     static void write(const QString &text, Core::MessageManager::PrintToOutputPaneFlags flags);
+
+signals:
+    void uiWrite(const QString &text, Core::MessageManager::PrintToOutputPaneFlags flags);
+
+protected:
+    void emitWrite(const QString &text, Core::MessageManager::PrintToOutputPaneFlags flags);
 
 private:
     MessageManager();

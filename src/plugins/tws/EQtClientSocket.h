@@ -29,13 +29,13 @@ private:
 
 public slots:
 	// callback from socket
+    void onConnect();
 	void onReceive();
 	void onClose();
     void socketError(QAbstractSocket::SocketError);
 private:
-
     QTcpSocket m_socket;
-    QMutex m_login_mutex;
+    QMutex m_mutex;
 };
 
 } // namespace TWS

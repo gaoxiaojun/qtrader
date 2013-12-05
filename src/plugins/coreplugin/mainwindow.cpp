@@ -230,7 +230,7 @@ MainWindow::MainWindow() :
     MacFullScreen::addFullScreen(this);
 #endif
 
-    //qInstallMessageHandler(PluginMessageOutput);
+    qInstallMessageHandler(PluginMessageOutput);
 }
 
 void MainWindow::setSidebarVisible(bool visible)

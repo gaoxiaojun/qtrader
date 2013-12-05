@@ -30,6 +30,7 @@
 #include "shared/TagValue.h"
 #include "shared/TwsSocketClientErrors.h"
 
+#include <QObject>
 #include <QString>
 
 namespace TWS {
@@ -40,6 +41,7 @@ namespace Internal {
 
 class TwsWrapper : public EWrapper
 {
+
 public:
     TwsWrapper(TwsClient* client);
     ~TwsWrapper();
@@ -101,6 +103,8 @@ public:
     void positionEnd();
     void accountSummary( int reqId, const IBString& account, const IBString& tag, const IBString& value, const IBString& curency);
     void accountSummaryEnd( int reqId);
+
+signals:
 
 private:
     TwsClient* m_client;
