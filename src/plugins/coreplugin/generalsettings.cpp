@@ -34,7 +34,6 @@
 #include "editormanager/editormanager.h"
 
 #include <utils/checkablemessagebox.h>
-//#include <utils/consoleprocess.h>
 #include <utils/hostosinfo.h>
 #include <utils/stylehelper.h>
 #include <utils/unixutils.h>
@@ -112,18 +111,6 @@ QWidget *GeneralSettings::createPage(QWidget *parent)
 
     m_page->colorButton->setColor(StyleHelper::requestedBaseColor());
     m_page->reloadBehavior->setCurrentIndex(EditorManager::reloadSetting());
-    /*if (HostOsInfo::isAnyUnixHost()) {
-        QSettings *settings = Core::ICore::settings();
-        const QStringList availableTerminals = ConsoleProcess::availableTerminalEmulators();
-        const QString currentTerminal = ConsoleProcess::terminalEmulator(settings, false);
-        m_page->terminalComboBox->addItems(availableTerminals);
-        m_page->terminalComboBox->lineEdit()->setText(currentTerminal);
-        m_page->terminalComboBox->lineEdit()->setPlaceholderText(ConsoleProcess::defaultTerminalEmulator());
-    } else {*/
-        m_page->terminalLabel->hide();
-        m_page->terminalComboBox->hide();
-        m_page->resetTerminalButton->hide();
-    //}
 
     if (HostOsInfo::isAnyUnixHost() && !HostOsInfo::isMacHost()) {
         QSettings *settings = Core::ICore::settings();
@@ -145,7 +132,6 @@ QWidget *GeneralSettings::createPage(QWidget *parent)
     connect(m_page->resetWarningsButton, SIGNAL(clicked()),
             this, SLOT(resetWarnings()));
     if (HostOsInfo::isAnyUnixHost()) {
-        connect(m_page->resetTerminalButton, SIGNAL(clicked()), this, SLOT(resetTerminal()));
         if (!HostOsInfo::isMacHost()) {
             connect(m_page->resetFileBrowserButton, SIGNAL(clicked()), this, SLOT(resetFileBrowser()));
             connect(m_page->helpExternalFileBrowserButton, SIGNAL(clicked()),
@@ -160,7 +146,6 @@ QWidget *GeneralSettings::createPage(QWidget *parent)
                 << m_page->colorLabel->text() << sep
                 << m_page->languageLabel->text() << sep
                 << m_page->systemBox->title() << sep
-                << m_page->terminalLabel->text() << sep
                 << m_page->modifiedLabel->text();
         m_searchKeywords.remove(QLatin1Char('&'));
     }
@@ -181,14 +166,12 @@ void GeneralSettings::apply()
     // Apply the new base color if accepted
     StyleHelper::setBaseColor(m_page->colorButton->color());
     EditorManager::setReloadSetting(IDocument::ReloadSetting(m_page->reloadBehavior->currentIndex()));
-    /*if (HostOsInfo::isAnyUnixHost()) {
-        ConsoleProcess::setTerminalEmulator(Core::ICore::settings(),
-                                            m_page->terminalComboBox->lineEdit()->text());
+    if (HostOsInfo::isAnyUnixHost()) {
         if (!HostOsInfo::isMacHost()) {
             Utils::UnixUtils::setFileBrowser(Core::ICore::settings(),
                                              m_page->externalFileBrowserEdit->text());
         }
-    }*/
+    }
     EditorManager::setAutoSaveEnabled(m_page->autoSaveCheckBox->isChecked());
     EditorManager::setAutoSaveInterval(m_page->autoSaveInterval->value());
 }
@@ -211,12 +194,6 @@ void GeneralSettings::resetWarnings()
     Core::InfoBar::clearGloballySuppressed();
     Utils::CheckableMessageBox::resetAllDoNotAskAgainQuestions(ICore::settings());
     m_page->resetWarningsButton->setEnabled(false);
-}
-
-void GeneralSettings::resetTerminal()
-{
-    if (HostOsInfo::isAnyUnixHost())
-        m_page->terminalComboBox->lineEdit()->setText(QString());
 }
 
 void GeneralSettings::resetFileBrowser()

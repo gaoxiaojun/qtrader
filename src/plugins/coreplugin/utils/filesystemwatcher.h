@@ -27,32 +27,64 @@
 **
 ****************************************************************************/
 
-#ifndef ADDTOVCSDIALOG_H
-#define ADDTOVCSDIALOG_H
+#ifndef FILESYSTEMWATCHER_H
+#define FILESYSTEMWATCHER_H
 
-#include <QDialog>
+#include "utils_global.h"
 
-namespace Core {
-namespace Internal {
+#include <QObject>
 
-namespace Ui {
-class AddToVcsDialog;
-}
+namespace Utils {
+class FileSystemWatcherPrivate;
 
-class AddToVcsDialog : public QDialog
+// Documentation inside.
+class UTILS_EXPORT FileSystemWatcher : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit AddToVcsDialog(QWidget *parent, const QString &title,
-                            const QStringList &files, const QString &vcsDisplayName);
-    ~AddToVcsDialog();
+    enum WatchMode
+    {
+        WatchModifiedDate,
+        WatchAllChanges
+    };
+
+    explicit FileSystemWatcher(QObject *parent = 0);
+    explicit FileSystemWatcher(int id, QObject *parent = 0);
+    virtual ~FileSystemWatcher();
+
+    void addFile(const QString &file, WatchMode wm);
+    void addFiles(const QStringList &files, WatchMode wm);
+
+    void removeFile(const QString &file);
+    void removeFiles(const QStringList &files);
+
+    bool watchesFile(const QString &file) const;
+    QStringList files() const;
+
+    void addDirectory(const QString &file, WatchMode wm);
+    void addDirectories(const QStringList &files, WatchMode wm);
+
+    void removeDirectory(const QString &file);
+    void removeDirectories(const QStringList &files);
+
+    bool watchesDirectory(const QString &file) const;
+    QStringList directories() const;
+
+private slots:
+    void slotFileChanged(const QString &path);
+    void slotDirectoryChanged(const QString &path);
+
+signals:
+    void fileChanged(const QString &path);
+    void directoryChanged(const QString &path);
 
 private:
-    Ui::AddToVcsDialog *ui;
+    void init();
+
+    FileSystemWatcherPrivate *d;
 };
 
+} // namespace Utils
 
-} // namespace Internal
-} // namespace Core
-#endif // ADDTOVCSDIALOG_H
+#endif // FILESYSTEMWATCHER_H

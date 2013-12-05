@@ -26,37 +26,29 @@
 ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
 **
 ****************************************************************************/
-#include "addtovcsdialog.h"
-#include "ui_addtovcsdialog.h"
 
-#include <QListWidgetItem>
+#ifndef UNIXUTILS_H
+#define UNIXUTILS_H
 
-namespace Core {
-namespace Internal {
+#include "utils_global.h"
 
-AddToVcsDialog::AddToVcsDialog(QWidget *parent, const QString &title,
-                               const QStringList &files, const QString &vcsDisplayName) :
-    QDialog(parent),
-    ui(new Ui::AddToVcsDialog)
+QT_BEGIN_NAMESPACE
+class QSettings;
+QT_END_NAMESPACE
+
+namespace Utils {
+
+class UTILS_EXPORT UnixUtils
 {
-    ui->setupUi(this);
-    QString addTo = files.size() == 1
-            ? tr("Add the file to version control (%1)").arg(vcsDisplayName)
-            : tr("Add the files to version control (%1)").arg(vcsDisplayName);
+public:
+    static QString defaultFileBrowser();
+    static QString fileBrowser(const QSettings *settings);
+    static void setFileBrowser(QSettings *settings, const QString &term);
+    static QString fileBrowserHelpText();
+    static QString substituteFileBrowserParameters(const QString &command,
+                                                   const QString &file);
+};
 
-    ui->addFilesLabel->setText(addTo);
-    setWindowTitle(title);
-
-    foreach (const QString &file, files) {
-        QListWidgetItem *item = new QListWidgetItem(file);
-        ui->filesListWidget->addItem(item);
-    }
 }
 
-AddToVcsDialog::~AddToVcsDialog()
-{
-    delete ui;
-}
-
-} // namespace Internal
-} // namespace Core
+#endif // UNIXUTILS_H

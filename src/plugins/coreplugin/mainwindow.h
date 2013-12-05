@@ -63,7 +63,6 @@ class NavigationWidget;
 class RightPaneWidget;
 class SettingsDatabase;
 class VariableManager;
-class VcsManager;
 
 namespace Internal {
 
@@ -171,7 +170,6 @@ private:
     MessageManager *m_messageManager;
     ProgressManagerPrivate *m_progressManager;
     VariableManager *m_variableManager;
-    VcsManager *m_vcsManager;
     StatusBarManager *m_statusBarManager;
     ModeManager *m_modeManager;
     MimeDatabase *m_mimeDatabase;

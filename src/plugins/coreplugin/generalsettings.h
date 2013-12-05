@@ -62,7 +62,6 @@ private slots:
     void resetLanguage();
     void showHelpForFileBrowser();
     void resetFileBrowser();
-    void resetTerminal();
 
 private:
     void variableHelpDialogCreator(const QString &helpText);

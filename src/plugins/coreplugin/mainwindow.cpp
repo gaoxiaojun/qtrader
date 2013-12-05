@@ -41,7 +41,6 @@
 #include "mimedatabase.h"
 #include "outputpanemanager.h"
 #include "plugindialog.h"
-#include "vcsmanager.h"
 #include "variablemanager.h"
 #include "versiondialog.h"
 #include "statusbarmanager.h"
@@ -139,7 +138,6 @@ MainWindow::MainWindow() :
     m_editorManager(0),
     m_progressManager(new ProgressManagerPrivate),
     m_variableManager(new VariableManager),
-    m_vcsManager(new VcsManager),
     m_statusBarManager(0),
     m_modeManager(0),
     m_mimeDatabase(new MimeDatabase),
@@ -286,8 +284,6 @@ MainWindow::~MainWindow()
     m_settings = 0;
     delete m_printer;
     m_printer = 0;
-    delete m_vcsManager;
-    m_vcsManager = 0;
     //we need to delete editormanager and statusbarmanager explicitly before the end of the destructor,
     //because they might trigger stuff that tries to access data from editorwindow, like removeContextWidget
 
@@ -354,7 +350,6 @@ void MainWindow::extensionsInitialized()
     m_editorManager->init();
     m_statusBarManager->extensionsInitalized();
     OutputPaneManager::instance()->init();
-    m_vcsManager->extensionsInitialized();
     m_navigationWidget->setFactories(ExtensionSystem::PluginManager::getObjects<INavigationWidgetFactory>());
 
     // reading the shortcut settings must be done after all shortcuts have been registered

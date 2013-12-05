@@ -40,7 +40,6 @@ imode.h
 inavigationwidgetfactory.h
 infobar.h
 ioutputpane.h
-iversioncontrol.h
 macfullscreen.h
 mainwindow.h
 manhattanstyle.h
@@ -69,7 +68,6 @@ tabpositionindicator.h
 textdocument.h
 variablechooser.h
 variablemanager.h
-vcsmanager.h
 versiondialog.h
 basefilewizard.cpp
 coreplugin.cpp
@@ -94,7 +92,6 @@ idocument.cpp
 imode.cpp
 inavigationwidgetfactory.cpp
 infobar.cpp
-iversioncontrol.cpp
 mainwindow.cpp
 manhattanstyle.cpp
 messagemanager.cpp
@@ -122,7 +119,6 @@ tabpositionindicator.cpp
 textdocument.cpp
 variablechooser.cpp
 variablemanager.cpp
-vcsmanager.cpp
 versiondialog.cpp
 actionmanager/actioncontainer.h
 actionmanager/actioncontainer_p.h
@@ -139,7 +135,6 @@ actionmanager/command.cpp
 actionmanager/commandbutton.cpp
 actionmanager/commandmappings.cpp
 actionmanager/commandsfile.cpp
-dialogs/addtovcsdialog.h
 dialogs/ioptionspage.h
 dialogs/iwizard.h
 dialogs/newdialog.h
@@ -149,7 +144,6 @@ dialogs/readonlyfilesdialog.h
 dialogs/saveitemsdialog.h
 dialogs/settingsdialog.h
 dialogs/shortcutsettings.h
-dialogs/addtovcsdialog.cpp
 dialogs/ioptionspage.cpp
 dialogs/iwizard.cpp
 dialogs/newdialog.cpp
@@ -255,6 +249,8 @@ utils/filenamevalidatinglineedit.cpp
 utils/ansiescapecodehandler.h
 utils/ansiescapecodehandler.cpp
 utils/outputformat.h
+utils/filesystemwatcher.h
+utils/filesystemwatcher.cpp
 )
 
 if(WIN32)

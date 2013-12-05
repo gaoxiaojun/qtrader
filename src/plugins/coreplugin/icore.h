@@ -49,7 +49,6 @@ class Context;
 class IContext;
 class ProgressManager;
 class SettingsDatabase;
-class VcsManager;
 
 namespace Internal { class MainWindow; }
 

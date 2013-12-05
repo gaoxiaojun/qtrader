@@ -12,9 +12,8 @@
 <context>
     <name>ChartMode</name>
     <message>
-        <location filename="../chartmode.cpp" line="119"/>
         <source>Design</source>
-        <translation type="unfinished">设计</translation>
+        <translation type="obsolete">设计</translation>
     </message>
 </context>
 <context>
@@ -81,6 +80,14 @@
 %2.</source>
         <translation>项目目录 %1 存在着无法被覆盖的文件:
 %2。</translation>
+    </message>
+</context>
+<context>
+    <name>Core::ChartMode</name>
+    <message>
+        <location filename="../chartmode.cpp" line="119"/>
+        <source>Design</source>
+        <translation type="unfinished">设计</translation>
     </message>
 </context>
 <context>
@@ -164,342 +171,338 @@
 <context>
     <name>Core::EditorManager</name>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="229"/>
-        <location filename="../editormanager/editormanager.cpp" line="242"/>
-        <location filename="../editormanager/editormanager.cpp" line="2341"/>
+        <location filename="../editormanager/editormanager.cpp" line="219"/>
+        <location filename="../editormanager/editormanager.cpp" line="232"/>
+        <location filename="../editormanager/editormanager.cpp" line="2292"/>
         <source>Revert to Saved</source>
         <translation>恢复到已保存的状态</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="232"/>
-        <location filename="../editormanager/editormanager.cpp" line="243"/>
-        <location filename="../editormanager/editormanager.cpp" line="321"/>
+        <location filename="../editormanager/editormanager.cpp" line="222"/>
+        <location filename="../editormanager/editormanager.cpp" line="233"/>
+        <location filename="../editormanager/editormanager.cpp" line="311"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="233"/>
-        <location filename="../editormanager/editormanager.cpp" line="244"/>
+        <location filename="../editormanager/editormanager.cpp" line="223"/>
+        <location filename="../editormanager/editormanager.cpp" line="234"/>
         <source>Close All</source>
         <translation>关闭所有文件</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="234"/>
-        <location filename="../editormanager/editormanager.cpp" line="245"/>
-        <location filename="../editormanager/editormanager.cpp" line="2038"/>
+        <location filename="../editormanager/editormanager.cpp" line="224"/>
+        <location filename="../editormanager/editormanager.cpp" line="235"/>
+        <location filename="../editormanager/editormanager.cpp" line="1989"/>
         <source>Close Others</source>
         <translation>关闭其他</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="235"/>
-        <location filename="../editormanager/editormanager.cpp" line="246"/>
+        <location filename="../editormanager/editormanager.cpp" line="225"/>
+        <location filename="../editormanager/editormanager.cpp" line="236"/>
         <source>Close All Except Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="236"/>
+        <location filename="../editormanager/editormanager.cpp" line="226"/>
         <source>Next Open Document in History</source>
         <translation>历史中下个打开的文件</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="237"/>
+        <location filename="../editormanager/editormanager.cpp" line="227"/>
         <source>Previous Open Document in History</source>
         <translation>历史中先前打开的文件</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="238"/>
+        <location filename="../editormanager/editormanager.cpp" line="228"/>
         <source>Go Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="239"/>
+        <location filename="../editormanager/editormanager.cpp" line="229"/>
         <source>Go Forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="240"/>
+        <location filename="../editormanager/editormanager.cpp" line="230"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="241"/>
+        <location filename="../editormanager/editormanager.cpp" line="231"/>
         <source>Save &amp;As...</source>
         <translation>另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="289"/>
+        <location filename="../editormanager/editormanager.cpp" line="279"/>
         <source>Revert File to Saved</source>
         <translation>恢复文件到已保存的状态</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="310"/>
+        <location filename="../editormanager/editormanager.cpp" line="300"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="320"/>
+        <location filename="../editormanager/editormanager.cpp" line="310"/>
         <source>Ctrl+F4</source>
         <translation>Ctrl+F4</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="327"/>
+        <location filename="../editormanager/editormanager.cpp" line="317"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="359"/>
+        <location filename="../editormanager/editormanager.cpp" line="349"/>
         <source>Alt+Tab</source>
         <translation>Alt+Tab</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="359"/>
+        <location filename="../editormanager/editormanager.cpp" line="349"/>
         <source>Ctrl+Tab</source>
         <translation>Ctrl+Tab</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="365"/>
+        <location filename="../editormanager/editormanager.cpp" line="355"/>
         <source>Alt+Shift+Tab</source>
         <translation>Alt+Shift+Tab</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="365"/>
+        <location filename="../editormanager/editormanager.cpp" line="355"/>
         <source>Ctrl+Shift+Tab</source>
         <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="371"/>
+        <location filename="../editormanager/editormanager.cpp" line="361"/>
         <source>Ctrl+Alt+Left</source>
         <translation>Ctrl+Alt+Left</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="371"/>
+        <location filename="../editormanager/editormanager.cpp" line="361"/>
         <source>Alt+Left</source>
         <translation>Alt+Left</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="377"/>
+        <location filename="../editormanager/editormanager.cpp" line="367"/>
         <source>Ctrl+Alt+Right</source>
         <translation>Ctrl+Alt+Right</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="377"/>
+        <location filename="../editormanager/editormanager.cpp" line="367"/>
         <source>Alt+Right</source>
         <translation>Alt+Right</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="381"/>
+        <location filename="../editormanager/editormanager.cpp" line="371"/>
         <source>Split</source>
         <translation>分栏</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="383"/>
+        <location filename="../editormanager/editormanager.cpp" line="373"/>
         <source>Meta+E,2</source>
         <translation>Meta+E,2</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="383"/>
+        <location filename="../editormanager/editormanager.cpp" line="373"/>
         <source>Ctrl+E,2</source>
         <translation>Ctrl+E,2</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="387"/>
+        <location filename="../editormanager/editormanager.cpp" line="377"/>
         <source>Split Side by Side</source>
         <translation>左右分栏</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="389"/>
+        <location filename="../editormanager/editormanager.cpp" line="379"/>
         <source>Meta+E,3</source>
         <translation>Meta+E,3</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="389"/>
+        <location filename="../editormanager/editormanager.cpp" line="379"/>
         <source>Ctrl+E,3</source>
         <translation>Ctrl+E,3</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="393"/>
+        <location filename="../editormanager/editormanager.cpp" line="383"/>
         <source>Open in New Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="395"/>
+        <location filename="../editormanager/editormanager.cpp" line="385"/>
         <source>Meta+E,4</source>
         <translation type="unfinished">Meta+E,4</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="395"/>
+        <location filename="../editormanager/editormanager.cpp" line="385"/>
         <source>Ctrl+E,4</source>
         <translation type="unfinished">Ctrl+E,4</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="399"/>
+        <location filename="../editormanager/editormanager.cpp" line="389"/>
         <source>Remove Current Split</source>
         <translation>删除当前分隔</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="401"/>
+        <location filename="../editormanager/editormanager.cpp" line="391"/>
         <source>Meta+E,0</source>
         <translation>Meta+E,0</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="401"/>
+        <location filename="../editormanager/editormanager.cpp" line="391"/>
         <source>Ctrl+E,0</source>
         <translation>Ctrl+E,0</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="405"/>
+        <location filename="../editormanager/editormanager.cpp" line="395"/>
         <source>Remove All Splits</source>
         <translation>删除所有分隔</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="407"/>
+        <location filename="../editormanager/editormanager.cpp" line="397"/>
         <source>Meta+E,1</source>
         <translation>Meta+E,1</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="407"/>
+        <location filename="../editormanager/editormanager.cpp" line="397"/>
         <source>Ctrl+E,1</source>
         <translation>Ctrl+E,1</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="411"/>
+        <location filename="../editormanager/editormanager.cpp" line="401"/>
         <source>Go to Next Split or Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="413"/>
+        <location filename="../editormanager/editormanager.cpp" line="403"/>
         <source>Meta+E,o</source>
         <translation>Meta+E,o</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="413"/>
+        <location filename="../editormanager/editormanager.cpp" line="403"/>
         <source>Ctrl+E,o</source>
         <translation>Ctrl+E,o</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="420"/>
+        <location filename="../editormanager/editormanager.cpp" line="410"/>
         <source>Ad&amp;vanced</source>
         <translation>高级(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="488"/>
+        <location filename="../editormanager/editormanager.cpp" line="478"/>
         <source>Current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="490"/>
+        <location filename="../editormanager/editormanager.cpp" line="480"/>
         <source>X-coordinate of the current editor&apos;s upper left corner, relative to screen.</source>
         <translation>当前编辑器的左上角(相对屏幕来说)X坐标轴。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="492"/>
+        <location filename="../editormanager/editormanager.cpp" line="482"/>
         <source>Y-coordinate of the current editor&apos;s upper left corner, relative to screen.</source>
         <translation>当前编辑器的左上角(相对屏幕来说)Y坐标轴。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="802"/>
+        <location filename="../editormanager/editormanager.cpp" line="792"/>
         <source>Close &quot;%1&quot;</source>
         <translation>关闭%1</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="803"/>
+        <location filename="../editormanager/editormanager.cpp" line="793"/>
         <source>Close Editor</source>
         <translation>关闭编辑器</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="805"/>
+        <location filename="../editormanager/editormanager.cpp" line="795"/>
         <source>Close All Except &quot;%1&quot;</source>
         <translation>除了%1 以外全部关闭</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="806"/>
+        <location filename="../editormanager/editormanager.cpp" line="796"/>
         <source>Close Other Editors</source>
         <translation>关闭其他编辑器</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1619"/>
-        <location filename="../editormanager/editormanager.cpp" line="1789"/>
-        <location filename="../editormanager/editormanager.cpp" line="2354"/>
+        <location filename="../editormanager/editormanager.cpp" line="1609"/>
+        <location filename="../editormanager/editormanager.cpp" line="1779"/>
+        <location filename="../editormanager/editormanager.cpp" line="2305"/>
         <source>File Error</source>
         <translation>文件错误</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1651"/>
+        <location filename="../editormanager/editormanager.cpp" line="1641"/>
         <source>Opening File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1908"/>
         <source>Cannot Open File</source>
-        <translation>无法打开文件</translation>
+        <translation type="vanished">无法打开文件</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1909"/>
         <source>Cannot open the file for editing with VCS.</source>
-        <translation>无法为了编辑VCS而打开文件。</translation>
+        <translation type="vanished">无法为了编辑VCS而打开文件。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1915"/>
+        <location filename="../editormanager/editormanager.cpp" line="1888"/>
         <source>Qt Creator</source>
         <translation>Qt Creator</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1979"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; This file was not opened in %1 yet.</source>
-        <translation>&lt;b&gt;警告:&lt;/b&gt; 此文件还没有在%1中打开。</translation>
+        <translation type="vanished">&lt;b&gt;警告:&lt;/b&gt; 此文件还没有在%1中打开。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1981"/>
         <source>Open</source>
-        <translation>打开</translation>
+        <translation type="vanished">打开</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1985"/>
+        <location filename="../editormanager/editormanager.cpp" line="1937"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; You are changing a read-only file.</source>
         <translation>&lt;b&gt;警告:&lt;/b&gt; 您正在改写一个只读文件。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1986"/>
+        <location filename="../editormanager/editormanager.cpp" line="1938"/>
         <source>Make Writable</source>
         <translation>使文件可写</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2007"/>
+        <location filename="../editormanager/editormanager.cpp" line="1958"/>
         <source>&amp;Save %1</source>
         <translation>保存%1(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2008"/>
+        <location filename="../editormanager/editormanager.cpp" line="1959"/>
         <source>Save %1 &amp;As...</source>
         <translation>%1 另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2009"/>
+        <location filename="../editormanager/editormanager.cpp" line="1960"/>
         <source>Revert %1 to Saved</source>
         <translation>恢复%1 到已保存的状态</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2035"/>
+        <location filename="../editormanager/editormanager.cpp" line="1986"/>
         <source>Close %1</source>
         <translation>关闭%1</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2038"/>
+        <location filename="../editormanager/editormanager.cpp" line="1989"/>
         <source>Close All Except %1</source>
         <translation>除了%1 以外全部关闭</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2342"/>
+        <location filename="../editormanager/editormanager.cpp" line="2293"/>
         <source>You will lose your current changes if you proceed reverting %1.</source>
         <translation>如果恢复 %1 那么您将会丢失现有的所有修改。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2344"/>
+        <location filename="../editormanager/editormanager.cpp" line="2295"/>
         <source>Proceed</source>
         <translation>继续</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2345"/>
+        <location filename="../editormanager/editormanager.cpp" line="2296"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -512,22 +515,27 @@
         <translation>分栏</translation>
     </message>
     <message>
-        <location filename="../editortoolbar.cpp" line="323"/>
+        <location filename="../editortoolbar.cpp" line="324"/>
         <source>Copy Full Path to Clipboard</source>
         <translation>复制完整路径到剪贴板</translation>
     </message>
     <message>
-        <location filename="../editortoolbar.cpp" line="354"/>
+        <location filename="../editortoolbar.cpp" line="325"/>
+        <source>Copy File Name to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editortoolbar.cpp" line="358"/>
         <source>Remove Split</source>
         <translation>删除分栏</translation>
     </message>
     <message>
-        <location filename="../editortoolbar.cpp" line="389"/>
+        <location filename="../editortoolbar.cpp" line="393"/>
         <source>Make Writable</source>
         <translation>使文件可写</translation>
     </message>
     <message>
-        <location filename="../editortoolbar.cpp" line="393"/>
+        <location filename="../editortoolbar.cpp" line="397"/>
         <source>File is writable</source>
         <translation>文件可写</translation>
     </message>
@@ -570,9 +578,8 @@
 <context>
     <name>Core::IVersionControl</name>
     <message>
-        <location filename="../iversioncontrol.cpp" line="36"/>
         <source>Open with VCS (%1)</source>
-        <translation>使用VCS打开 (%1)</translation>
+        <translation type="vanished">使用VCS打开 (%1)</translation>
     </message>
 </context>
 <context>
@@ -591,12 +598,12 @@
 <context>
     <name>Core::Internal</name>
     <message>
-        <location filename="../fileutils.cpp" line="61"/>
+        <location filename="../fileutils.cpp" line="58"/>
         <source>Launching a file browser failed</source>
         <translation>启动文件浏览器失败</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="63"/>
+        <location filename="../fileutils.cpp" line="60"/>
         <source>Unable to start the file manager:
 
 %1
@@ -609,7 +616,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="67"/>
+        <location filename="../fileutils.cpp" line="64"/>
         <source>&apos;%1&apos; returned the following error:
 
 %2</source>
@@ -618,77 +625,57 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="69"/>
+        <location filename="../fileutils.cpp" line="66"/>
         <source>Settings...</source>
         <translation>设定...</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="83"/>
+        <location filename="../fileutils.cpp" line="80"/>
         <source>Launching Windows Explorer Failed</source>
         <translation>启动Windows Explorer 失败</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="85"/>
+        <location filename="../fileutils.cpp" line="82"/>
         <source>Could not find explorer.exe in path to launch Windows Explorer.</source>
         <translation>在环境变量中找不到explorer.exe,无法启动Windows Explorer.</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="145"/>
+        <location filename="../fileutils.cpp" line="142"/>
         <source>Find in This Directory...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="151"/>
+        <location filename="../fileutils.cpp" line="148"/>
         <source>Show in Explorer</source>
         <translation>在Explorer中显示</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="153"/>
+        <location filename="../fileutils.cpp" line="150"/>
         <source>Show in Finder</source>
         <translation>在Finder中显示</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="154"/>
+        <location filename="../fileutils.cpp" line="151"/>
         <source>Show Containing Folder</source>
         <translation>显示包含的目录</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="160"/>
         <source>Open Command Prompt Here</source>
-        <translation>在此弹出命令提示</translation>
+        <translation type="vanished">在此弹出命令提示</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="161"/>
         <source>Open Terminal Here</source>
-        <translation>在此打开终端</translation>
+        <translation type="vanished">在此打开终端</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="177"/>
+        <location filename="../fileutils.cpp" line="171"/>
         <source>Deleting File Failed</source>
         <translation>删除文件失败</translation>
     </message>
     <message>
-        <location filename="../fileutils.cpp" line="178"/>
+        <location filename="../fileutils.cpp" line="172"/>
         <source>Could not delete file %1.</source>
         <translation>无法删除文件 %1 。</translation>
-    </message>
-</context>
-<context>
-    <name>Core::Internal::AddToVcsDialog</name>
-    <message>
-        <location filename="../dialogs/addtovcsdialog.ui" line="26"/>
-        <source>Dialog</source>
-        <translation>对话框</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/addtovcsdialog.cpp" line="44"/>
-        <source>Add the file to version control (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/addtovcsdialog.cpp" line="45"/>
-        <source>Add the files to version control (%1)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -790,8 +777,7 @@
     </message>
     <message>
         <location filename="../generalsettings.ui" line="57"/>
-        <location filename="../generalsettings.ui" line="149"/>
-        <location filename="../generalsettings.ui" line="169"/>
+        <location filename="../generalsettings.ui" line="135"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
@@ -817,95 +803,93 @@
         <translation>系统</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="132"/>
         <source>Terminal:</source>
-        <translation>终端:</translation>
+        <translation type="vanished">终端:</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="146"/>
         <source>Reset to default.</source>
         <comment>Terminal</comment>
-        <translation>重置为默认。</translation>
+        <translation type="vanished">重置为默认。</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="156"/>
+        <location filename="../generalsettings.ui" line="262"/>
         <source>External file browser:</source>
         <translation>外部文件浏览器:</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="166"/>
+        <location filename="../generalsettings.ui" line="132"/>
         <source>Reset to default.</source>
         <comment>File Browser</comment>
         <translation>重置为默认。</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="176"/>
+        <location filename="../generalsettings.ui" line="251"/>
         <source>?</source>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="189"/>
+        <location filename="../generalsettings.ui" line="207"/>
         <source>When files are externally modified:</source>
         <translation>当文件被外部修改时:</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="200"/>
+        <location filename="../generalsettings.ui" line="218"/>
         <source>Always Ask</source>
         <translation>总是询问</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="205"/>
+        <location filename="../generalsettings.ui" line="223"/>
         <source>Reload All Unchanged Editors</source>
         <translation>重新载入所有未变更的编辑器</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="210"/>
+        <location filename="../generalsettings.ui" line="228"/>
         <source>Ignore Modifications</source>
         <translation>忽略修改</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="235"/>
+        <location filename="../generalsettings.ui" line="144"/>
         <source>Automatically create temporary copies of modified files. If Qt Creator is restarted after a crash or power failure, it asks whether to recover the auto-saved content.</source>
         <translation>自动为已修改的文件创建临时备份。如果Qt Creator在崩溃或停电后重启,它将会询问是否恢复自动保存的内容。</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="238"/>
+        <location filename="../generalsettings.ui" line="147"/>
         <source>Auto-save modified files</source>
         <translation>自动保存修改的文件</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="264"/>
+        <location filename="../generalsettings.ui" line="173"/>
         <source>Interval:</source>
         <translation>间隔:</translation>
     </message>
     <message>
-        <location filename="../generalsettings.ui" line="271"/>
+        <location filename="../generalsettings.ui" line="180"/>
         <source>min</source>
         <extracomment>unit for minutes</extracomment>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../generalsettings.cpp" line="60"/>
+        <location filename="../generalsettings.cpp" line="59"/>
         <source>General</source>
         <translation>概要</translation>
     </message>
     <message>
-        <location filename="../generalsettings.cpp" line="78"/>
+        <location filename="../generalsettings.cpp" line="77"/>
         <source>&lt;System Language&gt;</source>
         <translation>&lt;系统语言&gt;</translation>
     </message>
     <message>
-        <location filename="../generalsettings.cpp" line="240"/>
+        <location filename="../generalsettings.cpp" line="217"/>
         <source>Variables</source>
         <translation>变量</translation>
     </message>
     <message>
-        <location filename="../generalsettings.cpp" line="273"/>
+        <location filename="../generalsettings.cpp" line="250"/>
         <source>Restart required</source>
         <translation>需要重启</translation>
     </message>
     <message>
-        <location filename="../generalsettings.cpp" line="274"/>
+        <location filename="../generalsettings.cpp" line="251"/>
         <source>The language change will take effect after a restart of Qt Creator.</source>
         <translation>语言变更会在重启 Qt Creator 后生效。</translation>
     </message>
@@ -913,250 +897,250 @@
 <context>
     <name>Core::Internal::MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="173"/>
+        <location filename="../mainwindow.cpp" line="171"/>
         <source>Qt Creator</source>
         <translation>Qt Creator</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="264"/>
+        <location filename="../mainwindow.cpp" line="262"/>
         <source>Exit Full Screen</source>
         <translation>退出全屏模式</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="266"/>
-        <location filename="../mainwindow.cpp" line="739"/>
+        <location filename="../mainwindow.cpp" line="264"/>
+        <location filename="../mainwindow.cpp" line="734"/>
         <source>Enter Full Screen</source>
         <translation>进入全屏模式</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="484"/>
+        <location filename="../mainwindow.cpp" line="479"/>
         <source>&amp;File</source>
         <translation>文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="498"/>
+        <location filename="../mainwindow.cpp" line="493"/>
         <source>&amp;Edit</source>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="509"/>
+        <location filename="../mainwindow.cpp" line="504"/>
         <source>&amp;Tools</source>
         <translation>工具(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="514"/>
+        <location filename="../mainwindow.cpp" line="509"/>
         <source>&amp;Window</source>
         <translation>窗口(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="525"/>
+        <location filename="../mainwindow.cpp" line="520"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="560"/>
+        <location filename="../mainwindow.cpp" line="555"/>
         <source>&amp;New File or Project...</source>
         <translation>新建文件或项目(&amp;N)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="568"/>
+        <location filename="../mainwindow.cpp" line="563"/>
         <source>&amp;Open File or Project...</source>
         <translation>打开文件或项目(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="575"/>
+        <location filename="../mainwindow.cpp" line="570"/>
         <source>Open File &amp;With...</source>
         <translation>打开文件，用...(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="583"/>
+        <location filename="../mainwindow.cpp" line="578"/>
         <source>Recent &amp;Files</source>
         <translation>最近访问的文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="588"/>
+        <location filename="../mainwindow.cpp" line="583"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="593"/>
+        <location filename="../mainwindow.cpp" line="588"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="598"/>
+        <location filename="../mainwindow.cpp" line="593"/>
         <source>Save &amp;As...</source>
         <translation>另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="601"/>
-        <location filename="../mainwindow.cpp" line="609"/>
+        <location filename="../mainwindow.cpp" line="596"/>
+        <location filename="../mainwindow.cpp" line="604"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="603"/>
+        <location filename="../mainwindow.cpp" line="598"/>
         <source>Save As...</source>
         <translation>另存为...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="607"/>
+        <location filename="../mainwindow.cpp" line="602"/>
         <source>Save A&amp;ll</source>
         <translation>保存所有文件(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="615"/>
+        <location filename="../mainwindow.cpp" line="610"/>
         <source>&amp;Print...</source>
         <translation>打印(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="623"/>
+        <location filename="../mainwindow.cpp" line="618"/>
         <source>E&amp;xit</source>
         <translation>退出(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="625"/>
+        <location filename="../mainwindow.cpp" line="620"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="631"/>
+        <location filename="../mainwindow.cpp" line="626"/>
         <source>&amp;Undo</source>
         <translation>撤销(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="635"/>
+        <location filename="../mainwindow.cpp" line="630"/>
         <source>Undo</source>
         <translation>撤销</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="641"/>
+        <location filename="../mainwindow.cpp" line="636"/>
         <source>&amp;Redo</source>
         <translation>恢复(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="645"/>
+        <location filename="../mainwindow.cpp" line="640"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="651"/>
+        <location filename="../mainwindow.cpp" line="646"/>
         <source>Cu&amp;t</source>
         <translation>剪切(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="659"/>
+        <location filename="../mainwindow.cpp" line="654"/>
         <source>&amp;Copy</source>
         <translation>复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="667"/>
+        <location filename="../mainwindow.cpp" line="662"/>
         <source>&amp;Paste</source>
         <translation>粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="675"/>
+        <location filename="../mainwindow.cpp" line="670"/>
         <source>Select &amp;All</source>
         <translation>全选(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="683"/>
+        <location filename="../mainwindow.cpp" line="678"/>
         <source>&amp;Go to Line...</source>
         <translation>转到行(&amp;G)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="685"/>
+        <location filename="../mainwindow.cpp" line="680"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="692"/>
+        <location filename="../mainwindow.cpp" line="687"/>
         <source>&amp;Options...</source>
         <translation>选项(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="695"/>
+        <location filename="../mainwindow.cpp" line="690"/>
         <source>Ctrl+,</source>
         <translation>Ctrl+,</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="703"/>
+        <location filename="../mainwindow.cpp" line="698"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="705"/>
+        <location filename="../mainwindow.cpp" line="700"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="710"/>
+        <location filename="../mainwindow.cpp" line="705"/>
         <source>Zoom</source>
         <translation>缩放</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="721"/>
+        <location filename="../mainwindow.cpp" line="716"/>
         <source>Show Sidebar</source>
         <translation>显示边栏</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="725"/>
+        <location filename="../mainwindow.cpp" line="720"/>
         <source>Ctrl+0</source>
         <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="725"/>
+        <location filename="../mainwindow.cpp" line="720"/>
         <source>Alt+0</source>
         <translation>Alt+0</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="732"/>
+        <location filename="../mainwindow.cpp" line="727"/>
         <source>Show Mode Selector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="742"/>
+        <location filename="../mainwindow.cpp" line="737"/>
         <source>Full Screen</source>
         <translation>全屏</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="751"/>
+        <location filename="../mainwindow.cpp" line="746"/>
         <source>Ctrl+Meta+F</source>
         <translation>Ctrl+Meta+F</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="751"/>
+        <location filename="../mainwindow.cpp" line="746"/>
         <source>Ctrl+Shift+F11</source>
         <translation>Ctrl+Shift+F11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="760"/>
+        <location filename="../mainwindow.cpp" line="755"/>
         <source>&amp;Views</source>
         <translation>视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="765"/>
+        <location filename="../mainwindow.cpp" line="760"/>
         <source>About &amp;Qt Creator</source>
         <translation>关于 Qt Creator(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="767"/>
+        <location filename="../mainwindow.cpp" line="762"/>
         <source>About &amp;Qt Creator...</source>
         <translation>关于 Qt Creator(&amp;Q)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="776"/>
+        <location filename="../mainwindow.cpp" line="771"/>
         <source>About &amp;Plugins...</source>
         <translation>关于插件(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="800"/>
+        <location filename="../mainwindow.cpp" line="795"/>
         <source>New</source>
         <comment>Title of dialog</comment>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1272"/>
+        <location filename="../mainwindow.cpp" line="1267"/>
         <source>Settings...</source>
         <translation>设定...</translation>
     </message>
@@ -1645,19 +1629,19 @@ Would you like to overwrite them?</source>
     </message>
     <message>
         <location filename="../dialogs/readonlyfilesdialog.ui" line="46"/>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="96"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="92"/>
         <source>Make Writable</source>
         <translation>使文件可写</translation>
     </message>
     <message>
         <location filename="../dialogs/readonlyfilesdialog.ui" line="51"/>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="97"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="93"/>
         <source>Open with VCS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogs/readonlyfilesdialog.ui" line="56"/>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="98"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="94"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1672,74 +1656,53 @@ Would you like to overwrite them?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="95"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="91"/>
         <source>Mixed</source>
         <translation>混合</translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="197"/>
-        <source>Failed to %1 File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="198"/>
-        <source>%1 file %2 from version control system %3 failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="205"/>
-        <source>No Version Control System Found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="206"/>
-        <source>Cannot open file %1 from version control system.
-No version control system found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="215"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="191"/>
         <source>Cannot Set Permissions</source>
         <translation>无法设置权限</translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="216"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="192"/>
         <source>Cannot set permissions for %1 to writable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="222"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="198"/>
         <source>Cannot Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="223"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="199"/>
         <source>Cannot save file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="228"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="204"/>
         <source>Canceled Changing Permissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="233"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="209"/>
         <source>Could Not Change Permissions on Some Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="235"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="211"/>
         <source>
 See details for a complete list of files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="369"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="339"/>
         <source>Change &amp;Permission</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/readonlyfilesdialog.cpp" line="448"/>
+        <location filename="../dialogs/readonlyfilesdialog.cpp" line="387"/>
         <source>The following files are not checked out yet.
 Do you want to check them out now?</source>
         <translation type="unfinished"></translation>
@@ -1860,6 +1823,11 @@ Do you want to check them out now?</source>
 </context>
 <context>
     <name>Core::Internal::SystemEditor</name>
+    <message>
+        <location filename="../editormanager/systemeditor.cpp" line="57"/>
+        <source>System Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../editormanager/systemeditor.cpp" line="68"/>
         <source>Could not open url %1.</source>
@@ -1995,73 +1963,6 @@ Do you want to check them out now?</source>
     </message>
 </context>
 <context>
-    <name>Core::VcsManager</name>
-    <message>
-        <location filename="../vcsmanager.cpp" line="305"/>
-        <source>%1 repository was detected but %1 is not configured.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="309"/>
-        <source>Configure</source>
-        <translation>配置</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="374"/>
-        <source>Version Control</source>
-        <translation>版本控制</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="375"/>
-        <source>Would you like to remove this file from the version control system (%1)?
-Note: This might remove the local file.</source>
-        <translation>您想从版本控制系统 (%1)中删除此文件么?
-注意: 本地文件有可能被删除。</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="386"/>
-        <source>Add to Version Control</source>
-        <translation>添加到版本控制系统</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="392"/>
-        <source>Add the file
-%1
-to version control (%2)?</source>
-        <translation>添加文件
-%1
-到版本控制 (%2)吗？</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="394"/>
-        <source>Add the files
-%1
-to version control (%2)?</source>
-        <translation>添加文件
-%1
-到版本控制 (%2)吗？</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="400"/>
-        <source>Adding to Version Control Failed</source>
-        <translation>添加文件到版本控制系统失败</translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="406"/>
-        <source>Could not add the file
-%1
-to version control (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../vcsmanager.cpp" line="408"/>
-        <source>Could not add the following files to version control (%1)
-%2</source>
-        <translation>无法添加以下文件到版本控制系统 (%1)
-%2</translation>
-    </message>
-</context>
-<context>
     <name>EditorManager</name>
     <message>
         <location filename="../editortoolbar.cpp" line="85"/>
@@ -2089,7 +1990,7 @@ to version control (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editortoolbar.cpp" line="351"/>
+        <location filename="../editortoolbar.cpp" line="355"/>
         <source>Close Document</source>
         <translation>关闭文档</translation>
     </message>

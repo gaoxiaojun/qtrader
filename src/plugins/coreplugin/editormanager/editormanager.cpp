@@ -48,7 +48,6 @@
 #include <coreplugin/icore.h>
 #include <coreplugin/icorelistener.h>
 #include <coreplugin/infobar.h>
-#include <coreplugin/iversioncontrol.h>
 #include <coreplugin/mimedatabase.h>
 #include <coreplugin/modemanager.h>
 #include <coreplugin/outputpane.h>
@@ -56,7 +55,6 @@
 #include <coreplugin/rightpane.h>
 #include <coreplugin/settingsdatabase.h>
 #include <coreplugin/variablemanager.h>
-#include <coreplugin/vcsmanager.h>
 
 #include <extensionsystem/pluginmanager.h>
 
@@ -114,8 +112,6 @@ using namespace Utils;
 
 //===================EditorManager=====================
 
-EditorManagerPlaceHolder *EditorManagerPlaceHolder::m_current = 0;
-
 EditorManagerPlaceHolder::EditorManagerPlaceHolder(Core::IMode *mode, QWidget *parent)
     : QWidget(parent), m_mode(mode)
 {
@@ -129,16 +125,17 @@ EditorManagerPlaceHolder::EditorManagerPlaceHolder(Core::IMode *mode, QWidget *p
 
 EditorManagerPlaceHolder::~EditorManagerPlaceHolder()
 {
-    if (m_current == this) {
-        EditorManager::instance()->setParent(0);
-        EditorManager::instance()->hide();
+    // EditorManager will be deleted in ~MainWindow()
+    EditorManager *em = EditorManager::instance();
+    if (em && em->parent() == this) {
+        em->hide();
+        em->setParent(0);
     }
 }
 
 void EditorManagerPlaceHolder::currentModeChanged(Core::IMode *mode)
 {
     if (m_mode == mode) {
-        m_current = this;
         QWidget *previousFocus = 0;
         if (EditorManager::instance()->focusWidget() && EditorManager::instance()->focusWidget()->hasFocus())
             previousFocus = EditorManager::instance()->focusWidget();
@@ -146,14 +143,7 @@ void EditorManagerPlaceHolder::currentModeChanged(Core::IMode *mode)
         EditorManager::instance()->show();
         if (previousFocus)
             previousFocus->setFocus();
-    } else if (m_current == this) {
-        m_current = 0;
     }
-}
-
-EditorManagerPlaceHolder* EditorManagerPlaceHolder::current()
-{
-    return m_current;
 }
 
 // ---------------- EditorManager
@@ -1893,23 +1883,6 @@ void EditorManager::makeCurrentEditorWritable()
         makeFileWritable(doc);
 }
 
-void EditorManager::vcsOpenCurrentEditor()
-{
-    IDocument *document = currentDocument();
-    if (!document)
-        return;
-
-    const QString directory = QFileInfo(document->filePath()).absolutePath();
-    IVersionControl *versionControl = VcsManager::findVersionControlForDirectory(directory);
-    if (!versionControl || versionControl->openSupportMode(document->filePath()) == IVersionControl::NoOpen)
-        return;
-
-    if (!versionControl->vcsOpen(document->filePath())) {
-        QMessageBox::warning(ICore::mainWindow(), tr("Cannot Open File"),
-                             tr("Cannot open the file for editing with VCS."));
-    }
-}
-
 void EditorManager::updateWindowTitle()
 {
     QString windowTitle = tr("Qt Creator");
@@ -1958,34 +1931,12 @@ void EditorManager::updateMakeWritableWarning()
     if (ww != document->hasWriteWarning()) {
         document->setWriteWarning(ww);
 
-        // Do this after setWriteWarning so we don't re-evaluate this part even
-        // if we do not really show a warning.
-        bool promptVCS = false;
-        const QString directory = QFileInfo(document->filePath()).absolutePath();
-        IVersionControl *versionControl = VcsManager::findVersionControlForDirectory(directory);
-        if (versionControl && versionControl->openSupportMode(document->filePath()) != IVersionControl::NoOpen) {
-            if (versionControl->settingsFlags() & IVersionControl::AutoOpen) {
-                vcsOpenCurrentEditor();
-                ww = false;
-            } else {
-                promptVCS = true;
-            }
-        }
-
         if (ww) {
             // we are about to change a read-only file, warn user
-            if (promptVCS) {
-                InfoBarEntry info(Id(kMakeWritableWarning),
-                                  tr("<b>Warning:</b> This file was not opened in %1 yet.")
-                                  .arg(versionControl->displayName()));
-                info.setCustomButtonInfo(tr("Open"), m_instance, SLOT(vcsOpenCurrentEditor()));
-                document->infoBar()->addInfo(info);
-            } else {
-                InfoBarEntry info(Id(kMakeWritableWarning),
-                                  tr("<b>Warning:</b> You are changing a read-only file."));
-                info.setCustomButtonInfo(tr("Make Writable"), m_instance, SLOT(makeCurrentEditorWritable()));
-                document->infoBar()->addInfo(info);
-            }
+            InfoBarEntry info(Id(kMakeWritableWarning),
+                              tr("<b>Warning:</b> You are changing a read-only file."));
+            info.setCustomButtonInfo(tr("Make Writable"), m_instance, SLOT(makeCurrentEditorWritable()));
+            document->infoBar()->addInfo(info);
         } else {
             document->infoBar()->removeInfo(Id(kMakeWritableWarning));
         }

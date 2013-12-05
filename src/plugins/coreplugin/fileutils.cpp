@@ -32,12 +32,9 @@
 #include <coreplugin/coreconstants.h>
 #include <coreplugin/documentmanager.h>
 #include <coreplugin/icore.h>
-#include <coreplugin/iversioncontrol.h>
-#include <coreplugin/vcsmanager.h>
-#include <utils/consoleprocess.h>
-#include <utils/hostosinfo.h>
-#include <utils/qtcprocess.h>
-#include <utils/unixutils.h>
+#include "utils/hostosinfo.h"
+#include "utils/unixutils.h"
+#include "utils/environment.h"
 
 #include <QApplication>
 #include <QDir>
@@ -154,18 +151,15 @@ QString FileUtils::msgGraphicalShellAction()
     return QApplication::translate("Core::Internal", "Show Containing Folder");
 }
 
-QString FileUtils::msgTerminalAction()
+/*QString FileUtils::msgTerminalAction()
 {
     if (HostOsInfo::isWindowsHost())
         return QApplication::translate("Core::Internal", "Open Command Prompt Here");
     return QApplication::translate("Core::Internal", "Open Terminal Here");
-}
+}*/
 
 void FileUtils::removeFile(const QString &filePath, bool deleteFromFS)
 {
-    // remove from version control
-    VcsManager::promptToDelete(filePath);
-
     // remove from file system
     if (deleteFromFS) {
         QFile file(filePath);
@@ -180,37 +174,17 @@ void FileUtils::removeFile(const QString &filePath, bool deleteFromFS)
     }
 }
 
-static inline bool fileSystemRenameFile(const QString &orgFilePath,
-                                        const QString &newFilePath)
-{
-#if QT_VERSION < 0x050000
-    QAbstractFileEngine *fileEngine = QAbstractFileEngine::create(orgFilePath); // Due to QTBUG-3570
-    if (!fileEngine->caseSensitive() && orgFilePath.compare(newFilePath, Qt::CaseInsensitive) == 0)
-        return fileEngine->rename(newFilePath);
-#endif
-    // QTBUG-3570 is also valid for Qt 5 but QAbstractFileEngine is now in a private header file and
-    // the symbol is not exported.
-    return QFile::rename(orgFilePath, newFilePath);
-}
-
 bool FileUtils::renameFile(const QString &orgFilePath, const QString &newFilePath)
 {
     if (orgFilePath == newFilePath)
         return false;
 
-    QString dir = QFileInfo(orgFilePath).absolutePath();
-    IVersionControl *vc = VcsManager::findVersionControlForDirectory(dir);
-
-    bool result = false;
-    if (vc && vc->supportsOperation(IVersionControl::MoveOperation))
-        result = vc->vcsMove(orgFilePath, newFilePath);
-    if (!result) // The moving via vcs failed or the vcs does not support moving, fall back
-        result = fileSystemRenameFile(orgFilePath, newFilePath);
-    if (result) {
+    if (QFile::rename(orgFilePath, newFilePath)) {
         // yeah we moved, tell the filemanager about it
         Core::DocumentManager::renamedFile(orgFilePath, newFilePath);
+        return true;
     }
-    return result;
+    return false;
 }
 
 } // namespace Core

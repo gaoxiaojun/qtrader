@@ -34,8 +34,6 @@
 #include <coreplugin/fileiconprovider.h>
 #include <coreplugin/icore.h>
 #include <coreplugin/idocument.h>
-#include <coreplugin/iversioncontrol.h>
-#include <coreplugin/vcsmanager.h>
 
 #include <utils/fileutils.h>
 #include <utils/hostosinfo.h>
@@ -65,8 +63,6 @@ public:
     QList <ButtonGroupForFile> buttonGroups;
 
     QMap <int, int> setAllIndexForOperation;
-    // The version control systems for every file, if the file isn't in VCS the value is 0.
-    QHash <QString, IVersionControl*> versionControls;
 
     // Define if some specific operations should be allowed to make the files writable.
     const bool useSaveAs;
@@ -191,26 +187,6 @@ void ReadOnlyFilesDialog::promptFailWarning(const QStringList &files, ReadOnlyRe
     if (files.count() == 1) {
         const QString file = files.first();
         switch (type) {
-        case RO_OpenVCS: {
-            if (IVersionControl *vc = d->versionControls[file]) {
-                const QString openText = vc->vcsOpenText().remove(QLatin1Char('&'));
-                title = tr("Failed to %1 File").arg(openText);
-                message = tr("%1 file %2 from version control system %3 failed.")
-                        .arg(openText)
-                        .arg(QDir::toNativeSeparators(file))
-                        .arg(vc->displayName());
-                message += QLatin1Char('\n');
-                message += d->failWarning;
-            } else {
-                title = tr("No Version Control System Found");
-                message = tr("Cannot open file %1 from version control system.\n"
-                             "No version control system found.")
-                        .arg(QDir::toNativeSeparators(file));
-                message += QLatin1Char('\n');
-                message += d->failWarning;
-            }
-            break;
-        }
         case RO_MakeWritable:
             title = tr("Cannot Set Permissions");
             message = tr("Cannot set permissions for %1 to writable.")
@@ -257,33 +233,27 @@ int ReadOnlyFilesDialog::exec()
 
     ReadOnlyResult result = RO_Cancel;
     QStringList failedToMakeWritable;
-    foreach (ReadOnlyFilesDialogPrivate::ButtonGroupForFile buttengroup, d->buttonGroups) {
-        result = static_cast<ReadOnlyResult>(buttengroup.group->checkedId());
+    foreach (ReadOnlyFilesDialogPrivate::ButtonGroupForFile buttongroup, d->buttonGroups) {
+        result = static_cast<ReadOnlyResult>(buttongroup.group->checkedId());
         switch (result) {
         case RO_MakeWritable:
-            if (!Utils::FileUtils::makeWritable(Utils::FileName(QFileInfo(buttengroup.fileName)))) {
-                failedToMakeWritable << buttengroup.fileName;
-                continue;
-            }
-            break;
-        case RO_OpenVCS:
-            if (!d->versionControls[buttengroup.fileName]->vcsOpen(buttengroup.fileName)) {
-                failedToMakeWritable << buttengroup.fileName;
+            if (!Utils::FileUtils::makeWritable(Utils::FileName(QFileInfo(buttongroup.fileName)))) {
+                failedToMakeWritable << buttongroup.fileName;
                 continue;
             }
             break;
         case RO_SaveAs:
             if (!EditorManager::saveDocumentAs(d->document)) {
-                failedToMakeWritable << buttengroup.fileName;
+                failedToMakeWritable << buttongroup.fileName;
                 continue;
             }
             break;
         default:
-            failedToMakeWritable << buttengroup.fileName;
+            failedToMakeWritable << buttongroup.fileName;
             continue;
         }
-        if (!QFileInfo(buttengroup.fileName).isWritable())
-            failedToMakeWritable << buttengroup.fileName;
+        if (!QFileInfo(buttongroup.fileName).isWritable())
+            failedToMakeWritable << buttongroup.fileName;
     }
     if (!failedToMakeWritable.isEmpty()) {
         if (d->showWarnings)
@@ -384,43 +354,12 @@ void ReadOnlyFilesDialog::initDialog(const QStringList &fileNames)
         item->setText(Folder, Utils::FileUtils::shortNativePath(Utils::FileName(QFileInfo(directory))));
         QButtonGroup *radioButtonGroup = new QButtonGroup;
 
-        // Add a button for opening the file with a version control system
-        // if the file is managed by an version control system which allows opening files.
-        IVersionControl *versionControlForFile =
-                VcsManager::findVersionControlForDirectory(directory);
-        const bool fileManagedByVCS = versionControlForFile
-                && versionControlForFile->openSupportMode(fileName) != IVersionControl::NoOpen;
-        if (fileManagedByVCS) {
-            const QString vcsOpenTextForFile =
-                    versionControlForFile->vcsOpenText().remove(QLatin1Char('&'));
-            const QString vcsMakeWritableTextforFile =
-                    versionControlForFile->vcsMakeWritableText().remove(QLatin1Char('&'));
-            if (!d->useVCS) {
-                vcsOpenTextForAll = vcsOpenTextForFile;
-                vcsMakeWritableTextForAll = vcsMakeWritableTextforFile;
-                d->useVCS = true;
-            } else {
-                // If there are different open or make writable texts choose the default one.
-                if (vcsOpenTextForFile != vcsOpenTextForAll)
-                    vcsOpenTextForAll.clear();
-                if (vcsMakeWritableTextforFile != vcsMakeWritableTextForAll)
-                    vcsMakeWritableTextForAll.clear();
-            }
-            // Add make writable if it is supported by the reposetory.
-            if (versionControlForFile->openSupportMode(fileName) == IVersionControl::OpenOptional) {
-                useMakeWritable = true;
-                createRadioButtonForItem(item, radioButtonGroup, MakeWritable);
-            }
-            createRadioButtonForItem(item, radioButtonGroup, OpenWithVCS)->setChecked(true);
-        } else {
-            useMakeWritable = true;
-            createRadioButtonForItem(item, radioButtonGroup, MakeWritable)->setChecked(true);
-        }
+        useMakeWritable = true;
+        createRadioButtonForItem(item, radioButtonGroup, MakeWritable)->setChecked(true);
+
         // Add a Save As radio button if requested.
         if (d->useSaveAs)
             createRadioButtonForItem(item, radioButtonGroup, SaveAs);
-        // If the file is managed by a version control system save the vcs for this file.
-        d->versionControls[fileName] = fileManagedByVCS ? versionControlForFile : 0;
 
         // Also save the buttongroup for every file to get the result for each entry.
         ReadOnlyFilesDialogPrivate::ButtonGroupForFile groupForFile;
