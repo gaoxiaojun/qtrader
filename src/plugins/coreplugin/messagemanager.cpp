@@ -68,7 +68,7 @@ void PluginMessageOutput(QtMsgType type, const QMessageLogContext &context, cons
     MessageManager::write (text);
 }
 
-MessageManager *MessageManager::instance()
+QObject *MessageManager::instance()
 {
     return m_instance;
 }

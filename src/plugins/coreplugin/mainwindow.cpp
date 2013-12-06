@@ -149,9 +149,9 @@ MainWindow::MainWindow() :
     setWindowTitle(tr("Qt Creator"));
     if (!Utils::HostOsInfo::isMacHost())
         QApplication::setWindowIcon(QIcon(QLatin1String(Constants::ICON_QTLOGO_128)));
-    QCoreApplication::setApplicationName(QLatin1String("QtCreator"));
-    QCoreApplication::setApplicationVersion(QLatin1String(""));//Core::Constants::IDE_VERSION_LONG));
-    QCoreApplication::setOrganizationName(QLatin1String(""));//Constants::IDE_SETTINGSVARIANT_STR));
+    //QCoreApplication::setApplicationName(QLatin1String("QtCreator"));
+    //QCoreApplication::setApplicationVersion(QLatin1String(""));//Core::Constants::IDE_VERSION_LONG));
+    //QCoreApplication::setOrganizationName(QLatin1String(""));//Constants::IDE_SETTINGSVARIANT_STR));
     QString baseName = QApplication::style()->objectName();
     if (Utils::HostOsInfo::isAnyUnixHost() && !Utils::HostOsInfo::isMacHost()) {
         if (baseName == QLatin1String("windows")) {

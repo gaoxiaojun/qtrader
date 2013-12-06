@@ -45,7 +45,7 @@ class CORE_EXPORT MessageManager : public QObject
     Q_OBJECT
 
 public:
-    static MessageManager *instance();
+    static QObject *instance();
 
     static void showOutputPane();
 

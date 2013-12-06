@@ -766,7 +766,8 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/coreplugin/provider/ihistoricalprovider.h \
     src/plugins/coreplugin/provider/imarketdataprovider.h \
     src/plugins/coreplugin/provider/iorderexecutionprovider.h \
-    src/plugins/coreplugin/provider/iprovider.h
+    src/plugins/coreplugin/provider/iprovider.h \
+    src/plugins/tws/twsdatacenter.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1395,7 +1396,8 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/coreplugin/model/orderexecutionprovidermanager.cpp \
     src/plugins/coreplugin/model/ordermanager.cpp \
     src/plugins/coreplugin/model/quote.cpp \
-    src/plugins/coreplugin/provider/historicaldatarequest.cpp
+    src/plugins/coreplugin/provider/historicaldatarequest.cpp \
+    src/plugins/tws/twsdatacenter.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
