@@ -16,7 +16,7 @@
 #ifndef TWSHISTORICALPROVIDER_H
 #define TWSHISTORICALPROVIDER_H
 
-#include "twsclient.h"
+#include "twscontroller.h"
 
 #include <coreplugin/providermanager/ihistoricalprovider.h>
 
@@ -51,7 +51,7 @@ public slots:
     void OnTwsError(int errorCode, const QString& message);
 
 private:
-    TwsClient* m_client;
+    TwsController* m_client;
     OpenTrade::ProviderInfo* m_info;
 };
 

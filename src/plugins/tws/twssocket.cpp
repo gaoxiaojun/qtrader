@@ -1,7 +1,7 @@
 /* Copyright (C) 2013 Interactive Brokers LLC. All rights reserved. This code is subject to the terms
  * and conditions of the IB API Non-Commercial License or the IB API Commercial License, as applicable. */
 
-#include "eqtclientsocket.h"
+#include "twssocket.h"
 
 #include "shared/TwsSocketClientErrors.h"
 #include "shared/EWrapper.h"
@@ -11,23 +11,24 @@
 #include <string.h>
 #include <errno.h>
 
-using namespace TWS;
+namespace TWS {
+namespace Internal {
 
 const int WAIT_TIME = 1000;
 const int RESERVE_ORDER_ID = 100000;
 
 ///////////////////////////////////////////////////////////
 // member funcs
-EQtClientSocket::EQtClientSocket( EWrapper *ptr) :
-    EClientSocketBase( ptr)
+TwsSocket::TwsSocket(QObject *parent, EWrapper *ptr) :
+    QObject(parent), EClientSocketBase(ptr), m_socket(this)
 {
-    qRegisterMetaType<QAbstractSocket::SocketError>();
+    //qRegisterMetaType<QAbstractSocket::SocketError>();
     connect(&m_socket, SIGNAL(disconnected()), this, SLOT(onClose()));
     connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(onReceive()));
 }
 
-EQtClientSocket::~EQtClientSocket()
+TwsSocket::~TwsSocket()
 {
     disconnect(&m_socket, SIGNAL(disconnected()), this, SLOT(onClose()));
     disconnect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
@@ -38,10 +39,8 @@ EQtClientSocket::~EQtClientSocket()
     eDisconnect();
 }
 
-bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientId)
+bool TwsSocket::eConnect( const char *host, unsigned int port, int clientId)
 {
-    QMutexLocker locker(&m_mutex);
-
 	// already connected?
     if( isConnected ()) {
 		getWrapper()->error( NO_VALID_ID, ALREADY_CONNECTED.code(), ALREADY_CONNECTED.msg());
@@ -60,7 +59,7 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
     // set client id
 	setClientId( clientId);
 
-	onConnectBase();
+    onConnectBase();
 
     m_socket.waitForBytesWritten(WAIT_TIME);
 
@@ -78,21 +77,21 @@ bool EQtClientSocket::eConnect( const char *host, unsigned int port, int clientI
     return isConnected();
 }
 
-void EQtClientSocket::eDisconnect()
+void TwsSocket::eDisconnect()
 {
-    QMutexLocker locker(&m_mutex);
+    //QMutexLocker locker(&m_mutex);
     if (m_socket.isValid ())
         m_socket.close ();
     eDisconnectBase();
 }
 
-bool EQtClientSocket::isSocketOK() const
+bool TwsSocket::isSocketOK() const
 {
     return m_socket.isValid ()  && m_socket.isOpen ();
 }
 
 /* Call by EClientSocketBase::sendBufferedData & EClientSocketBase::bufferedSend */
-int EQtClientSocket::send(const char* buf, size_t sz)
+int TwsSocket::send(const char* buf, size_t sz)
 {
     return m_socket.write (buf, sz);
 }
@@ -100,14 +99,14 @@ int EQtClientSocket::send(const char* buf, size_t sz)
 /* Call by EClientSocketBase::BufferRead
  * BufferRead only call by checkMessages()
  */
-int EQtClientSocket::receive(char* buf, size_t sz)
+int TwsSocket::receive(char* buf, size_t sz)
 {
     return m_socket.read(buf, sz);
 }
 
 ///////////////////////////////////////////////////////////
 // callbacks from socket
-void EQtClientSocket::onConnect()
+void TwsSocket::onConnect()
 {
     // DETAIL LEVEL, log everything
     setServerLogLevel (5);
@@ -116,18 +115,19 @@ void EQtClientSocket::onConnect()
     reqCurrentTime ();
 }
 
-void EQtClientSocket::onReceive()
+void TwsSocket::onReceive()
 {
-	checkMessages();
+    if (isConnected())
+        checkMessages();
 }
 
-void EQtClientSocket::onClose()
+void TwsSocket::onClose()
 {
 	eDisconnect();
 	getWrapper()->connectionClosed();
 }
 
-void EQtClientSocket::socketError(QAbstractSocket::SocketError err)
+void TwsSocket::socketError(QAbstractSocket::SocketError err)
 {
     if (err != QAbstractSocket::RemoteHostClosedError)
         if (isConnected ()) {
@@ -136,3 +136,7 @@ void EQtClientSocket::socketError(QAbstractSocket::SocketError err)
             onClose();
         }
 }
+
+} // namespace Internal
+
+} // namespace TWS

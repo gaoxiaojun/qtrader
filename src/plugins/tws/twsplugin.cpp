@@ -3,7 +3,6 @@
 #include "twsconstants.h"
 
 #include "twsmarketdataprovider.h"
-#include "twsclient.h"
 #include "twsoptionspage.h"
 #include "twsorderexecutionprovider.h"
 #include "twshistoricalprovider.h"
@@ -70,8 +69,8 @@ bool TwsPlugin::initialize(const QStringList &, QString *)
     menu->addAction(disconnectCmd);
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
 
-    m_client = new TwsClient(this);
-    addAutoReleasedObject(new TwsMarketDataProvier(this, m_client));
+    m_controller = new TwsController(this);
+    addAutoReleasedObject(new TwsMarketDataProvier(this, m_controller));
     //addAutoReleasedObject(new TwsHistoricalProvider(this));
     //addAutoReleasedObject(new TwsOrderExecutionProvider(this));
     addAutoReleasedObject (new TwsOptionsPage(this));
@@ -148,43 +147,44 @@ void TwsPlugin::setupFilterMenuItems()
 void TwsPlugin::writeSettings()
 {
     QSettings *settings = Core::ICore::settings();
-    m_client->writeSettings (settings);
+    m_controller->writeSettings (settings);
 }
 
 void TwsPlugin::readSettings()
 {
     QSettings *settings = Core::ICore::settings();
-    m_client->writeSettings (settings);
+    m_controller->readSettings (settings);
     emit twsFlagsChanged(); // would have been done in the setXXX methods above
 }
 
 void TwsPlugin::connectAction()
 {
-    if (m_client->connect ()) {
-        qDebug() << "serverVersion:" << m_client->serverVersion ();
-    }
+    /*if (m_controller->connect ()) {
+        qDebug() << "serverVersion:" << m_controller->serverVersion ();
+    }*/
+    m_controller->connect ();
 }
 
 void TwsPlugin::subscribeAction()
 {
     OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
     qDebug() << inst.symbol () << "." << inst.currency ();
-    if( m_client->isConnected ()) {
-        m_client->subscribe (inst);
+    if( m_controller->isConnected ()) {
+        m_controller->subscribe (inst);
     }
 }
 
 void TwsPlugin::disconnectAction()
 {
-    m_client->disconnect ();
+    m_controller->disconnect ();
 }
 
 void TwsPlugin::unsubscribeAction()
 {
     OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
     qDebug() << inst.symbol () << "." << inst.currency ();
-    if( m_client->isConnected ()) {
-        m_client->unsubscribe (inst);
+    if( m_controller->isConnected ()) {
+        m_controller->unsubscribe (inst);
     }
 }
 

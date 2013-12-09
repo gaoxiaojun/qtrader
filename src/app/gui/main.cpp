@@ -236,7 +236,7 @@ int main(int argc, char **argv)
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, 2 * threadCount));
 
-    Utils::setupBreakPadCrashHandler(); // Display a backtrace once a serious signal is delivered.
+    //Utils::setupBreakPadCrashHandler(); // Display a backtrace once a serious signal is delivered.
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 1)
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);

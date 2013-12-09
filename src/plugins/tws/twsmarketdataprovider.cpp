@@ -17,8 +17,10 @@
 
 using namespace TWS;
 
-TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent, TwsClient *client) :
-    OpenTrade::IMarketDataProvider(parent), m_client(client)
+TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent, TwsController *controller) :
+    OpenTrade::IMarketDataProvider(parent),
+    m_controller(controller),
+    m_mkt_connected(false)
 {
     TwsProviderInfo* info = new TwsProviderInfo();
     info->m_id = 100;
@@ -32,6 +34,9 @@ TwsMarketDataProvier::TwsMarketDataProvier(QObject *parent, TwsClient *client) :
     info->m_url = "";
 
     m_info = info;
+
+    //QObject::connect(m_controller, SIGNAL(mktConnected()), this, SLOT(mktConnected()));
+    //QObject::connect (m_controller, SIGNAL(mktDisconnected()), this, SLOT(mktDisconnected()));
 }
 
 TwsMarketDataProvier::~TwsMarketDataProvier()
@@ -40,36 +45,54 @@ TwsMarketDataProvier::~TwsMarketDataProvier()
 
 void TwsMarketDataProvier::subscribe(const OpenTrade::Instrument& instrument)
 {
-    //m_client->
+    Q_UNUSED(instrument)
 }
 
 void TwsMarketDataProvier::unsubscribe(const OpenTrade::Instrument& instrument)
 {
-
+Q_UNUSED(instrument)
 }
 
 
 bool TwsMarketDataProvier::isConnected() const
 {
-    return m_client->isConnected();
+    return m_controller->isConnected() && m_mkt_connected;
 }
 
 void TwsMarketDataProvier::connect()
 {
-    m_client->connect ();
+    m_mkt_connected = false;
+    m_controller->connect ();
 }
 
 void TwsMarketDataProvier::disonnect()
 {
-    m_client->disconnect ();
+    m_controller->disconnect ();
+    m_mkt_connected = false;
 }
 
 void TwsMarketDataProvier::shutdown()
 {
-
+    m_mkt_connected = false;
 }
 
 OpenTrade::ProviderInfo* TwsMarketDataProvier::info() const
 {
     return m_info;
+}
+
+void TwsMarketDataProvier::mktConnected ()
+{
+    qDebug() << "MktData connected";
+    m_mkt_connected = true;
+
+    emit connected();
+}
+
+void TwsMarketDataProvier::mktDisconnected ()
+{
+    qDebug() << "MktData disconnected";
+    m_mkt_connected = false;
+
+    emit disconnected();
 }

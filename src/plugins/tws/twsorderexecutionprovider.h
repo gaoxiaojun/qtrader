@@ -16,7 +16,7 @@
 #ifndef TWSORDEREXECUTIONPROVIDER_H
 #define TWSORDEREXECUTIONPROVIDER_H
 
-#include "twsclient.h"
+#include "twscontroller.h"
 #include "twsproviderinfo.h"
 
 #include <coreplugin/providermanager/iprovider.h>
@@ -48,7 +48,7 @@ public:
     void replace(const OpenTrade::Order& order, double newQty, double newPrice, double newStopPrice);
 
 private:
-    TwsClient* m_client;
+    TwsController* m_controller;
     TwsProviderInfo *m_info;
 };
 

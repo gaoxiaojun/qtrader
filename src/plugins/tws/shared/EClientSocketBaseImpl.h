@@ -2412,9 +2412,9 @@ int EClientSocketBase::processConnectAck(const char*& beginPtr, const char* endP
 		const char* ptr = beginPtr;
 
 		// check server version
-		DECODE_FIELD( m_serverVersion);
+        DECODE_FIELD( m_serverVersion);
 		if( m_serverVersion >= 20) {
-			DECODE_FIELD( m_TwsTime);
+            DECODE_FIELD( m_TwsTime);
 		}
 
 		if( m_serverVersion < SERVER_VERSION) {

@@ -1,22 +1,23 @@
-#ifndef EQtClientSocket_def
-#define EQtClientSocket_def
+#ifndef __TWS_SOCKET_H__
+#define __TWS_SOCKET_H__
 
 #include "shared/EClientSocketBase.h"
 
 #include <QTcpSocket>
-#include <QMutex>
 
 class EWrapper;
 
 namespace TWS {
-class EQtClientSocket : public QObject, public EClientSocketBase
+
+namespace Internal {
+
+class TwsSocket : public QObject, public EClientSocketBase
 {
     Q_OBJECT
 
 public:
-
-    explicit EQtClientSocket( EWrapper *ptr);
-    ~EQtClientSocket();
+    TwsSocket(QObject *parent, EWrapper *ptr);
+    ~TwsSocket();
 
 	// override virtual funcs from EClient
 	bool eConnect( const char *host, unsigned int port, int clientId=0);
@@ -35,8 +36,10 @@ public slots:
     void socketError(QAbstractSocket::SocketError);
 private:
     QTcpSocket m_socket;
-    QMutex m_mutex;
 };
 
+} // namespace Internal
+
 } // namespace TWS
-#endif
+
+#endif // __TWS_SOCKET_H__

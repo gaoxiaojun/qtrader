@@ -14,8 +14,8 @@
 ****************************************************************************/
 
 #include "twsoptionspage.h"
-#include "iboptionswidget.h"
-#include "twsclient.h"
+#include "twsoptionswidget.h"
+#include "twscontroller.h"
 
 #include <QIcon>
 
@@ -39,9 +39,9 @@ TwsOptionsPage::~TwsOptionsPage ()
 
 QWidget* TwsOptionsPage::createPage (QWidget *parent)
 {
-   m_pages = new IBOptionsWidget(parent);
-   m_pages->setHost(TwsClient::instance ()->host());
-   m_pages->setPort(TwsClient::instance()->port());
+   m_pages = new TwsOptionsWidget(parent);
+   m_pages->setHost(TwsController::instance ()->host());
+   m_pages->setPort(TwsController::instance ()->port());
 
    return m_pages;
 }
@@ -49,8 +49,7 @@ QWidget* TwsOptionsPage::createPage (QWidget *parent)
 void TwsOptionsPage::apply ()
 {
     if(m_pages) {
-        TwsClient::instance ()->setHost (m_pages->host ());
-        TwsClient::instance ()->setPort (m_pages->port ());
+        TwsController::instance ()->setHostAndPort (m_pages->host (), m_pages->port ());
     }
 }
 

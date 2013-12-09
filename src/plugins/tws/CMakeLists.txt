@@ -15,25 +15,28 @@ set(LIB_INCLUDE_DIR
 add_definitions (-DIB_USE_STD_STRING)
 
 set( LIB_SRC_FILES
-    eqtclientsocket.h
-    eqtclientsocket.cpp
+    twssocket.h
+    twssocket.cpp
     twsclient.h
     twsclient.cpp
+    twscontroller.h
+    twscontroller.cpp
     EClientSocketBase.cpp
-    twswrapper.h
-    twswrapper.cpp
     twsplugin.h
     twsplugin.cpp
     twsoptionspage.h
     twsoptionspage.cpp
-    iboptionswidget.h
-    iboptionswidget.cpp
+    twsoptionswidget.h
+    twsoptionswidget.cpp
     twsmarketdataprovider.h
     twsmarketdataprovider.cpp
     twshistoricalprovider.h
     twshistoricalprovider.cpp
     twsorderexecutionprovider.h
     twsorderexecutionprovider.cpp
+
+    bar.h
+    bar.cpp
 )
 
 file (GLOB_RECURSE LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)

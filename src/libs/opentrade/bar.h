@@ -13,29 +13,50 @@
 **
 ****************************************************************************/
 
-#ifndef TwsOptionsPage_H
-#define TwsOptionsPage_H
+#ifndef BAR_H
+#define BAR_H
 
-#include "twsoptionswidget.h"
-#include <coreplugin/dialogs/ioptionspage.h>
+#include <QDateTime>
+#include <QVector>
 
-#include <QObject>
+namespace OpenTradeModel {
 
-namespace TWS {
+namespace Internal {
+  class BarPrivate;
+  class BarSeriesPrivate;
+}
 
-class TwsOptionsPage : public Core::IOptionsPage
+class Bar
 {
-    Q_OBJECT
 public:
-    explicit TwsOptionsPage(QObject *parent = 0);
-    ~TwsOptionsPage();
+    Bar(const QDateTime& begin, double open, double high, double low, double close, double volume);
+    ~Bar();
+    QDateTime begin() const;
+    double open() const;
+    double high() const;
+    double low() const;
+    double close() const;
+    double volume() const;
 
-    QWidget *createPage(QWidget *parent);
-    void apply();
-    void finish();
 private:
-     TwsOptionsWidget * m_pages;
+    Internal::BarPrivate *d;
 };
 
-} // namespace TWS
-#endif // TwsOptionsPage_H
+
+class BarSeries
+{
+public:
+    BarSeries();
+    ~BarSeries();
+
+    int count() const;
+    const Bar& at(int i) const;
+    void append(const Bar& bar);
+
+private:
+    Internal::BarSeriesPrivate *d;
+};
+
+} // namespace OpenTradeModel
+
+#endif // BAR_H

@@ -56,7 +56,7 @@ void TwsOrderExecutionProvider::replace(const OpenTrade::Order& order, double ne
 
 bool TwsOrderExecutionProvider::isConnected() const
 {
-    return m_client->isConnected();
+    return m_controller->isConnected();
 }
 
 void TwsOrderExecutionProvider::connect()

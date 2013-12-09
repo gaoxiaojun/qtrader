@@ -13,41 +13,35 @@
 **
 ****************************************************************************/
 
-#include "iboptionswidget.h"
-#include "ui_iboptionswidget.h"
+#ifndef __TWS_OPTIONS_WIDGET_H__
+#define __TWS_OPTIONS_WIDGET_H__
+
+#include <QWidget>
+
+namespace Ui {
+   class TwsOptionsWidget;
+}
 
 namespace TWS {
 
-IBOptionsWidget::IBOptionsWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::IBOptionsWidget)
+class TwsOptionsWidget : public QWidget
 {
-    ui->setupUi(this);
-}
+    Q_OBJECT
 
-IBOptionsWidget::~IBOptionsWidget()
-{
-    delete ui;
-}
+public:
+    explicit TwsOptionsWidget(QWidget *parent = 0);
+    ~TwsOptionsWidget();
 
-void IBOptionsWidget::setHost(const QString& host)
-{
-    ui->host->setPlainText (host);
-}
+public:
+    void setHost(const QString& host);
+    void setPort(unsigned int port);
+    QString host() const;
+    unsigned int port() const;
 
-void IBOptionsWidget::setPort(unsigned int port)
-{
-    ui->port->setValue (port);
-}
-
-QString IBOptionsWidget::host() const
-{
-    return ui->host->toPlainText ();
-}
-
-unsigned int IBOptionsWidget::port() const
-{
-    return ui->port->value ();
-}
+private:
+    Ui::TwsOptionsWidget *ui;
+};
 
 } // namespace TWS
+
+#endif // __TWS_OPTIONS_WIDGET_H__

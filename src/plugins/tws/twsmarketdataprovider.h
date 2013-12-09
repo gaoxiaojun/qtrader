@@ -16,7 +16,7 @@
 #ifndef TWSMARKETDATAPROVIER_H
 #define TWSMARKETDATAPROVIER_H
 
-#include "twsclient.h"
+#include "twscontroller.h"
 #include "twsproviderinfo.h"
 
 #include <coreplugin/providermanager/imarketdataprovider.h>
@@ -29,7 +29,7 @@ class TwsMarketDataProvier : public OpenTrade::IMarketDataProvider
     Q_OBJECT
 
 public:
-    TwsMarketDataProvier(QObject *parent, TwsClient *client);
+    TwsMarketDataProvier(QObject *parent, TwsController *controller);
     ~TwsMarketDataProvier();
 
     // IProvider
@@ -45,10 +45,15 @@ public:
     void unsubscribe(const OpenTrade::Instrument& instrument);
     QString errorString();
 
+private slots:
+    void mktConnected();
+    void mktDisconnected();
+
 private:
-    TwsClient* m_client;
+    TwsController* m_controller;
     QString m_error;
     TwsProviderInfo *m_info;
+    bool m_mkt_connected;
 };
 
 } // namespace TWS

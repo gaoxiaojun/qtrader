@@ -636,7 +636,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/twsorderexecutionprovider.h \
     src/plugins/domain/twshistoricalprovider.h \
     src/plugins/tws/twshistoricalprovider.h \
-    src/plugins/tws/twsclient.h \
     src/plugins/tws/twsproviderinfo.h \
     src/plugins/domain/marketdataprovidermanager.h \
     src/plugins/domain/orderexecutionprovidermanager.h \
@@ -674,7 +673,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/IBJts/source/posixclient/src/EPosixClientSocket.h \
     src/plugins/tws/IBJts/source/posixclient/src/EPosixClientSocketPlatform.h \
     src/plugins/opentrade/opentrade_global.h \
-    src/plugins/tws/twswrapper.h \
     src/plugins/tws/ib/ib_order.h \
     src/plugins/tws/ib/ib_tagvalue.h \
     src/plugins/tws/ib/ib_shared_ptr.h \
@@ -746,9 +744,7 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/shared/TagValue.h \
     src/plugins/tws/shared/TwsSocketClientErrors.h \
     src/plugins/tws/twsoptionspage.h \
-    src/plugins/tws/iboptionswidget.h \
     src/plugins/tws/twsmarketdataprovider.h \
-    src/plugins/tws/eqtclientsocket.h \
     src/plugins/tws/twsconstants.h \
     src/plugins/tws/twsconsolepane.h \
     src/plugins/coreplugin/chartmode.h \
@@ -767,7 +763,21 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/coreplugin/provider/imarketdataprovider.h \
     src/plugins/coreplugin/provider/iorderexecutionprovider.h \
     src/plugins/coreplugin/provider/iprovider.h \
-    src/plugins/tws/twsdatacenter.h
+    src/plugins/tws/twsdatacenter.h \
+    src/plugins/tws/twscontroller.h \
+    src/plugins/tws/twsclient.h \
+    src/plugins/tws/twsclientsocket.h \
+    src/plugins/tws/twssocket.h \
+    src/plugins/tws/twsoptionswidget.h \
+    src/plugins/coreplugin/providermanager/iprovider.h \
+    src/plugins/coreplugin/providermanager/orderexecutionprovidermanager.h \
+    src/plugins/coreplugin/providermanager/historicalprovidermanager.h \
+    src/plugins/coreplugin/providermanager/marketdataprovidermanager.h \
+    src/plugins/coreplugin/providermanager/iorderexecutionprovider.h \
+    src/plugins/coreplugin/providermanager/imarketdataprovider.h \
+    src/plugins/coreplugin/providermanager/ihistoricalprovider.h \
+    src/plugins/coreplugin/providermanager/historicaldatarequest.h \
+    src/plugins/tws/bar.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1353,7 +1363,6 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/tws/twsorderexecutionprovider.cpp \
     src/plugins/domain/twshistoricalprovider.cpp \
     src/plugins/tws/twshistoricalprovider.cpp \
-    src/plugins/tws/twsclient.cpp \
     src/plugins/domain/marketdataprovidermanager.cpp \
     src/plugins/domain/orderexecutionprovidermanager.cpp \
     src/plugins/opentrade/historicalprovidermanager.cpp \
@@ -1369,7 +1378,6 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/opentrade/orderbook.cpp \
     src/plugins/tws/IBJts/source/posixclient/src/EClientSocketBase.cpp \
     src/plugins/tws/IBJts/source/posixclient/src/EPosixClientSocket.cpp \
-    src/plugins/tws/twswrapper.cpp \
     src/plugins/tws/ib2/qtextstream.cpp \
     src/plugins/tws/ib/qibreader.cpp \
     src/plugins/tws/twsapi/PosixSocketClient/src/EClientSocketBase.cpp \
@@ -1381,7 +1389,6 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/tws/ib2/EQtClientSocket.cpp \
     src/plugins/tws/EClientSocketBase.cpp \
     src/plugins/tws/twsoptionspage.cpp \
-    src/plugins/tws/iboptionswidget.cpp \
     src/plugins/tws/twsmarketdataprovider.cpp \
     src/plugins/tws/eqtclientsocket.cpp \
     src/plugins/tws/twsconsolepane.cpp \
@@ -1397,7 +1404,17 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/coreplugin/model/ordermanager.cpp \
     src/plugins/coreplugin/model/quote.cpp \
     src/plugins/coreplugin/provider/historicaldatarequest.cpp \
-    src/plugins/tws/twsdatacenter.cpp
+    src/plugins/tws/twsdatacenter.cpp \
+    src/plugins/tws/eqtclient.cpp \
+    src/plugins/tws/twscontroller.cpp \
+    src/plugins/tws/twsclient.cpp \
+    src/plugins/tws/twssocket.cpp \
+    src/plugins/tws/twsoptionswidget.cpp \
+    src/plugins/coreplugin/providermanager/marketdataprovidermanager.cpp \
+    src/plugins/coreplugin/providermanager/historicaldatarequest.cpp \
+    src/plugins/coreplugin/providermanager/historicalprovidermanager.cpp \
+    src/plugins/coreplugin/providermanager/orderexecutionprovidermanager.cpp \
+    src/plugins/tws/bar.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \

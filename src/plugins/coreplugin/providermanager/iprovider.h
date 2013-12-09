@@ -67,7 +67,7 @@ public:
 
 
 signals:
-    void connted();
+    void connected();
     void disconnected();
 
     void error(const QString& errorMessage);
