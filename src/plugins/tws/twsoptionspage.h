@@ -30,7 +30,7 @@ public:
     explicit TwsOptionsPage(QObject *parent = 0);
     ~TwsOptionsPage();
 
-    QWidget *createPage(QWidget *parent);
+    QWidget* widget();
     void apply();
     void finish();
 private:

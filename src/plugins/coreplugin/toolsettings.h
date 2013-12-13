@@ -27,62 +27,34 @@
 **
 ****************************************************************************/
 
-#ifndef DESIGNMODE_H
-#define DESIGNMODE_H
+#ifndef TOOLSETTINGS_H
+#define TOOLSETTINGS_H
 
-#include <coreplugin/imode.h>
+#include <coreplugin/dialogs/ioptionspage.h>
+
+#include <QPointer>
 
 namespace Core {
-class IEditor;
-
 namespace Internal {
-class DesignModeCoreListener;
-} // namespace Internal
 
-/**
-  * A global mode for Design pane - used by Bauhaus (QML Designer) and
-  * Qt Designer. Other plugins can register themselves by registerDesignWidget()
-  * and giving a list of mimetypes that the editor understands, as well as an instance
-  * to the main editor widget itself.
-  */
+class ExternalToolConfig;
 
-class DesignModePrivate;
-
-class CORE_EXPORT ChartMode : public Core::IMode
+class ToolSettings : public IOptionsPage
 {
     Q_OBJECT
 
 public:
-    explicit ChartMode();
-    virtual ~ChartMode();
+    explicit ToolSettings(QObject *parent = 0);
 
-    static ChartMode *instance();
-
-    void setDesignModeIsRequired();
-    bool designModeIsRequired() const;
-
-    void registerDesignWidget(QWidget *widget,
-                              const QStringList &mimeTypes,
-                              const Context &context);
-    void unregisterDesignWidget(QWidget *widget);
-
-    QStringList registeredMimeTypes() const;
-
-signals:
-    void actionsUpdated(Core::IEditor *editor);
-
-private slots:
-    void currentEditorChanged(Core::IEditor *editor);
-    void updateActions();
-    void updateContext(Core::IMode *newMode, Core::IMode *oldMode);
+    QWidget *widget();
+    void apply();
+    void finish();
 
 private:
-    void setActiveContext(const Context &context);
-
-    DesignModePrivate *d;
-    friend class Internal::DesignModeCoreListener;
+    QPointer<ExternalToolConfig> m_widget;
 };
 
+} // namespace Internal
 } // namespace Core
 
-#endif // DESIGNMODE_H
+#endif // TOOLSETTINGS_H

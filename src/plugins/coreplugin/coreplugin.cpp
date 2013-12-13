@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "coreplugin.h"
-#include "chartmode.h"
+#include "designmode.h"
 #include "editmode.h"
 #include "helpmanager.h"
 #include "mainwindow.h"
@@ -49,7 +49,7 @@
 using namespace Core;
 using namespace Core::Internal;
 
-CorePlugin::CorePlugin() : m_editMode(0), m_designMode(0), m_mainWindow(0)
+CorePlugin::CorePlugin() : m_mainWindow(0), m_editMode(0), m_designMode(0)
 {
     qRegisterMetaType<Core::Id>();
 }
@@ -110,7 +110,7 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
         m_editMode = new EditMode;
         addObject(m_editMode);
         ModeManager::activateMode(m_editMode->id());
-        m_designMode = new ChartMode;
+        m_designMode = new DesignMode;
         InfoBar::initializeGloballySuppressed();
     }
 

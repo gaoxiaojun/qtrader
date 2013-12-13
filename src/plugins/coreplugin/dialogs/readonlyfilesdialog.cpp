@@ -63,6 +63,8 @@ public:
     QList <ButtonGroupForFile> buttonGroups;
 
     QMap <int, int> setAllIndexForOperation;
+    // The version control systems for every file, if the file isn't in VCS the value is 0.
+    //QHash <QString, IVersionControl*> versionControls;
 
     // Define if some specific operations should be allowed to make the files writable.
     const bool useSaveAs;

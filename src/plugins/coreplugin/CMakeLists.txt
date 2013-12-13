@@ -16,7 +16,7 @@ basefilewizard.h
 core_global.h
 coreconstants.h
 coreplugin.h
-chartmode.h
+designmode.h
 documentmanager.h
 editmode.h
 editortoolbar.h
@@ -71,7 +71,7 @@ variablemanager.h
 versiondialog.h
 basefilewizard.cpp
 coreplugin.cpp
-chartmode.cpp
+designmode.cpp
 documentmanager.cpp
 editmode.cpp
 editortoolbar.cpp

@@ -226,7 +226,6 @@ private slots:
     static void closeOtherEditorsFromContextMenu();
 
     static void showInGraphicalShell();
-    //static void openTerminal();
     static void findInDirectory();
 
     static void rootDestroyed(QObject *root);

@@ -113,29 +113,6 @@ void FileUtils::showInGraphicalShell(QWidget *parent, const QString &pathIn)
     }
 }
 
-/*void FileUtils::openTerminal(const QString &path)
-{
-    // Get terminal application
-    QString terminalEmulator;
-    QStringList args;
-    if (HostOsInfo::isWindowsHost()) {
-        terminalEmulator = ConsoleProcess::defaultTerminalEmulator();
-    } else if (HostOsInfo::isMacHost()) {
-        terminalEmulator = ICore::resourcePath()
-            + QLatin1String("/scripts/openTerminal.command");
-    } else {
-        args = QtcProcess::splitArgs(ConsoleProcess::terminalEmulator(ICore::settings()));
-        terminalEmulator = args.takeFirst();
-        args.append(QString::fromLocal8Bit(qgetenv("SHELL")));
-    }
-
-    // Launch terminal with working directory set.
-    const QFileInfo fileInfo(path);
-    const QString pwd = QDir::toNativeSeparators(fileInfo.isDir() ?
-                                                 fileInfo.absoluteFilePath() :
-                                                 fileInfo.absolutePath());
-    QProcess::startDetached(terminalEmulator, args, pwd);
-}*/
 
 QString FileUtils::msgFindInDirectory()
 {
@@ -150,13 +127,6 @@ QString FileUtils::msgGraphicalShellAction()
         return QApplication::translate("Core::Internal", "Show in Finder");
     return QApplication::translate("Core::Internal", "Show Containing Folder");
 }
-
-/*QString FileUtils::msgTerminalAction()
-{
-    if (HostOsInfo::isWindowsHost())
-        return QApplication::translate("Core::Internal", "Open Command Prompt Here");
-    return QApplication::translate("Core::Internal", "Open Terminal Here");
-}*/
 
 void FileUtils::removeFile(const QString &filePath, bool deleteFromFS)
 {

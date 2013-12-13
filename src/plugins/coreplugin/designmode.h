@@ -27,33 +27,62 @@
 **
 ****************************************************************************/
 
-#ifndef MIMETYPESETTINGSPAGE_H
-#define MIMETYPESETTINGSPAGE_H
+#ifndef DESIGNMODE_H
+#define DESIGNMODE_H
 
-#include <coreplugin/dialogs/ioptionspage.h>
+#include <coreplugin/imode.h>
 
 namespace Core {
+class IEditor;
+
 namespace Internal {
+class DesignModeCoreListener;
+} // namespace Internal
 
-class MimeTypeSettingsPrivate;
+/**
+  * A global mode for Design pane - used by Bauhaus (QML Designer) and
+  * Qt Designer. Other plugins can register themselves by registerDesignWidget()
+  * and giving a list of mimetypes that the editor understands, as well as an instance
+  * to the main editor widget itself.
+  */
 
-class MimeTypeSettings : public IOptionsPage
+class DesignModePrivate;
+
+class CORE_EXPORT DesignMode : public Core::IMode
 {
     Q_OBJECT
 
 public:
-    MimeTypeSettings(QObject *parent = 0);
-    virtual ~MimeTypeSettings();
+    explicit DesignMode();
+    virtual ~DesignMode();
 
-    virtual QWidget *widget();
-    virtual void apply();
-    virtual void finish();
+    static DesignMode *instance();
+
+    void setDesignModeIsRequired();
+    bool designModeIsRequired() const;
+
+    void registerDesignWidget(QWidget *widget,
+                              const QStringList &mimeTypes,
+                              const Context &context);
+    void unregisterDesignWidget(QWidget *widget);
+
+    QStringList registeredMimeTypes() const;
+
+signals:
+    void actionsUpdated(Core::IEditor *editor);
+
+private slots:
+    void currentEditorChanged(Core::IEditor *editor);
+    void updateActions();
+    void updateContext(Core::IMode *newMode, Core::IMode *oldMode);
 
 private:
-    MimeTypeSettingsPrivate *d;
+    void setActiveContext(const Context &context);
+
+    DesignModePrivate *d;
+    friend class Internal::DesignModeCoreListener;
 };
 
-} // Internal
-} // Core
+} // namespace Core
 
-#endif // MIMETYPESETTINGSPAGE_H
+#endif // DESIGNMODE_H

@@ -33,7 +33,7 @@
 #include <extensionsystem/iplugin.h>
 
 namespace Core {
-class ChartMode;
+class DesignMode;
 namespace Internal {
 
 class EditMode;
@@ -57,12 +57,18 @@ public:
 public slots:
     void fileOpenRequest(const QString&);
 
+private slots:
+#if defined(WITH_TESTS)
+    void testVcsManager_data();
+    void testVcsManager();
+#endif
+
 private:
     void parseArguments(const QStringList & arguments);
 
     MainWindow *m_mainWindow;
     EditMode *m_editMode;
-    ChartMode *m_designMode;
+    DesignMode *m_designMode;
 };
 
 } // namespace Internal

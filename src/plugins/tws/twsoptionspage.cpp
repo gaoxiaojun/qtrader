@@ -37,9 +37,9 @@ TwsOptionsPage::~TwsOptionsPage ()
 }
 
 
-QWidget* TwsOptionsPage::createPage (QWidget *parent)
+QWidget* TwsOptionsPage::widget ()
 {
-   m_pages = new TwsOptionsWidget(parent);
+   m_pages = new TwsOptionsWidget();
    m_pages->setHost(TwsController::instance ()->host());
    m_pages->setPort(TwsController::instance ()->port());
 

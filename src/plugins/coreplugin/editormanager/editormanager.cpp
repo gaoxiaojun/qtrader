@@ -192,7 +192,6 @@ public:
     QAction *m_closeOtherEditorsContextAction;
     QAction *m_closeAllEditorsExceptVisibleContextAction;
     QAction *m_openGraphicalShellAction;
-    //QAction *m_openTerminalAction;
     QAction *m_findInDirectoryAction;
     DocumentModel::Entry *m_contextMenuEntry;
 
@@ -235,7 +234,6 @@ EditorManagerPrivate::EditorManagerPrivate(QWidget *parent) :
     m_closeOtherEditorsContextAction(new QAction(EditorManager::tr("Close Others"), parent)),
     m_closeAllEditorsExceptVisibleContextAction(new QAction(EditorManager::tr("Close All Except Visible"), parent)),
     m_openGraphicalShellAction(new QAction(FileUtils::msgGraphicalShellAction(), parent)),
-    //m_openTerminalAction(new QAction(FileUtils::msgTerminalAction(), parent)),
     m_findInDirectoryAction(new QAction(FileUtils::msgFindInDirectory(), parent)),
     m_windowPopup(0),
     m_coreListener(0),
@@ -341,7 +339,6 @@ EditorManager::EditorManager(QWidget *parent) :
     connect(d->m_closeAllEditorsExceptVisibleContextAction, SIGNAL(triggered()), this, SLOT(closeAllEditorsExceptVisible()));
 
     connect(d->m_openGraphicalShellAction, SIGNAL(triggered()), this, SLOT(showInGraphicalShell()));
-    //connect(d->m_openTerminalAction, SIGNAL(triggered()), this, SLOT(openTerminal()));
     connect(d->m_findInDirectoryAction, SIGNAL(triggered()), this, SLOT(findInDirectory()));
 
     // Goto Previous In History Action
@@ -809,10 +806,8 @@ void EditorManager::addNativeDirActions(QMenu *contextMenu, DocumentModel::Entry
     QTC_ASSERT(contextMenu, return);
     bool enabled = entry && !entry->fileName().isEmpty();
     d->m_openGraphicalShellAction->setEnabled(enabled);
-    //d->m_openTerminalAction->setEnabled(enabled);
     d->m_findInDirectoryAction->setEnabled(enabled);
     contextMenu->addAction(d->m_openGraphicalShellAction);
-    //contextMenu->addAction(d->m_openTerminalAction);
     contextMenu->addAction(d->m_findInDirectoryAction);
 }
 
@@ -962,13 +957,6 @@ void EditorManager::showInGraphicalShell()
         return;
     Core::FileUtils::showInGraphicalShell(ICore::mainWindow(), d->m_contextMenuEntry->fileName());
 }
-
-/*void EditorManager::openTerminal()
-{
-    if (!d->m_contextMenuEntry || d->m_contextMenuEntry->fileName().isEmpty())
-        return;
-    Core::FileUtils::openTerminal(QFileInfo(d->m_contextMenuEntry->fileName()).path());
-}*/
 
 void EditorManager::findInDirectory()
 {
@@ -1883,23 +1871,6 @@ void EditorManager::makeCurrentEditorWritable()
         makeFileWritable(doc);
 }
 
-/*void EditorManager::vcsOpenCurrentEditor()
-{
-    IDocument *document = currentDocument();
-    if (!document)
-        return;
-
-    const QString directory = QFileInfo(document->filePath()).absolutePath();
-    IVersionControl *versionControl = VcsManager::findVersionControlForDirectory(directory);
-    if (!versionControl || versionControl->openSupportMode(document->filePath()) == IVersionControl::NoOpen)
-        return;
-
-    if (!versionControl->vcsOpen(document->filePath())) {
-        QMessageBox::warning(ICore::mainWindow(), tr("Cannot Open File"),
-                             tr("Cannot open the file for editing with VCS."));
-    }
-}*/
-
 void EditorManager::updateWindowTitle()
 {
     QString windowTitle = tr("Qt Creator");
@@ -1950,32 +1921,13 @@ void EditorManager::updateMakeWritableWarning()
 
         // Do this after setWriteWarning so we don't re-evaluate this part even
         // if we do not really show a warning.
-        //bool promptVCS = false;
-        //const QString directory = QFileInfo(document->filePath()).absolutePath();
-        /*IVersionControl *versionControl = VcsManager::findVersionControlForDirectory(directory);
-        if (versionControl && versionControl->openSupportMode(document->filePath()) != IVersionControl::NoOpen) {
-            if (versionControl->settingsFlags() & IVersionControl::AutoOpen) {
-                vcsOpenCurrentEditor();
-                ww = false;
-            } else {
-                promptVCS = true;
-            }
-        }*/
 
         if (ww) {
             // we are about to change a read-only file, warn user
-            /*if (promptVCS) {
-                InfoBarEntry info(Id(kMakeWritableWarning),
-                                  tr("<b>Warning:</b> This file was not opened in %1 yet.")
-                                  .arg(versionControl->displayName()));
-                info.setCustomButtonInfo(tr("Open"), m_instance, SLOT(vcsOpenCurrentEditor()));
-                document->infoBar()->addInfo(info);
-            } else {*/
                 InfoBarEntry info(Id(kMakeWritableWarning),
                                   tr("<b>Warning:</b> You are changing a read-only file."));
                 info.setCustomButtonInfo(tr("Make Writable"), m_instance, SLOT(makeCurrentEditorWritable()));
                 document->infoBar()->addInfo(info);
-            //}
         } else {
             document->infoBar()->removeInfo(Id(kMakeWritableWarning));
         }
