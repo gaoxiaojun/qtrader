@@ -633,9 +633,7 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/domain/order.h \
     src/plugins/domain/ordermanager.h \
     src/plugins/domain/historicaldatarequest.h \
-    src/plugins/tws/twsorderexecutionprovider.h \
     src/plugins/domain/twshistoricalprovider.h \
-    src/plugins/tws/twshistoricalprovider.h \
     src/plugins/tws/twsproviderinfo.h \
     src/plugins/domain/marketdataprovidermanager.h \
     src/plugins/domain/orderexecutionprovidermanager.h \
@@ -777,7 +775,30 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/coreplugin/providermanager/imarketdataprovider.h \
     src/plugins/coreplugin/providermanager/ihistoricalprovider.h \
     src/plugins/coreplugin/providermanager/historicaldatarequest.h \
-    src/plugins/tws/bar.h
+    src/plugins/tws/bar.h \
+    src/libs/opentrade/bar.h \
+    src/libs/opentrade/barmanager.h \
+    src/libs/opentrade/orderbook.h \
+    src/libs/opentrade/order.h \
+    src/libs/opentrade/instrument.h \
+    src/libs/opentrade/barseries.h \
+    src/libs/opentrade/instrumentmanager.h \
+    src/libs/opentrade/bar_p.h \
+    src/libs/opentrade/marketdataprovidermanager.h \
+    src/libs/opentrade/imarketdataprovider.h \
+    src/libs/opentrade/iprovider.h \
+    src/libs/opentrade/opentrade_global.h \
+    src/plugins/coreplugin/model/account.h \
+    src/libs/opentrade/account.h \
+    src/libs/opentrade/accountmanager.h \
+    src/libs/opentrade/ibackfillprovider.h \
+    src/libs/opentrade/backfillrequest.h \
+    src/libs/opentrade/backfillprovidermanager.h \
+    src/libs/opentrade/quote.h \
+    src/plugins/tws/twsbackfillprovider.h \
+    src/plugins/tws/twsexecutionprovider.h \
+    src/libs/opentrade/iexecutionprovider.h \
+    src/libs/opentrade/executionprovidermanager.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1360,9 +1381,7 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/domain/order.cpp \
     src/plugins/domain/ordermanager.cpp \
     src/plugins/domain/historicaldatarequest.cpp \
-    src/plugins/tws/twsorderexecutionprovider.cpp \
     src/plugins/domain/twshistoricalprovider.cpp \
-    src/plugins/tws/twshistoricalprovider.cpp \
     src/plugins/domain/marketdataprovidermanager.cpp \
     src/plugins/domain/orderexecutionprovidermanager.cpp \
     src/plugins/opentrade/historicalprovidermanager.cpp \
@@ -1414,7 +1433,24 @@ SOURCES += src/app/gui/main.cpp \
     src/plugins/coreplugin/providermanager/historicaldatarequest.cpp \
     src/plugins/coreplugin/providermanager/historicalprovidermanager.cpp \
     src/plugins/coreplugin/providermanager/orderexecutionprovidermanager.cpp \
-    src/plugins/tws/bar.cpp
+    src/plugins/tws/bar.cpp \
+    src/libs/opentrade/bar.cpp \
+    src/libs/opentrade/barmanager.cpp \
+    src/libs/opentrade/orderbook.cpp \
+    src/libs/opentrade/order.cpp \
+    src/libs/opentrade/instrument.cpp \
+    src/libs/opentrade/barseries.cpp \
+    src/libs/opentrade/instrumentmanager.cpp \
+    src/libs/opentrade/marketdataprovidermanager.cpp \
+    src/plugins/coreplugin/model/account.cpp \
+    src/libs/opentrade/account.cpp \
+    src/libs/opentrade/accountmanager.cpp \
+    src/libs/opentrade/quote.cpp \
+    src/libs/opentrade/backfillrequest.cpp \
+    src/libs/opentrade/backfillprovidermanager.cpp \
+    src/plugins/tws/twsbackfillprovider.cpp \
+    src/libs/opentrade/executionprovidermanager.cpp \
+    src/plugins/tws/twsexecutionprovider.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
@@ -1507,4 +1543,5 @@ OTHER_FILES += \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/TickType.java \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/UnderComp.java \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/Util.java \
-    src/plugins/coreplugin/model/OpenTrade.json.in
+    src/plugins/coreplugin/model/OpenTrade.json.in \
+    src/libs/opentrade/CMakeLists.txt

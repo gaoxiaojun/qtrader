@@ -16,9 +16,9 @@
 #ifndef HISTORICALDATAREQUEST_H
 #define HISTORICALDATAREQUEST_H
 
-#include "core_global.h"
+#include "opentrade_global.h"
 
-#include "model/instrument.h"
+#include "instrument.h"
 
 #include <QMetaType>
 #include <QDateTime>
@@ -26,10 +26,10 @@
 namespace OpenTrade {
 
 namespace Internal {
-  class HistoricalDataRequestPrivate;
+  class BackfillRequestPrivate;
 }
 
-class CORE_EXPORT HistoricalDataRequest
+class OPENTRADE_EXPORT BackfillRequest
 {
 public:
     enum RequestDataType {
@@ -39,20 +39,20 @@ public:
         Daily  = 3
     };
 
-    HistoricalDataRequest(const Instrument& inst, long barSize, RequestDataType type, const QDateTime& begin, const QDateTime& end);
-    HistoricalDataRequest (const HistoricalDataRequest& other);
-    HistoricalDataRequest& operator=(const HistoricalDataRequest& other);
-    ~HistoricalDataRequest();
+    BackfillRequest(const Instrument& inst, long barSize, RequestDataType type, const QDateTime& begin, const QDateTime& end);
+    BackfillRequest (const BackfillRequest& other);
+    BackfillRequest& operator=(const BackfillRequest& other);
+    ~BackfillRequest();
 
-    void swap(HistoricalDataRequest &other) { qSwap(d, other.d); }
+    void swap(BackfillRequest &other) { qSwap(d, other.d); }
 
 #ifdef Q_COMPILER_RVALUE_REFS
     inline HistoricalDataRequest &operator=(HistoricalDataRequest &&other)
     { qSwap(d, other.d); return *this; }
 #endif
 
-    bool operator==(const HistoricalDataRequest &other) const;
-    inline bool operator!=(const HistoricalDataRequest &other) const
+    bool operator==(const BackfillRequest &other) const;
+    inline bool operator!=(const BackfillRequest &other) const
     { return !(operator==(other)); }
 
     Instrument instrument() const;
@@ -62,11 +62,11 @@ public:
     QDateTime end() const;
 
 private:
-    QSharedDataPointer<Internal::HistoricalDataRequestPrivate> d;
+    QSharedDataPointer<Internal::BackfillRequestPrivate> d;
 };
 
 } // namespace OpenTrade
 
-Q_DECLARE_SHARED(OpenTrade::HistoricalDataRequest)
+Q_DECLARE_SHARED(OpenTrade::BackfillRequest)
 
 #endif // HISTORICALDATAREQUEST_H

@@ -13,55 +13,47 @@
 **
 ****************************************************************************/
 
-#ifndef BAR_H
-#define BAR_H
+#ifndef ACCOUNT_H
+#define ACCOUNT_H
 
-#include "opentrade_global.h"
-
+#include <QObject>
+#include <QString>
+#include <QVariant>
 #include <QDateTime>
-#include <QVector>
-#include <qglobal.h>
 
 namespace OpenTrade {
 
-class Instrument;
-class BarSeries;
-
 namespace Internal {
-  class BarPrivate;
+  class AccountPrivate;
 }
 
-class OPENTRADE_EXPORT Bar
+class Account : public QObject
 {
+    Q_OBJECT
 public:
-    Bar();
-    Bar(double open, double high, double low, double close, double volume);
-    ~Bar();
+    Account(const QString& acctName, QObject *parent = 0);
+    ~Account();
 
-    //QDateTime begin() const;
-    //QDateTime end() const;
-    //QDateTime current() const;
+    double buyingPower() const;
+    const QString& accountName() const;
 
-    bool isValid() const;
+    QVariant field(const QString& name) const;
+    void setField(const QString& name, const QVariant & value);
+    const QDateTime& lastUpdateTime() const;
+    void setLastUpdateTime(const QDateTime& last);
+    // Orders
+    // Positions
+    // addOrder()
+    // addPosition()
 
-    double average() const;   //平均值
-    double typical() const;   //典型值
-    double median() const;    //
-    double weighted() const;
+signals:
 
-    double open() const;
-    double high() const;
-    double low() const;
-    double close() const;
-    double volume() const;
+public slots:
 
 private:
-    Internal::BarPrivate *d;
-    friend class BarSeries;
+    Internal::AccountPrivate *d;
 };
 
 } // namespace OpenTrade
 
-Q_DECLARE_TYPEINFO(OpenTrade::Bar, Q_MOVABLE_TYPE);
-
-#endif // BAR_H
+#endif // ACCOUNT_H

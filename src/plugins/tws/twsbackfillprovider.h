@@ -18,18 +18,19 @@
 
 #include "twscontroller.h"
 
-#include <coreplugin/providermanager/ihistoricalprovider.h>
+#include <opentrade/ibackfillprovider.h>
 
 #include <QString>
 
 namespace TWS {
 
-class TwsHistoricalProvider : public OpenTrade::IHistoricalProvider
+class TwsBackfillProvider : public OpenTrade::IBackfillProvider
 {
+    Q_OBJECT
 public:
-    explicit TwsHistoricalProvider(QObject *parent);
+    explicit TwsBackfillProvider(QObject *parent, TwsController *controller);
 
-    ~TwsHistoricalProvider();
+    ~TwsBackfillProvider();
 
     // IProvider
     OpenTrade::ProviderInfo* info() const;
@@ -41,18 +42,17 @@ public:
     void shutdown();
 
     // IHistoricalProvider
-    void RequestHistoricalData(const OpenTrade::HistoricalDataRequest& request );
-    void CancelHistoricalData(const OpenTrade::HistoricalDataRequest& request );
+    void RequestHistoricalData(const OpenTrade::BackfillRequest& request );
+    void CancelHistoricalData(const OpenTrade::BackfillRequest& request );
 
-public slots:
-    void OnTwsConnected();
-    void OnTwsDisConnected();
-    void OnTwsError(const QString& message);
-    void OnTwsError(int errorCode, const QString& message);
+private slots:
+    void hisConnected();
+    void hisDisconnected();
 
 private:
-    TwsController* m_client;
+    TwsController* m_controller;
     OpenTrade::ProviderInfo* m_info;
+    bool m_hisconnect;
 };
 
 } // namespace TWS

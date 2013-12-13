@@ -16,7 +16,7 @@
 #ifndef __OPENTRADE_IPROVIDER_H__
 #define __OPENTRADE_IPROVIDER_H__
 
-#include "core_global.h"
+#include "opentrade_global.h"
 
 #include <QObject>
 #include <QDateTime>
@@ -30,7 +30,7 @@ class Bar;
   class ProviderInfoPrivate;
 }*/
 
-class CORE_EXPORT ProviderInfo
+class OPENTRADE_EXPORT ProviderInfo
 {
 public:
     //~ProviderInfo();
@@ -49,7 +49,7 @@ public:
     friend class Internal::ProviderInfoPrivate;*/
 };
 
-class CORE_EXPORT IProvider : public QObject
+class OPENTRADE_EXPORT IProvider : public QObject
 {
     Q_OBJECT
 

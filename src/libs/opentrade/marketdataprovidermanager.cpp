@@ -14,10 +14,10 @@
 ****************************************************************************/
 
 #include "marketdataprovidermanager.h"
-#include "model/instrument.h"
-#include "model/order.h"
-#include "model/bar.h"
-#include "model/quote.h"
+#include "instrument.h"
+#include "order.h"
+#include "bar.h"
+//#include "quote.h"
 
 #include <extensionsystem/pluginmanager.h>
 
@@ -45,7 +45,7 @@ MarketDataProviderManager::~MarketDataProviderManager()
     m_providers.clear();
 }
 
-void MarketDataProviderManager::init()
+void MarketDataProviderManager::initialize()
 {
     connect(ExtensionSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)),
             this, SLOT(objectAdded(QObject*)));
@@ -59,14 +59,14 @@ void MarketDataProviderManager::extensionsInitalized()
 
 void MarketDataProviderManager::connectToProvider (IMarketDataProvider *provider)
 {
-    connect(provider, SIGNAL(newBar(const Instrument&, Bar::BarType, long, const QDateTime&,
+    connect(provider, SIGNAL(newBar(const Instrument&, long, const QDateTime&,
                                     const QDateTime&, double, double, double, double, double)),
-            this, SLOT(newBar(const Instrument&, Bar::BarType, long, const QDateTime&,
+            this, SLOT(newBar(const Instrument&, long, const QDateTime&,
                               const QDateTime&, double, double, double, double, double)));
 
-    connect(provider, SIGNAL(newBarOpen(const Instrument&, Bar::BarType, long, const QDateTime&,
+    connect(provider, SIGNAL(newBarOpen(const Instrument&, long, const QDateTime&,
                                     const QDateTime&, double, double, double, double, double)),
-            this, SLOT(newBar(const Instrument&, Bar::BarType, long, const QDateTime&,
+            this, SLOT(newBar(const Instrument&, long, const QDateTime&,
                               const QDateTime&, double, double, double, double, double)));
     connect(provider, SIGNAL(newBarSlice(long)), this, SLOT(newBarSlice(long)));
 
@@ -82,14 +82,14 @@ void MarketDataProviderManager::connectToProvider (IMarketDataProvider *provider
 
 void MarketDataProviderManager::disconnectToProvider (IMarketDataProvider *provider)
 {
-    disconnect(provider, SIGNAL(newBar(const Instrument&, Bar::BarType, long, const QDateTime&,
+    /*disconnect(provider, SIGNAL(newBar(const Instrument&, long, const QDateTime&,
                                     const QDateTime&, double, double, double, double, double)),
-            this, SLOT(newBar(const Instrument&, Bar::BarType, long, const QDateTime&,
+            this, SLOT(newBar(const Instrument&, long, const QDateTime&,
                               const QDateTime&, double, double, double, double, double)));
 
-    disconnect(provider, SIGNAL(newBarOpen(const Instrument&, Bar::BarType, long, const QDateTime&,
+    disconnect(provider, SIGNAL(newBarOpen(const Instrument&, long, const QDateTime&,
                                     const QDateTime&, double, double, double, double, double)),
-            this, SLOT(newBar(const Instrument&, Bar::BarType, long, const QDateTime&,
+            this, SLOT(newBar(const Instrument&, long, const QDateTime&,
                               const QDateTime&, double, double, double, double, double)));
     disconnect(provider, SIGNAL(newBarSlice(long)), this, SLOT(newBarSlice(long)));
 
@@ -99,7 +99,7 @@ void MarketDataProviderManager::disconnectToProvider (IMarketDataProvider *provi
     disconnect(provider, SIGNAL(newOrderBookUpdate(const Instrument&, const QDateTime&, Bar::BidAsk,
                                                 OrderBook::OrderBookAction, double, int, int )),
             this, SLOT(newOrderBookUpdate(const Instrument&, const QDateTime&, Bar::BidAsk,
-                                          OrderBook::OrderBookAction, double, int, int)));
+                                          OrderBook::OrderBookAction, double, int, int)));*/
 
 }
 
@@ -124,13 +124,13 @@ void MarketDataProviderManager::aboutToRemoveObject(QObject *obj)
     }
 }
 
-void MarketDataProviderManager::newBar(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
+void MarketDataProviderManager::newBar(const Instrument& instrument, long barSize, const QDateTime& begin,
             const QDateTime& end, double open, double hight, double low, double close, double volume)
 {
 
 }
 
-void MarketDataProviderManager::newBarOpen(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
+void MarketDataProviderManager::newBarOpen(const Instrument& instrument, long barSize, const QDateTime& begin,
                 const QDateTime& end, double open, double hight, double low, double close, double volume)
 {
 
@@ -148,9 +148,9 @@ void MarketDataProviderManager::newQuote(const Instrument& instrument, const QDa
 
 }
 
-void MarketDataProviderManager::newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
+/*void MarketDataProviderManager::newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
                         OrderBook::OrderBookAction action, double price, int size, int position )
 {
 
-}
+}*/
 

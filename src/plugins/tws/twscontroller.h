@@ -18,8 +18,8 @@
 
 #include "twssocket.h"
 
-#include <coreplugin/model/instrument.h>
-#include <coreplugin/model/order.h>
+#include <opentrade/instrument.h>
+#include <opentrade/order.h>
 
 #include <QThread>
 #include <QSettings>
@@ -43,6 +43,8 @@ public:
     void connect();
     void disconnect();
     bool isConnected() const;
+    //bool isMktConnected() const { return m_mktconnect; }
+    //bool isHisConnected() const { return m_hisconnect; }
 
     //
     QString host() const;
@@ -74,6 +76,12 @@ public:
 public:
     void readSettings(QSettings* settings);
     void writeSettings(QSettings* settings);
+
+signals:
+    void mktConnected();
+    void mktDisconnected();
+    void hisConnected();
+    void hisDisconnected();
 
 private:
     Internal::TwsClient *m_client;

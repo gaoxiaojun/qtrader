@@ -16,16 +16,16 @@
 #ifndef IORDEREXECUTIONPROVIDER_HPP
 #define IORDEREXECUTIONPROVIDER_HPP
 
-#include "core_global.h"
+#include "opentrade_global.h"
 #include "iprovider.h"
 
-#include "model/order.h"
+#include "order.h"
 
 namespace OpenTrade {
 
 class Order;
 
-class CORE_EXPORT IOrderExecutionProvider : public IProvider
+class OPENTRADE_EXPORT IOrderExecutionProvider : public IProvider
 {
     Q_OBJECT
 

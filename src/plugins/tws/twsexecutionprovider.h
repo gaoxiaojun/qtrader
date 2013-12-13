@@ -19,9 +19,9 @@
 #include "twscontroller.h"
 #include "twsproviderinfo.h"
 
-#include <coreplugin/providermanager/iprovider.h>
-#include <coreplugin/providermanager/iorderexecutionprovider.h>
-#include <coreplugin/model/order.h>
+#include <opentrade/iprovider.h>
+#include <opentrade/iexecutionprovider.h>
+#include <opentrade/order.h>
 
 namespace TWS {
 

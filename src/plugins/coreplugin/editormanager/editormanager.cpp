@@ -1883,6 +1883,23 @@ void EditorManager::makeCurrentEditorWritable()
         makeFileWritable(doc);
 }
 
+/*void EditorManager::vcsOpenCurrentEditor()
+{
+    IDocument *document = currentDocument();
+    if (!document)
+        return;
+
+    const QString directory = QFileInfo(document->filePath()).absolutePath();
+    IVersionControl *versionControl = VcsManager::findVersionControlForDirectory(directory);
+    if (!versionControl || versionControl->openSupportMode(document->filePath()) == IVersionControl::NoOpen)
+        return;
+
+    if (!versionControl->vcsOpen(document->filePath())) {
+        QMessageBox::warning(ICore::mainWindow(), tr("Cannot Open File"),
+                             tr("Cannot open the file for editing with VCS."));
+    }
+}*/
+
 void EditorManager::updateWindowTitle()
 {
     QString windowTitle = tr("Qt Creator");
@@ -1931,12 +1948,34 @@ void EditorManager::updateMakeWritableWarning()
     if (ww != document->hasWriteWarning()) {
         document->setWriteWarning(ww);
 
+        // Do this after setWriteWarning so we don't re-evaluate this part even
+        // if we do not really show a warning.
+        //bool promptVCS = false;
+        //const QString directory = QFileInfo(document->filePath()).absolutePath();
+        /*IVersionControl *versionControl = VcsManager::findVersionControlForDirectory(directory);
+        if (versionControl && versionControl->openSupportMode(document->filePath()) != IVersionControl::NoOpen) {
+            if (versionControl->settingsFlags() & IVersionControl::AutoOpen) {
+                vcsOpenCurrentEditor();
+                ww = false;
+            } else {
+                promptVCS = true;
+            }
+        }*/
+
         if (ww) {
             // we are about to change a read-only file, warn user
-            InfoBarEntry info(Id(kMakeWritableWarning),
-                              tr("<b>Warning:</b> You are changing a read-only file."));
-            info.setCustomButtonInfo(tr("Make Writable"), m_instance, SLOT(makeCurrentEditorWritable()));
-            document->infoBar()->addInfo(info);
+            /*if (promptVCS) {
+                InfoBarEntry info(Id(kMakeWritableWarning),
+                                  tr("<b>Warning:</b> This file was not opened in %1 yet.")
+                                  .arg(versionControl->displayName()));
+                info.setCustomButtonInfo(tr("Open"), m_instance, SLOT(vcsOpenCurrentEditor()));
+                document->infoBar()->addInfo(info);
+            } else {*/
+                InfoBarEntry info(Id(kMakeWritableWarning),
+                                  tr("<b>Warning:</b> You are changing a read-only file."));
+                info.setCustomButtonInfo(tr("Make Writable"), m_instance, SLOT(makeCurrentEditorWritable()));
+                document->infoBar()->addInfo(info);
+            //}
         } else {
             document->infoBar()->removeInfo(Id(kMakeWritableWarning));
         }
@@ -1947,8 +1986,7 @@ void EditorManager::setupSaveActions(IDocument *document, QAction *saveAction, Q
 {
     saveAction->setEnabled(document != 0 && document->isModified());
     saveAsAction->setEnabled(document != 0 && document->isSaveAsAllowed());
-    revertToSavedAction->setEnabled(document != 0
-                                    && !document->filePath().isEmpty() && document->isModified());
+    revertToSavedAction->setEnabled(document != 0 && !document->filePath().isEmpty());
 
     const QString documentName = document ? document->displayName() : QString();
     QString quotedName;
@@ -1957,7 +1995,9 @@ void EditorManager::setupSaveActions(IDocument *document, QAction *saveAction, Q
         quotedName = QLatin1Char('"') + documentName + QLatin1Char('"');
         saveAction->setText(tr("&Save %1").arg(quotedName));
         saveAsAction->setText(tr("Save %1 &As...").arg(quotedName));
-        revertToSavedAction->setText(tr("Revert %1 to Saved").arg(quotedName));
+        revertToSavedAction->setText(document->isModified()
+                                     ? tr("Revert %1 to Saved").arg(quotedName)
+                                     : tr("Reload %1").arg(quotedName));
     }
 }
 

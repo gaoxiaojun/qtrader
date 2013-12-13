@@ -17,7 +17,7 @@
 #define OrderExecutionProviderManager_H
 
 #include <QObject>
-#include "iorderexecutionprovider.h"
+#include "iexecutionprovider.h"
 
 namespace OpenTrade {
 
@@ -33,7 +33,7 @@ public:
 
     static QList<IOrderExecutionProvider *> getProviders();
 
-    void init();
+    void initialize();
     void extensionsInitalized();
 
 private slots:

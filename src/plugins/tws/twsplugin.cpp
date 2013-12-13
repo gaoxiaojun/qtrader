@@ -4,8 +4,10 @@
 
 #include "twsmarketdataprovider.h"
 #include "twsoptionspage.h"
-#include "twsorderexecutionprovider.h"
-#include "twshistoricalprovider.h"
+#include "twsexecutionprovider.h"
+#include "twsbackfillprovider.h"
+
+#include <opentrade/instrument.h>
 
 #include <coreplugin/icore.h>
 #include <coreplugin/icontext.h>
@@ -167,7 +169,7 @@ void TwsPlugin::connectAction()
 
 void TwsPlugin::subscribeAction()
 {
-    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
+    OpenTrade::Forex inst("EUR.USD");
     qDebug() << inst.symbol () << "." << inst.currency ();
     if( m_controller->isConnected ()) {
         m_controller->subscribe (inst);
@@ -181,7 +183,7 @@ void TwsPlugin::disconnectAction()
 
 void TwsPlugin::unsubscribeAction()
 {
-    OpenTrade::Instrument inst(OpenTrade::Instrument::Forex, "EUR", "CHF", "SMART");
+    OpenTrade::Forex inst("EUR.USD");
     qDebug() << inst.symbol () << "." << inst.currency ();
     if( m_controller->isConnected ()) {
         m_controller->unsubscribe (inst);

@@ -34,12 +34,16 @@ TwsController *TwsController::instance()
 }
 
 TwsController::TwsController(QObject *parent) :
-    QObject(parent)
+    QObject(parent) //, m_mktconnect(false), m_hisconnect(false)
 {
     m_client = new Internal::TwsClient(this);
     m_client->moveToThread (&m_thread);
     m_thread.start();
     m_instance = this;
+    QObject::connect(m_client, SIGNAL(mktConnected()), this, SIGNAL(mktConnected()));
+    QObject::connect(m_client, SIGNAL(mktDisconnected()), this, SIGNAL(mktDisconnected()));
+    QObject::connect(m_client, SIGNAL(hisConnected()), this, SIGNAL(hisConnected()));
+    QObject::connect(m_client, SIGNAL(hisDisconnected()), this, SIGNAL(hisDisconnected()));
 }
 
 TwsController::~TwsController()
@@ -59,80 +63,14 @@ void TwsController::disconnect()
     m_client->disconnect ();
 }
 
-/*void TwsController::convertInstrumentToContract(const OpenTrade::Instrument& inst, Contract *contract)
-{
-    switch(inst.type()) {
-    case OpenTrade::Instrument::Forex:
-            contract->secType = "CASH";
-            contract->symbol = inst.symbol().toStdString();
-            contract->exchange = "IDEALPRO";
-            contract->currency = inst.currency().toStdString();
-        break;
-    case OpenTrade::Instrument::Index:
-            contract->secType = "IND";
-            contract->symbol = inst.symbol().toStdString();
-            contract->exchange = inst.exchange().toStdString();
-            contract->currency = inst.currency().toStdString();
-    default:
-        break;
-    }
-}
-
-TickerId TwsController::tickId()
-{
-    return m_tickId.fetchAndAddOrdered(1);
-}*/
-
 void TwsController::subscribe(const OpenTrade::Instrument &instrument)
 {
-    /*OpenTrade::Instrument* inst = const_cast<OpenTrade::Instrument*>(&instrument);
-    if(m_subscribes.contains(inst))
-        return;
-
-    Contract contract;
-
-    convertInstrumentToContract(instrument, &contract);
-
-    // market data
-    IBString genericTicks;
-    switch(instrument.type ()) {
-    case OpenTrade::Instrument::Forex:
-        genericTicks = "165";
-        break;
-    default:
-        genericTicks = "233,165";
-        break;
-    }
-
-    Internal::subscribeInfo *info = new Internal::subscribeInfo();
-    info->marketData_id = tickId();
-    info->realtimeBar_bid_id = tickId();
-    info->realtimeBar_ask_id = tickId();
-    m_subscribes.insert(inst, info);
-    m_client->reqMktData(info->marketData_id, contract, "", false);
-
-    m_client->reqRealTimeBars (info->realtimeBar_bid_id, contract, 5, "BID", false);
-    m_client->reqRealTimeBars (info->realtimeBar_ask_id, contract, 5, "ASK", false);*/
+    m_client->subscribe (instrument);
 }
-
-/*void TwsController::removeInfo(Internal::subscribeInfo *info)
-{
-    if (m_client->isConnected ()) {
-        m_client->cancelMktData (info->marketData_id);
-        m_client->cancelRealTimeBars (info->realtimeBar_bid_id);
-        m_client->cancelRealTimeBars (info->realtimeBar_ask_id);
-    }
-    delete info;
-}*/
 
 void TwsController::unsubscribe(const OpenTrade::Instrument& instrument)
 {
-    /*OpenTrade::Instrument* inst = const_cast<OpenTrade::Instrument*>(&instrument);
-    Internal::subscribeInfo *info = m_subscribes.value(inst);
-    if(info) {
-        removeInfo(info);
-        m_subscribes.remove(inst);
-    }*/
+    m_client->unsubscribe (instrument);
 }
 
 bool TwsController::isConnected () const

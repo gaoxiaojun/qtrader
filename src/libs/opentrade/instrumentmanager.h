@@ -13,9 +13,32 @@
 **
 ****************************************************************************/
 
-#include "ordermanager.h"
+#ifndef INSTRUMENTMANAGER_H
+#define INSTRUMENTMANAGER_H
 
-OrderManager::OrderManager(QObject *parent) :
-    QObject(parent)
+#include <QObject>
+
+namespace OpenTrade {
+
+class Instrument;
+
+class InstrumentManager : public QObject
 {
-}
+    Q_OBJECT
+public:
+    explicit InstrumentManager(QObject *parent = 0);
+
+    const Instrument& at(const QString& symbol) const;
+
+    Instrument&	operator[](const QString& symbol);
+    const Instrument& operator[](const QString& symbol) const;
+
+signals:
+
+public slots:
+
+};
+
+} // namespace OpenTrade
+
+#endif // INSTRUMENTMANAGER_H

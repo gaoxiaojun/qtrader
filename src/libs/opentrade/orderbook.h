@@ -16,7 +16,7 @@
 #ifndef ORDERBOOK_H
 #define ORDERBOOK_H
 
-#include "core_global.h"
+#include "opentrade_global.h"
 
 #include <QSharedDataPointer>
 #include <QMetaType>
@@ -28,7 +28,7 @@ namespace Internal {
   class OrderBookPrivate;
 }
 
-class CORE_EXPORT OrderBook
+class OPENTRADE_EXPORT OrderBook
 {
 public:
     enum OrderBookAction{
@@ -57,7 +57,8 @@ private:
     QSharedDataPointer<Internal::OrderBookPrivate> d;
     friend class Internal::OrderBookPrivate;
 };
-QDebug CORE_EXPORT operator<<(QDebug, const OrderBook &ob);
+
+QDebug OPENTRADE_EXPORT operator<<(QDebug, const OrderBook &ob);
 //Q_DECLARE_METATYPE(OrderBook)
 
 } // namespace OpenTrade

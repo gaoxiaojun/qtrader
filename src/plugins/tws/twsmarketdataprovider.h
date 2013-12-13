@@ -19,8 +19,8 @@
 #include "twscontroller.h"
 #include "twsproviderinfo.h"
 
-#include <coreplugin/providermanager/imarketdataprovider.h>
-#include <coreplugin/model/instrument.h>
+#include <opentrade/imarketdataprovider.h>
+#include <opentrade/instrument.h>
 
 namespace TWS {
 
@@ -46,8 +46,8 @@ public:
     QString errorString();
 
 private slots:
-    void mktConnected();
-    void mktDisconnected();
+    void mktConnected ();
+    void mktDisconnected ();
 
 private:
     TwsController* m_controller;

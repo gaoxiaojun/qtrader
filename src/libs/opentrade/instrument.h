@@ -16,11 +16,10 @@
 #ifndef __INSTRUMENT_H__
 #define __INSTRUMENT_H__
 
-#include "core_global.h"
-
 #include <QString>
 #include <QDateTime>
-
+#include <QDebug>
+#include <qglobal.h>
 
 namespace OpenTrade {
 
@@ -35,7 +34,7 @@ namespace Internal {
 /* TODO:
  * 确保是个immutable class 或者...
 */
-class CORE_EXPORT Instrument
+class Instrument
 {
 public:
     enum InstrumentType {
@@ -52,10 +51,11 @@ public:
     };
 
     enum PutCall {
-        Put  = 0,
-        Call = 1
+        NONE = 0,
+        Put  = 1,
+        Call = 2
     };
-
+    Instrument(Instrument::InstrumentType type, const QString& symbol);
     Instrument(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange);
     Instrument(const Instrument& other);
     ~Instrument();
@@ -129,10 +129,39 @@ public:
 private:
     QSharedDataPointer<Internal::InstrumentPrivate> d;
     friend class Internal::InstrumentPrivate;
+    //friend uint qHash(const OpenTrade::Instrument &key, uint seed);
 };
-QDebug CORE_EXPORT operator<<(QDebug, const OpenTrade::Instrument &instrument);
+
+class Forex: public Instrument
+{
+public:
+    Forex(const QString& symbol)
+        :Instrument(Instrument::Forex, symbol)
+    {}
+};
+
+class Stock: public Instrument
+{
+public:
+    Stock(const QString& symbol, const QString& currency, const QString& exchange)
+        :Instrument(Instrument::Stock, symbol, currency, exchange)
+    {}
+};
+
+class Future: public Instrument
+{
+public:
+    Future(const QString& symbol)
+        :Instrument(Instrument::Futures, symbol)
+    {}
+};
+
+QDebug operator<<(QDebug, const OpenTrade::Instrument &instrument);
 
 } //namespace OpenTrade
+
+
+uint qHash(const OpenTrade::Instrument &key, uint seed);
 
 Q_DECLARE_SHARED(OpenTrade::Instrument)
 

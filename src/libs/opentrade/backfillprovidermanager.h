@@ -17,7 +17,7 @@
 #define HistoricalProviderManager_H
 
 #include <QObject>
-#include "ihistoricalprovider.h"
+#include "ibackfillprovider.h"
 
 namespace OpenTrade {
 
@@ -30,9 +30,9 @@ public:
     explicit HistoricalProviderManager(QObject *parent = 0);
     ~HistoricalProviderManager();
 
-    static QList<IHistoricalProvider *> getProviders();
+    static QList<IBackfillProvider *> getProviders();
 
-    void init();
+    void initialize();
     void extensionsInitalized();
 
 private slots:
@@ -40,21 +40,21 @@ private slots:
     void aboutToRemoveObject(QObject *obj);
 
 private slots:
-    void historicalDataCancelled(const HistoricalDataRequest& request );
-    void historicalDataCompleted(const HistoricalDataRequest& request );
-    void HistoricalDataError(const HistoricalDataRequest& request, QString message );
+    void historicalDataCancelled(const BackfillRequest& request );
+    void historicalDataCompleted(const BackfillRequest& request );
+    void HistoricalDataError(const BackfillRequest& request, QString message );
 
-    void newHistoricalBar(const HistoricalDataRequest& request, const QDateTime& datetime,
+    void newHistoricalBar(const BackfillRequest& request, const QDateTime& datetime,
                            double open, double high, double low, double close, long volume );
-    void newHistoricalQuote(const HistoricalDataRequest& request, const QDateTime& datetime,
+    void newHistoricalQuote(const BackfillRequest& request, const QDateTime& datetime,
                              double bid, int bidSize, double ask, int askSize );
-    void newHistoricalTrade(const HistoricalDataRequest& request, const QDateTime& datetime, double price, int size );
+    void newHistoricalTrade(const BackfillRequest& request, const QDateTime& datetime, double price, int size );
 
 private:
-    void connectToProvider(IHistoricalProvider *provider);
-    void disconnectToProvider(IHistoricalProvider *provider);
+    void connectToProvider(IBackfillProvider *provider);
+    void disconnectToProvider(IBackfillProvider *provider);
 
-    QList<IHistoricalProvider *> m_providers;
+    QList<IBackfillProvider *> m_providers;
 
 };
 

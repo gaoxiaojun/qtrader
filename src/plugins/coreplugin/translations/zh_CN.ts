@@ -158,12 +158,12 @@
 <context>
     <name>Core::DocumentModel</name>
     <message>
-        <location filename="../editormanager/documentmodel.cpp" line="340"/>
+        <location filename="../editormanager/documentmodel.cpp" line="342"/>
         <source>&lt;no document&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/documentmodel.cpp" line="342"/>
+        <location filename="../editormanager/documentmodel.cpp" line="344"/>
         <source>No document is selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -173,7 +173,7 @@
     <message>
         <location filename="../editormanager/editormanager.cpp" line="219"/>
         <location filename="../editormanager/editormanager.cpp" line="232"/>
-        <location filename="../editormanager/editormanager.cpp" line="2292"/>
+        <location filename="../editormanager/editormanager.cpp" line="2332"/>
         <source>Revert to Saved</source>
         <translation>恢复到已保存的状态</translation>
     </message>
@@ -193,7 +193,7 @@
     <message>
         <location filename="../editormanager/editormanager.cpp" line="224"/>
         <location filename="../editormanager/editormanager.cpp" line="235"/>
-        <location filename="../editormanager/editormanager.cpp" line="1989"/>
+        <location filename="../editormanager/editormanager.cpp" line="2029"/>
         <source>Close Others</source>
         <translation>关闭其他</translation>
     </message>
@@ -426,7 +426,7 @@
     <message>
         <location filename="../editormanager/editormanager.cpp" line="1609"/>
         <location filename="../editormanager/editormanager.cpp" line="1779"/>
-        <location filename="../editormanager/editormanager.cpp" line="2305"/>
+        <location filename="../editormanager/editormanager.cpp" line="2345"/>
         <source>File Error</source>
         <translation>文件错误</translation>
     </message>
@@ -444,7 +444,7 @@
         <translation type="vanished">无法为了编辑VCS而打开文件。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1888"/>
+        <location filename="../editormanager/editormanager.cpp" line="1905"/>
         <source>Qt Creator</source>
         <translation>Qt Creator</translation>
     </message>
@@ -457,52 +457,57 @@
         <translation type="vanished">打开</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1937"/>
+        <location filename="../editormanager/editormanager.cpp" line="1975"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; You are changing a read-only file.</source>
         <translation>&lt;b&gt;警告:&lt;/b&gt; 您正在改写一个只读文件。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1938"/>
+        <location filename="../editormanager/editormanager.cpp" line="1976"/>
         <source>Make Writable</source>
         <translation>使文件可写</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1958"/>
+        <location filename="../editormanager/editormanager.cpp" line="1996"/>
         <source>&amp;Save %1</source>
         <translation>保存%1(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1959"/>
+        <location filename="../editormanager/editormanager.cpp" line="1997"/>
         <source>Save %1 &amp;As...</source>
         <translation>%1 另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1960"/>
+        <location filename="../editormanager/editormanager.cpp" line="1999"/>
         <source>Revert %1 to Saved</source>
         <translation>恢复%1 到已保存的状态</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1986"/>
+        <location filename="../editormanager/editormanager.cpp" line="2000"/>
+        <source>Reload %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editormanager/editormanager.cpp" line="2026"/>
         <source>Close %1</source>
         <translation>关闭%1</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1989"/>
+        <location filename="../editormanager/editormanager.cpp" line="2029"/>
         <source>Close All Except %1</source>
         <translation>除了%1 以外全部关闭</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2293"/>
+        <location filename="../editormanager/editormanager.cpp" line="2333"/>
         <source>You will lose your current changes if you proceed reverting %1.</source>
         <translation>如果恢复 %1 那么您将会丢失现有的所有修改。</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2295"/>
+        <location filename="../editormanager/editormanager.cpp" line="2335"/>
         <source>Proceed</source>
         <translation>继续</translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2296"/>
+        <location filename="../editormanager/editormanager.cpp" line="2336"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

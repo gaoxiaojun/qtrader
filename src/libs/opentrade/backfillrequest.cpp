@@ -13,7 +13,7 @@
 **
 ****************************************************************************/
 
-#include "historicaldatarequest.h"
+#include "backfillrequest.h"
 
 #include <QSharedData>
 
@@ -21,48 +21,48 @@ namespace OpenTrade {
 
 namespace Internal {
 
-class HistoricalDataRequestPrivate : public QSharedData
+class BackfillRequestPrivate : public QSharedData
 {
 public:
-    inline HistoricalDataRequestPrivate(const Instrument& inst, long barSize, HistoricalDataRequest::RequestDataType type,
+    inline BackfillRequestPrivate(const Instrument& inst, long barSize, BackfillRequest::RequestDataType type,
                                  const QDateTime& begin, const QDateTime& end) :
         m_instrument(inst), m_barSize(barSize), m_type(type), m_begin(begin), m_end(end)
     {}
 
     Instrument m_instrument;
     long m_barSize;
-    HistoricalDataRequest::RequestDataType m_type;
+    BackfillRequest::RequestDataType m_type;
     QDateTime m_begin;
     QDateTime m_end;
 };
 
 } // namespace Internal
 
-HistoricalDataRequest::HistoricalDataRequest(const Instrument& inst,
+BackfillRequest::BackfillRequest(const Instrument& inst,
                                              long barSize, RequestDataType type,
                                              const QDateTime& begin, const QDateTime& end) :
-    d(new Internal::HistoricalDataRequestPrivate(inst, barSize, type, begin, end))
+    d(new Internal::BackfillRequestPrivate(inst, barSize, type, begin, end))
 {
 
 }
 
-HistoricalDataRequest::HistoricalDataRequest(const HistoricalDataRequest &other) :
+BackfillRequest::BackfillRequest(const BackfillRequest &other) :
     d(other.d)
 {
 }
 
-HistoricalDataRequest::~HistoricalDataRequest()
+BackfillRequest::~BackfillRequest()
 {
     d = 0;
 }
 
-HistoricalDataRequest& HistoricalDataRequest::operator=(const HistoricalDataRequest &other)
+BackfillRequest& BackfillRequest::operator=(const BackfillRequest &other)
 {
     d = other.d;
     return *this;
 }
 
-bool HistoricalDataRequest::operator==(const HistoricalDataRequest &other) const
+bool BackfillRequest::operator==(const BackfillRequest &other) const
 {
     if(d == other.d)
         return true;
@@ -73,27 +73,27 @@ bool HistoricalDataRequest::operator==(const HistoricalDataRequest &other) const
             (d->m_end == other.d->m_end));
 }
 
-Instrument HistoricalDataRequest::instrument() const
+Instrument BackfillRequest::instrument() const
 {
     return d->m_instrument;
 }
 
-long HistoricalDataRequest::barSize() const
+long BackfillRequest::barSize() const
 {
     return d->m_barSize;
 }
 
-HistoricalDataRequest::RequestDataType HistoricalDataRequest::type() const
+BackfillRequest::RequestDataType BackfillRequest::type() const
 {
     return d->m_type;
 }
 
-QDateTime HistoricalDataRequest::begin() const
+QDateTime BackfillRequest::begin() const
 {
     return d->m_begin;
 }
 
-QDateTime HistoricalDataRequest::end() const
+QDateTime BackfillRequest::end() const
 {
     return d->m_end;
 }

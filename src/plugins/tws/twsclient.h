@@ -40,7 +40,7 @@
 #include <QMap>
 #include <QThread>
 #include <QMetaObject>
-
+#include <QStringList>
 
 
 namespace TWS {
@@ -67,6 +67,14 @@ public:
     unsigned int port();
     Q_INVOKABLE void setHostAndPort(const QString& host, unsigned int port);
 
+public:
+    // util
+    TickerId tickId();
+    void convertInstrumentToContract(const OpenTrade::Instrument& inst, Contract *contract);
+    void removeInfo(Internal::subscribeInfo *info);
+    // market data
+    void subscribe(const OpenTrade::Instrument& instrument);
+    void unsubscribe(const OpenTrade::Instrument& instrument);
 
 public:
     Q_INVOKABLE void connect();
@@ -75,7 +83,15 @@ public:
 
 public:
     bool isConnected();
-
+signals:
+    void serverLost ();
+    void serverRestore ();
+    void serverRestoreWithData ();
+    void serverLostWithAutoRestore();
+    void mktConnected();
+    void mktDisconnected();
+    void hisConnected();
+    void hisDisconnected();
 private:
     friend class TwsSocket;
     void tickPrice( TickerId tickerId, TickType field, double price, int canAutoExecute);
@@ -139,13 +155,15 @@ public:
     QString connectionTime();
 private:
     TwsController* m_controller;
-    TwsSocket  *m_socket;
+    TwsSocket  m_socket;
     QAtomicInt m_tickId;
     QAtomicInt m_clientId;
     QMap<OpenTrade::Instrument*, subscribeInfo*> m_subscribes;
     QString m_host;
     unsigned int m_port;
     QMutex m_mutex;
+    QString m_account;
+    QStringList m_FaAccountList;
 };
 
 } // namespace Internal

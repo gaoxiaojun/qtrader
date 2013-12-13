@@ -16,12 +16,12 @@
 #ifndef IMARKETDATAPROVIDER_H
 #define IMARKETDATAPROVIDER_H
 
-#include "core_global.h"
+#include "opentrade_global.h"
 #include "iprovider.h"
 
-#include "model/bar.h"
-#include "model/instrument.h"
-#include "model/orderbook.h"
+#include "bar.h"
+#include "instrument.h"
+//#include "orderbook.h"
 
 #include <QObject>
 #include <QDateTime>
@@ -31,7 +31,7 @@ namespace OpenTrade {
 class Instrument;
 class Bar;
 
-class CORE_EXPORT IMarketDataProvider : public IProvider
+class OPENTRADE_EXPORT IMarketDataProvider : public IProvider
 {
     Q_OBJECT
 
@@ -45,10 +45,10 @@ public:
     //virtual QString errorString() = 0;
 
 signals:
-    void newBar(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
+    void newBar(const Instrument& instrument, long barSize, const QDateTime& begin,
                 const QDateTime& end, double open, double hight, double low, double close, double volume);
 
-    void newBarOpen(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
+    void newBarOpen(const Instrument& instrument, long barSize, const QDateTime& begin,
                     const QDateTime& end, double open, double hight, double low, double close, double volume);
 
     void newBarSlice(long barSize);
@@ -57,8 +57,8 @@ signals:
     void newQuote(const Instrument& instrument, const QDateTime& time, double bid, double ask,
                   int bidSize, int askSize);
 
-    void newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
-                            OrderBook::OrderBookAction action, double price, int size, int position );
+    //void newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
+    //                        OrderBook::OrderBookAction action, double price, int size, int position );
 
 };
 

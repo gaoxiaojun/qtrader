@@ -29,10 +29,9 @@ private:
 	int receive( char* buf, size_t sz);
 
 public slots:
-	// callback from socket
-    void onConnect();
-	void onReceive();
-	void onClose();
+    // callback from socket
+    void onReceive();
+    void onClose();
     void socketError(QAbstractSocket::SocketError);
 private:
     QTcpSocket m_socket;

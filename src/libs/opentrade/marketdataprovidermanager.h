@@ -33,17 +33,17 @@ public:
 
     static QList<IMarketDataProvider *> getProviders();
 
-    void init();
+    void initialize();
     void extensionsInitalized();
 
 private slots:
     void objectAdded(QObject *obj);
     void aboutToRemoveObject(QObject *obj);
 
-    void newBar(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
+    void newBar(const Instrument& instrument, long barSize, const QDateTime& begin,
                 const QDateTime& end, double open, double hight, double low, double close, double volume);
 
-    void newBarOpen(const Instrument& instrument, Bar::BarType barType, long barSize, const QDateTime& begin,
+    void newBarOpen(const Instrument& instrument, long barSize, const QDateTime& begin,
                     const QDateTime& end, double open, double hight, double low, double close, double volume);
 
     void newBarSlice(long barSize);
@@ -52,8 +52,8 @@ private slots:
     void newQuote(const Instrument& instrument, const QDateTime& time, double bid, double ask,
                   int bidSize, int askSize);
 
-    void newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
-                            OrderBook::OrderBookAction action, double price, int size, int position );
+    //void newOrderBookUpdate(const Instrument& instrument, const QDateTime& time, Bar::BidAsk side,
+    //                        OrderBook::OrderBookAction action, double price, int size, int position );
 
 
 private:

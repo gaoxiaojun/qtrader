@@ -1,6 +1,3 @@
-/* Copyright (C) 2013 Interactive Brokers LLC. All rights reserved. This code is subject to the terms
- * and conditions of the IB API Non-Commercial License or the IB API Commercial License, as applicable. */
-
 #include "twssocket.h"
 
 #include "shared/TwsSocketClientErrors.h"
@@ -22,7 +19,6 @@ const int RESERVE_ORDER_ID = 100000;
 TwsSocket::TwsSocket(QObject *parent, EWrapper *ptr) :
     QObject(parent), EClientSocketBase(ptr), m_socket(this)
 {
-    //qRegisterMetaType<QAbstractSocket::SocketError>();
     connect(&m_socket, SIGNAL(disconnected()), this, SLOT(onClose()));
     connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(onReceive()));
@@ -30,10 +26,6 @@ TwsSocket::TwsSocket(QObject *parent, EWrapper *ptr) :
 
 TwsSocket::~TwsSocket()
 {
-    disconnect(&m_socket, SIGNAL(disconnected()), this, SLOT(onClose()));
-    disconnect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
-    disconnect(&m_socket, SIGNAL(readyRead()), this, SLOT(onReceive()));
-
     if(isConnected())
         getWrapper()->connectionClosed();
     eDisconnect();
@@ -41,11 +33,12 @@ TwsSocket::~TwsSocket()
 
 bool TwsSocket::eConnect( const char *host, unsigned int port, int clientId)
 {
-	// already connected?
     if( isConnected ()) {
 		getWrapper()->error( NO_VALID_ID, ALREADY_CONNECTED.code(), ALREADY_CONNECTED.msg());
 		return false;
 	}
+
+    bool signalBlock = m_socket.blockSignals (true);
 
     m_socket.connectToHost (host, port);
 
@@ -53,7 +46,7 @@ bool TwsSocket::eConnect( const char *host, unsigned int port, int clientId)
 
     if (!bConnected) {
         getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
-        return false;
+        goto exit_connect;
     }
 
     // set client id
@@ -67,33 +60,36 @@ bool TwsSocket::eConnect( const char *host, unsigned int port, int clientId)
         m_socket.waitForReadyRead(WAIT_TIME);
 		if ( !checkMessages()) {
 			getWrapper()->error( NO_VALID_ID, CONNECT_FAIL.code(), CONNECT_FAIL.msg());
-			return false;
+            goto exit_connect;
 		}
     }
 
     if(isConnected())
-        onConnect();
+        setServerLogLevel (5);
 
+exit_connect:
+    m_socket.blockSignals (signalBlock);
     return isConnected();
 }
 
 void TwsSocket::eDisconnect()
 {
-    //QMutexLocker locker(&m_mutex);
-    if (m_socket.isValid ())
-        m_socket.close ();
+    if (isSocketOK())
+        m_socket.close();
     eDisconnectBase();
 }
 
 bool TwsSocket::isSocketOK() const
 {
-    return m_socket.isValid ()  && m_socket.isOpen ();
+    return m_socket.isValid();
 }
 
 /* Call by EClientSocketBase::sendBufferedData & EClientSocketBase::bufferedSend */
 int TwsSocket::send(const char* buf, size_t sz)
 {
-    return m_socket.write (buf, sz);
+    int written = m_socket.write(buf, sz);
+    m_socket.flush();
+    return written;
 }
 
 /* Call by EClientSocketBase::BufferRead
@@ -106,31 +102,24 @@ int TwsSocket::receive(char* buf, size_t sz)
 
 ///////////////////////////////////////////////////////////
 // callbacks from socket
-void TwsSocket::onConnect()
-{
-    // DETAIL LEVEL, log everything
-    setServerLogLevel (5);
-
-    reqIds (RESERVE_ORDER_ID);
-    reqCurrentTime ();
-}
-
 void TwsSocket::onReceive()
 {
-    if (isConnected())
-        checkMessages();
+    checkMessages();
 }
 
 void TwsSocket::onClose()
 {
 	eDisconnect();
-	getWrapper()->connectionClosed();
+    getWrapper()->connectionClosed();
 }
 
 void TwsSocket::socketError(QAbstractSocket::SocketError err)
 {
+    /* RemoteHostClosedError will be direct processed by onClose
+     * to avoid duplicate connectionClosed callback
+     */
     if (err != QAbstractSocket::RemoteHostClosedError)
-        if (isConnected ()) {
+        if (isConnected()) {
             getWrapper()->error( NO_VALID_ID, SOCKET_EXCEPTION.code(),
                 SOCKET_EXCEPTION.msg() + m_socket.errorString ().toStdString ());
             onClose();

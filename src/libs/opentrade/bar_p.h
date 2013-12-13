@@ -13,55 +13,47 @@
 **
 ****************************************************************************/
 
-#ifndef BAR_H
-#define BAR_H
+#ifndef BAR_P_H
+#define BAR_P_H
 
-#include "opentrade_global.h"
-
-#include <QDateTime>
-#include <QVector>
-#include <qglobal.h>
+#include <float.h>
+#include <limits.h>
 
 namespace OpenTrade {
-
-class Instrument;
 class BarSeries;
 
 namespace Internal {
-  class BarPrivate;
-}
 
-class OPENTRADE_EXPORT Bar
-{
+class BarPrivate {
 public:
-    Bar();
-    Bar(double open, double high, double low, double close, double volume);
-    ~Bar();
+    BarPrivate()
+        :m_open(DBL_MAX), m_high(DBL_MAX), m_low(DBL_MAX), m_close(DBL_MAX),
+          m_volume (DBL_MAX), m_series(0)
+    {}
 
-    //QDateTime begin() const;
-    //QDateTime end() const;
-    //QDateTime current() const;
+    BarPrivate(double open, double high, double low, double close, double volume)
+        :m_open(open), m_high(high), m_low(low), m_close(close), m_volume(volume), m_series(0)
+    {}
 
-    bool isValid() const;
+    inline bool isValid() const {
+        if ((m_open == DBL_MAX) || (m_high == DBL_MAX) || (m_low == DBL_MAX) || (m_close == DBL_MAX)
+                || (m_volume == DBL_MAX))
+            return false;
+        else
+            return true;
+    }
 
-    double average() const;   //平均值
-    double typical() const;   //典型值
-    double median() const;    //
-    double weighted() const;
-
-    double open() const;
-    double high() const;
-    double low() const;
-    double close() const;
-    double volume() const;
-
-private:
-    Internal::BarPrivate *d;
     friend class BarSeries;
+public:
+    double m_open;
+    double m_high;
+    double m_low;
+    double m_close;
+    double m_volume;
+    BarSeries* m_series;
 };
 
+} // namespace Internal
 } // namespace OpenTrade
 
-Q_DECLARE_TYPEINFO(OpenTrade::Bar, Q_MOVABLE_TYPE);
-
-#endif // BAR_H
+#endif // BAR_P_H

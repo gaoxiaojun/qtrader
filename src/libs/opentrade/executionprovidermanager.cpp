@@ -13,7 +13,7 @@
 **
 ****************************************************************************/
 
-#include "orderexecutionprovidermanager.h"
+#include "executionprovidermanager.h"
 #include <extensionsystem/iplugin.h>
 #include <extensionsystem/pluginmanager.h>
 
@@ -42,7 +42,7 @@ OrderExecutionProviderManager::~OrderExecutionProviderManager()
     m_providers.clear();
 }
 
-void OrderExecutionProviderManager::init()
+void OrderExecutionProviderManager::initialize()
 {
     connect(ExtensionSystem::PluginManager::instance(), SIGNAL(objectAdded(QObject*)),
             this, SLOT(objectAdded(QObject*)));

@@ -13,14 +13,16 @@
 **
 ****************************************************************************/
 
-#include "twshistoricalprovider.h"
+#include "twsbackfillprovider.h"
 #include "twsproviderinfo.h"
 #include "twsclient.h"
 
 namespace TWS {
 
-TwsHistoricalProvider::TwsHistoricalProvider(QObject *parent) :
-        OpenTrade::IHistoricalProvider(parent)
+TwsBackfillProvider::TwsBackfillProvider(QObject *parent, TwsController *controller) :
+        OpenTrade::IBackfillProvider(parent),
+        m_controller(controller),
+        m_hisconnect(false)
 {
     //Q_ASSERT(m_client != 0);
 
@@ -40,44 +42,58 @@ TwsHistoricalProvider::TwsHistoricalProvider(QObject *parent) :
     //connect(TwsClient::instance (), SIGNAL(twsConnected()),  this, SLOT(onTwsConnected()));
 }
 
-TwsHistoricalProvider::~TwsHistoricalProvider()
+TwsBackfillProvider::~TwsBackfillProvider()
 {
     delete m_info;
 }
 
-void TwsHistoricalProvider::RequestHistoricalData(const OpenTrade::HistoricalDataRequest& request )
+void TwsBackfillProvider::RequestHistoricalData(const OpenTrade::BackfillRequest& request )
 {
 
 }
 
-void TwsHistoricalProvider::CancelHistoricalData(const OpenTrade::HistoricalDataRequest& request )
+void TwsBackfillProvider::CancelHistoricalData(const OpenTrade::BackfillRequest& request )
 {
 
 }
 
-bool TwsHistoricalProvider::isConnected() const
+bool TwsBackfillProvider::isConnected() const
 {
-    return m_client->isConnected();
+    return m_controller->isConnected();
 }
 
-void TwsHistoricalProvider::connect()
-{
-
-}
-
-void TwsHistoricalProvider::disonnect()
+void TwsBackfillProvider::connect()
 {
 
 }
 
-void TwsHistoricalProvider::shutdown()
+void TwsBackfillProvider::disonnect()
 {
 
 }
 
-OpenTrade::ProviderInfo* TwsHistoricalProvider::info() const
+void TwsBackfillProvider::shutdown()
+{
+
+}
+
+OpenTrade::ProviderInfo* TwsBackfillProvider::info() const
 {
     return m_info;
+}
+
+void TwsBackfillProvider::hisConnected()
+{
+    m_hisconnect = true;
+    qDebug() << "hisConnected";
+    emit connected();
+}
+
+void TwsBackfillProvider::hisDisconnected()
+{
+    m_hisconnect = false;
+    qDebug() << "hisDisConnected";
+    emit disconnected();
 }
 
 } // namespace TWS

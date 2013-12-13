@@ -13,34 +13,40 @@
 **
 ****************************************************************************/
 
-#ifndef ORDERMANAGER_H
-#define ORDERMANAGER_H
+#ifndef ACCOUNTMANAGER_H
+#define ACCOUNTMANAGER_H
 
-#include "opentrade_global.h"
-
-#include "order.h"
+#include "account.h"
 
 #include <QObject>
 
-/*
- * 主要功能:
- *   1.创建订单
- *
- */
-class OPENTRADE_EXPORT OrderManager : public QObject
+namespace OpenTrade {
+
+namespace Internal {
+  class AccountManagerPrivate;
+}
+
+class AccountManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit OrderManager(QObject *parent = 0);
+    ~AccountManager();
 
-    /*
-     *
-     */
+    static AccountManager* instance();
+
+    Account* createAccount(const QString& acctName);
+    Account* value(const QString& acctName);
 
 signals:
 
 public slots:
 
+private:
+    explicit AccountManager(QObject *parent = 0);
+    Q_DISABLE_COPY(AccountManager)
+    Internal::AccountManagerPrivate *d;
 };
 
-#endif // ORDERMANAGER_H
+} // namespace OpenTrade
+
+#endif // ACCOUNTMANAGER_H

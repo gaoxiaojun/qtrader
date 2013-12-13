@@ -16,12 +16,16 @@
 #include "twsclient.h"
 #include "twscontroller.h"
 
+#include <opentrade/account.h>
+#include <opentrade/accountmanager.h>
+
 #include <coreplugin/messagemanager.h>
 
 #include <QMutexLocker>
 #include <QDebug>
 #include <QDateTime>
 #include <QMetaObject>
+#include <QApplication>
 
 /*
  *  需要记录的内容:
@@ -40,12 +44,14 @@ public:
   int marketData_id;
   int realtimeBar_bid_id;
   int realtimeBar_ask_id;
+  int marketdepth_id;
 };
 
 TwsClient::TwsClient(TwsController* controller) :
-    QObject(0), m_controller(controller)
+    QObject(0), m_controller(controller),
+    m_socket(this, static_cast<EWrapper *>(this)),
+    m_tickId(1)
 {
-    m_socket = new TwsSocket(this, static_cast<EWrapper *>(this));
 }
 
 TwsClient::~TwsClient()
@@ -144,11 +150,13 @@ void TwsClient::tickOptionComputation( TickerId tickerId, TickType tickType, dou
 
 void TwsClient::tickGeneric(TickerId tickerId, TickType tickType, double value)
 {
+    QApplication::beep ();
     qDebug() << "[tickGeneric]" << tickerId << " " << tickTypeString(tickType) << " " << value;
 }
 
 void TwsClient::tickString(TickerId tickerId, TickType tickType, const IBString& value)
 {
+    QApplication::beep ();
     qDebug() << "[tickString]" << tickerId << " " << tickTypeString (tickType) << " " << QString::fromStdString (value);
 }
 
@@ -193,6 +201,17 @@ const IBString& currency, const IBString& accountName)
 {
     qDebug() << "[updateAccountValue]" << " {" << QString::fromStdString (key) << "  " << QString::fromStdString (val) << "} currency" << QString::fromStdString (currency)
                 << " account:" << QString::fromStdString (accountName);
+
+    QString acctName = QString::fromStdString (accountName);
+
+    OpenTrade::Account * account = OpenTrade::AccountManager::instance ()->value (acctName);
+
+    if (!account) {
+        account = OpenTrade::AccountManager::instance()->createAccount (acctName);
+        m_account = acctName;
+    }
+
+    account->setField (QString::fromStdString (key), QVariant(QString::fromStdString (val)));
 }
 
 void TwsClient::updatePortfolio( const Contract& contract, int position,
@@ -207,6 +226,11 @@ void TwsClient::updatePortfolio( const Contract& contract, int position,
 void TwsClient::updateAccountTime(const IBString& timeStamp)
 {
     qDebug() << "[updateAccountTime]" << QString::fromStdString (timeStamp);
+    QDateTime last = QDateTime::fromString (QString::fromStdString (timeStamp),
+                                            "hh:mm");
+    last.setDate (QDateTime::currentDateTime ().date ());
+    qDebug() << "last:" << last;
+    OpenTrade::AccountManager::instance()->value (m_account)->setLastUpdateTime (last);
 }
 
 void TwsClient::accountDownloadEnd(const IBString& accountName)
@@ -253,8 +277,8 @@ void TwsClient::execDetailsEnd( int reqId)
  */
 void TwsClient::error(const int id, const int errorCode, const IBString errorString)
 {
-    /*
-     *     switch(errorCode) {
+
+   switch(errorCode) {
     case 1100:
         emit serverLost ();
         break;
@@ -271,21 +295,24 @@ void TwsClient::error(const int id, const int errorCode, const IBString errorStr
         emit mktConnected ();
         break;
     case 2105:
-        emit hmdsDisconnected ();
+        emit hisDisconnected ();
         break;
     case 2106:
-        emit hmdsConnected ();
+        emit hisConnected ();
         break;
     case 2110:
         emit serverLostWithAutoRestore();
         break;
-   */
-    qDebug() << "id:" << id << "code:" << errorCode << "error:" << QString::fromStdString (errorString);
+    default:
+       qDebug() << "id:" << id << "code:" << errorCode << "error:" << QString::fromStdString (errorString);
+       break;
+   }
 }
 
 void TwsClient::updateMktDepth(TickerId id, int position, int operation, int side,
    double price, int size)
 {
+    QApplication::beep();
     qDebug() << id << position << operation << side << price << size;
 }
 
@@ -394,7 +421,7 @@ void TwsClient::commissionReport( const CommissionReport &commissionReport)
 void TwsClient::position( const IBString& account, const Contract& contract, int position)
 {
     Q_UNUSED(contract)
-    qDebug() << "[position]" << QString::fromStdString (account) << position;
+    qDebug() << "[position]" << QString::fromStdString (account) << QString::fromStdString (contract.symbol) << position;
 }
 
 void TwsClient::positionEnd()
@@ -414,14 +441,6 @@ void TwsClient::accountSummaryEnd( int reqId)
     qDebug() << "[accountSummaryEnd]" << reqId;
 }
 
-
-void TwsClient::reconnect()
-{
-    qDebug() << "reConnect";
-    disconnect();
-    connect();
-}
-
 void TwsClient::connect()
 {
     if (QThread::currentThread () != this->thread ()) {
@@ -429,7 +448,15 @@ void TwsClient::connect()
     }
     else {
         qDebug() << "Try connect...";
-        m_socket->eConnect (m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered (1));
+        m_socket.eConnect (m_host.toLatin1 ().data (), m_port, m_clientId.fetchAndAddOrdered (1));
+        if (isConnected()) {
+            m_socket.reqAccountUpdates (true, "");
+            m_socket.reqAllOpenOrders ();
+            m_socket.reqCurrentTime ();
+            m_socket.reqIds (1);
+            m_socket.reqNewsBulletins (true);
+            m_socket.reqPositions ();
+        }
     }
 }
 
@@ -440,12 +467,19 @@ void TwsClient::disconnect()
         QMetaObject::invokeMethod (this, "disconnect", Qt::QueuedConnection);
     }
     else
-        m_socket->eDisconnect ();
+        m_socket.eDisconnect ();
+}
+
+void TwsClient::reconnect()
+{
+    qDebug() << "reConnect";
+    disconnect();
+    connect();
 }
 
 bool TwsClient::isConnected ()
 {
-    return m_socket->isConnected ();
+    return m_socket.isConnected ();
 }
 
 QString TwsClient::host()
@@ -484,15 +518,103 @@ void TwsClient::setHostAndPort(const QString& host, unsigned int port)
 
 unsigned int TwsClient::serverVersion()
 {
-    return m_socket->serverVersion ();
+    return m_socket.serverVersion ();
 }
 
 QString TwsClient::connectionTime()
 {
-    return QString::fromStdString (m_socket->TwsConnectionTime ());
+    return QString::fromStdString (m_socket.TwsConnectionTime ());
 }
 
 
+void TwsClient::convertInstrumentToContract(const OpenTrade::Instrument& inst, Contract *contract)
+{
+    switch(inst.type()) {
+    case OpenTrade::Instrument::Forex:
+            contract->localSymbol = inst.symbol().toStdString();
+            qDebug() << "localSymbol" << QString::fromStdString (contract->localSymbol);
+            contract->secType = "CASH";
+            contract->exchange = "IDEALPRO";
+        break;
+    case OpenTrade::Instrument::Stock:
+            contract->secType = "STK";
+            contract->symbol = inst.symbol().toStdString();
+            contract->exchange = inst.exchange().toStdString();
+            contract->currency = inst.currency().toStdString();
+    case OpenTrade::Instrument::Index:
+            contract->secType = "IND";
+            contract->symbol = inst.symbol().toStdString();
+            contract->exchange = inst.exchange().toStdString();
+            contract->currency = inst.currency().toStdString();
+
+    default:
+        qWarning() << "Not support instrument type";
+        break;
+    }
+}
+
+TickerId TwsClient::tickId()
+{
+    return m_tickId.fetchAndAddOrdered(1);
+}
+
+void TwsClient::subscribe(const OpenTrade::Instrument &instrument)
+{
+    OpenTrade::Instrument* inst = const_cast<OpenTrade::Instrument*>(&instrument);
+    if(m_subscribes.contains(inst))
+        return;
+
+    Contract contract;
+
+    convertInstrumentToContract(instrument, &contract);
+
+    // market data
+    IBString genericTicks;
+    switch(instrument.type ()) {
+    case OpenTrade::Instrument::Forex:
+        genericTicks = "";
+        break;
+    default:
+        genericTicks = "233,165";
+        break;
+    }
+
+
+    Internal::subscribeInfo *info = new Internal::subscribeInfo();
+    info->marketData_id = tickId();
+    info->realtimeBar_bid_id = tickId();
+    info->realtimeBar_ask_id = tickId();
+    info->marketdepth_id = tickId();
+    m_subscribes.insert(inst, info);
+
+    m_socket.reqMktData(info->marketData_id, contract, genericTicks, false);
+
+    m_socket.reqRealTimeBars (info->realtimeBar_bid_id, contract, 5, "BID", false);
+    m_socket.reqRealTimeBars (info->realtimeBar_ask_id, contract, 5, "ASK", false);
+
+    m_socket.reqMktDepth (info->marketdepth_id, contract, 10);
+}
+
+void TwsClient::removeInfo(Internal::subscribeInfo *info)
+{
+    if (m_socket.isConnected ()) {
+        m_socket.cancelMktData (info->marketData_id);
+        m_socket.cancelRealTimeBars (info->realtimeBar_bid_id);
+        m_socket.cancelRealTimeBars (info->realtimeBar_ask_id);
+        m_socket.cancelMktDepth (info->marketdepth_id);
+    }
+    delete info;
+}
+
+void TwsClient::unsubscribe(const OpenTrade::Instrument& instrument)
+{
+    OpenTrade::Instrument* inst = const_cast<OpenTrade::Instrument*>(&instrument);
+    Internal::subscribeInfo *info = m_subscribes.value(inst);
+    if(info) {
+        removeInfo(info);
+        m_subscribes.remove(inst);
+    }
+}
 } // namespace Internal
 
 } // namespace TWS

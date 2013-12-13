@@ -14,29 +14,18 @@
 ****************************************************************************/
 
 #include "bar.h"
+#include "bar_p.h"
 
-namespace OpenTradeModel {
+#include "barmanager.h"
 
-namespace Internal {
-class BarPrivate {
-public:
-    BarPrivate(const QDateTime& begin, double open, double high, double low, double close, double volume)
-        :m_begin(begin), m_open(open), m_high(high), m_low(low), m_close(close), m_volume(volume)
-    {}
+using namespace OpenTrade;
 
-public:
-    QDateTime m_begin;
-    double m_open;
-    double m_high;
-    double m_low;
-    double m_close;
-    double m_volume;
-};
+Bar::Bar() :d(new Internal::BarPrivate())
+{
+}
 
-} // namespace Internal
-
-Bar::Bar(const QDateTime& begin, double open, double high, double low, double close, double volume)
-    : d(new Internal::BarPrivate(begin, open, high, low, close, volume))
+Bar::Bar(double open, double high, double low, double close, double volume)
+    : d(new Internal::BarPrivate(open, high, low, close, volume))
 {
 }
 
@@ -45,10 +34,12 @@ Bar::~Bar()
     delete d;
 }
 
-QDateTime Bar::begin() const
+/*QDateTime Bar::begin() const
 {
-    return d->m_begin;
-}
+    Q_ASSERT(d->m_series);
+
+    //return d-->begin();
+}*/
 
 double Bar::open() const
 {
@@ -75,4 +66,27 @@ double Bar::volume() const
     return d->m_volume;
 }
 
-} // namespace OpenTradeModel
+bool Bar::isValid () const
+{
+    return d->isValid ();
+}
+
+double Bar::average() const
+{
+    return (d->m_high + d->m_low + d->m_close + d->m_high) / 4;
+}
+
+double Bar::typical() const
+{
+    return (d->m_high + d->m_low + d->m_close) / 3;
+}
+
+double Bar::median() const
+{
+    return (d->m_high + d->m_low) / 2;
+}
+
+double Bar::weighted() const
+{
+    return (d->m_high + d->m_low + 2* d->m_close) / 4;
+}

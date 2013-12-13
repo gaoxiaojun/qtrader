@@ -22,6 +22,7 @@
 #include "instrument.h"
 #include "bar.h"
 #include "orderbook.h"
+#include <qhash.h>
 
 #include <QSharedData>
 
@@ -33,12 +34,15 @@ class InstrumentPrivate : public QSharedData
 {
 public:
     InstrumentPrivate(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange) :
-        m_symbol(symbol), m_type(type), m_currency(QString(currency)),
-        m_description(QString()), m_exchange(QString(exchange)),
-        m_factory(1.0), m_group(QString("Unknow")),
+        m_symbol(symbol), m_type(type), m_currency(currency),
+        m_description(QString()), m_exchange(exchange),
+        m_factory(1.0), m_group(QString()),
         m_margin(0), m_maturity(QDateTime()), m_orderBook(OrderBook()),
         m_priceFormat(QString(".5f")), m_putCall(Instrument::Put),
         m_sector(QString()), m_stike(0), m_tickSize(0)
+    {}
+    InstrumentPrivate(Instrument::InstrumentType type, const QString &symbol)
+        :m_symbol(symbol), m_type(type)
     {}
 
     QString m_symbol;
@@ -60,6 +64,11 @@ public:
 };
 
 } // namespace Internal
+
+Instrument::Instrument(Instrument::InstrumentType type, const QString& symbol)
+    : d(new Internal::InstrumentPrivate(type, symbol))
+{
+}
 
 Instrument::Instrument(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange)
     : d(new Internal::InstrumentPrivate(type, symbol, currency, exchange))
@@ -87,7 +96,8 @@ bool Instrument::operator==(const Instrument &other) const
     if(d == other.d)
         return true;
     return d->m_symbol == other.d->m_symbol &&
-            d->m_type == other.d->m_type;
+            d->m_type == other.d->m_type &&
+            d->m_exchange == other.d->m_exchange;
 }
 
 QString Instrument::symbol() const
@@ -235,10 +245,16 @@ Quote Instrument::quote()
 
 QDebug operator<<(QDebug s, const OpenTrade::Instrument &ins)
 {
-    s.nospace() << "Instrument("
+    s.nospace() << "Instrument(" << ins.symbol ()
                    <<')';
     return s.space();
 }
+
+uint qHash(const OpenTrade::Instrument &inst, uint seed)
+{
+    return qHash(inst.symbol(), seed);
+}
+
 
 
 
