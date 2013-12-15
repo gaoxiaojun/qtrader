@@ -16,6 +16,8 @@
 #ifndef __INSTRUMENT_H__
 #define __INSTRUMENT_H__
 
+#include "opentrade_global.h"
+
 #include <QString>
 #include <QDateTime>
 #include <QDebug>
@@ -26,6 +28,7 @@ namespace OpenTrade {
 class OrderBook;
 class Bar;
 class Quote;
+class Trade;
 
 namespace Internal {
   class InstrumentPrivate;
@@ -34,7 +37,7 @@ namespace Internal {
 /* TODO:
  * 确保是个immutable class 或者...
 */
-class Instrument
+class OPENTRADE_EXPORT Instrument
 {
 public:
     enum InstrumentType {
@@ -51,7 +54,7 @@ public:
     };
 
     enum PutCall {
-        NONE = 0,
+        None = 0,
         Put  = 1,
         Call = 2
     };
@@ -74,10 +77,14 @@ public:
     QString symbol() const;
     InstrumentType type() const;
 
-    /* 深度行情 */
+    // 深度行情 Gets a reference to instrument order book
     OrderBook orderBook();
+    // Gets last bar for this instrument
     Bar bar();
+    // Gets last quote for this instrument
     Quote quote();
+    // Gets last trade for this instrument
+    Trade trade();
 
     /* 交易所 */
     QString exchange() const;
@@ -104,6 +111,8 @@ public:
     void setPriceFormat(const QString format);
 
     /* 因子 */
+    // For Derivatives: Contract Value Factor by which price must be adjusted to determine the true nominal value of one futures/options contract.
+    // (Qty * Price) * Factor = Nominal Value
     double factor() const;
     void setFactor(double factor);
 
@@ -111,10 +120,11 @@ public:
     double margin() const;
     void setMargin(double margin);
 
+    /* 价格最小变动单位 */
     double tickSize() const;
     void setTickSize(double tickSize);
 
-    /* 到期日 */
+    /* 到期日 Options or Futures */
     QDateTime maturity() const;
     void setMaturity(const QDateTime& date);
 
@@ -129,10 +139,9 @@ public:
 private:
     QSharedDataPointer<Internal::InstrumentPrivate> d;
     friend class Internal::InstrumentPrivate;
-    //friend uint qHash(const OpenTrade::Instrument &key, uint seed);
 };
 
-class Forex: public Instrument
+class OPENTRADE_EXPORT Forex: public Instrument
 {
 public:
     Forex(const QString& symbol)
@@ -140,7 +149,7 @@ public:
     {}
 };
 
-class Stock: public Instrument
+class OPENTRADE_EXPORT Stock: public Instrument
 {
 public:
     Stock(const QString& symbol, const QString& currency, const QString& exchange)
@@ -148,7 +157,7 @@ public:
     {}
 };
 
-class Future: public Instrument
+class OPENTRADE_EXPORT Future: public Instrument
 {
 public:
     Future(const QString& symbol)
@@ -159,9 +168,6 @@ public:
 QDebug operator<<(QDebug, const OpenTrade::Instrument &instrument);
 
 } //namespace OpenTrade
-
-
-uint qHash(const OpenTrade::Instrument &key, uint seed);
 
 Q_DECLARE_SHARED(OpenTrade::Instrument)
 

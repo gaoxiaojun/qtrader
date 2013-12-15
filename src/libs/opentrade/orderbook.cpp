@@ -61,6 +61,36 @@ bool OrderBook::operator==(const OrderBook &other) const
     return true;
 }
 
+int OrderBook::count() const
+{
+
+}
+
+double OrderBook::getAskVolume()
+{
+
+}
+
+double OrderBook::getAvgAskPrice()
+{
+
+}
+
+double OrderBook::getAvgBidPrice()
+{
+
+}
+
+double OrderBook::getBidVolume()
+{
+
+}
+
+Quote OrderBook::getQuote(int level)
+{
+
+}
+
 } // namespace OpenTrade
 
 QDebug operator<<(QDebug s, const OpenTrade::OrderBook &ob)

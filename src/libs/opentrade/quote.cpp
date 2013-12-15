@@ -30,8 +30,8 @@ namespace Internal {
 class QuotePrivate: public QSharedData
 {
 public:
-    inline QuotePrivate(const QDateTime& dt, double bid, double bidSize, double ask, double askSize, unsigned int providerId) :
-        m_stamp(dt), m_ask(ask), m_askSize(askSize), m_bid(bid), m_bidSize(bidSize), m_providerId(providerId)
+    inline QuotePrivate(const QDateTime& dt, double bid, double bidSize, double ask, double askSize) :
+        m_stamp(dt), m_ask(ask), m_askSize(askSize), m_bid(bid), m_bidSize(bidSize)
     {}
 
     QDateTime m_stamp;
@@ -39,13 +39,12 @@ public:
     double m_askSize;
     double m_bid;
     double m_bidSize;
-    unsigned int m_providerId;
 };
 
 } // namespace Internal
 
-Quote::Quote(const QDateTime& dt, double bid, double bidSize, double ask, double askSize, unsigned int providerId) :
-    d(new Internal::QuotePrivate(dt, bid, bidSize, ask, askSize, providerId))
+Quote::Quote(const QDateTime& dt, double bid, double bidSize, double ask, double askSize) :
+    d(new Internal::QuotePrivate(dt, bid, bidSize, ask, askSize))
 {
 }
 
@@ -73,8 +72,7 @@ bool Quote::operator==(const Quote &other) const
             d->m_ask == other.d->m_ask &&
             d->m_askSize == other.d->m_askSize &&
             d->m_bid == other.d->m_bid &&
-            d->m_bidSize == other.d->m_bidSize &&
-            d->m_providerId == other.d->m_providerId;
+            d->m_bidSize == other.d->m_bidSize;
 }
 
 double Quote::ask() const
@@ -102,41 +100,6 @@ QDateTime Quote::datetime() const
     return d->m_stamp;
 }
 
-unsigned int Quote::providerId() const
-{
-    return d->m_providerId;
-}
-
-/*void Quote::setAsk(double ask)
-{
-    d->m_ask = ask;
-}
-
-void Quote::setAskSize(double askSize)
-{
-    d->m_askSize = askSize;
-}
-
-void Quote::setBid(double bid)
-{
-    d->m_bid = bid;
-}
-
-void Quote::setBidSize(double bidSize)
-{
-    d->m_bidSize = bidSize;
-}
-
-void Quote::setDateTime(const QDateTime& dt)
-{
-    d->m_stamp = dt;
-}
-
-void Quote::setProviderId(unsigned int id)
-{
-    d->m_providerId = id;
-}*/
-
 } // namespace OpenTrade
 
 QDebug operator<<(QDebug c, const OpenTrade::Quote &quote)
@@ -147,7 +110,6 @@ QDebug operator<<(QDebug c, const OpenTrade::Quote &quote)
                 << "AskSize:" << quote.askSize()
                 << "Bid:" << quote.bid()
                 << "BidSize" << quote.bidSize()
-                << "ProviderId:" << quote.providerId()
                 <<')';
     return c.space();
 }

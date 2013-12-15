@@ -22,13 +22,14 @@
 
 namespace OpenTrade {
 
+namespace Internal {
+
 class MarketDataProviderManager : public QObject
 {
     Q_OBJECT
 public:
     static MarketDataProviderManager *instance();
 
-    explicit MarketDataProviderManager(QObject *parent = 0);
     ~MarketDataProviderManager();
 
     static QList<IMarketDataProvider *> getProviders();
@@ -57,11 +58,15 @@ private slots:
 
 
 private:
+    explicit MarketDataProviderManager(QObject *parent = 0);
+
     void connectToProvider(IMarketDataProvider *provider);
     void disconnectToProvider(IMarketDataProvider *provider);
 
     QList<IMarketDataProvider *> m_providers;
 };
+
+} // namespace Internal
 
 } // namespace OpenTrade
 

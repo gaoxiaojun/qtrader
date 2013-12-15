@@ -158,7 +158,7 @@
     <message>
         <location filename="../editormanager/editormanager.cpp" line="218"/>
         <location filename="../editormanager/editormanager.cpp" line="231"/>
-        <location filename="../editormanager/editormanager.cpp" line="2286"/>
+        <location filename="../editormanager/editormanager.cpp" line="2284"/>
         <source>Revert to Saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -178,7 +178,7 @@
     <message>
         <location filename="../editormanager/editormanager.cpp" line="223"/>
         <location filename="../editormanager/editormanager.cpp" line="234"/>
-        <location filename="../editormanager/editormanager.cpp" line="1983"/>
+        <location filename="../editormanager/editormanager.cpp" line="1981"/>
         <source>Close Others</source>
         <translation type="unfinished"></translation>
     </message>
@@ -409,74 +409,74 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1599"/>
-        <location filename="../editormanager/editormanager.cpp" line="1769"/>
-        <location filename="../editormanager/editormanager.cpp" line="2299"/>
+        <location filename="../editormanager/editormanager.cpp" line="1597"/>
+        <location filename="../editormanager/editormanager.cpp" line="1767"/>
+        <location filename="../editormanager/editormanager.cpp" line="2297"/>
         <source>File Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1631"/>
+        <location filename="../editormanager/editormanager.cpp" line="1629"/>
         <source>Opening File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1878"/>
+        <location filename="../editormanager/editormanager.cpp" line="1876"/>
         <source>Qt Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1930"/>
+        <location filename="../editormanager/editormanager.cpp" line="1928"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; You are changing a read-only file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1931"/>
+        <location filename="../editormanager/editormanager.cpp" line="1929"/>
         <source>Make Writable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1950"/>
+        <location filename="../editormanager/editormanager.cpp" line="1948"/>
         <source>&amp;Save %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1951"/>
+        <location filename="../editormanager/editormanager.cpp" line="1949"/>
         <source>Save %1 &amp;As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1953"/>
+        <location filename="../editormanager/editormanager.cpp" line="1951"/>
         <source>Revert %1 to Saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1954"/>
+        <location filename="../editormanager/editormanager.cpp" line="1952"/>
         <source>Reload %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1980"/>
+        <location filename="../editormanager/editormanager.cpp" line="1978"/>
         <source>Close %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="1983"/>
+        <location filename="../editormanager/editormanager.cpp" line="1981"/>
         <source>Close All Except %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2287"/>
+        <location filename="../editormanager/editormanager.cpp" line="2285"/>
         <source>You will lose your current changes if you proceed reverting %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2289"/>
+        <location filename="../editormanager/editormanager.cpp" line="2287"/>
         <source>Proceed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/editormanager.cpp" line="2290"/>
+        <location filename="../editormanager/editormanager.cpp" line="2288"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1180,7 +1180,7 @@
 <context>
     <name>Core::Internal::MimeTypeSettings</name>
     <message>
-        <location filename="../mimetypesettings.cpp" line="578"/>
+        <location filename="../mimetypesettings.cpp" line="583"/>
         <source>MIME Types</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1296,28 +1296,28 @@
 <context>
     <name>Core::Internal::MimeTypeSettingsPrivate</name>
     <message>
-        <location filename="../mimetypesettings.cpp" line="320"/>
-        <location filename="../mimetypesettings.cpp" line="330"/>
+        <location filename="../mimetypesettings.cpp" line="325"/>
+        <location filename="../mimetypesettings.cpp" line="335"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mimetypesettings.cpp" line="320"/>
+        <location filename="../mimetypesettings.cpp" line="325"/>
         <source>No MIME type selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mimetypesettings.cpp" line="330"/>
+        <location filename="../mimetypesettings.cpp" line="335"/>
         <source>No magic header selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mimetypesettings.cpp" line="552"/>
+        <location filename="../mimetypesettings.cpp" line="557"/>
         <source>MIME Types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mimetypesettings.cpp" line="553"/>
+        <location filename="../mimetypesettings.cpp" line="558"/>
         <source>Changes will take effect in the next time you start Qt Creator.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1386,12 +1386,12 @@
 <context>
     <name>Core::Internal::OpenEditorsViewFactory</name>
     <message>
-        <location filename="../editormanager/openeditorsview.cpp" line="247"/>
+        <location filename="../editormanager/openeditorsview.cpp" line="252"/>
         <source>Meta+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editormanager/openeditorsview.cpp" line="247"/>
+        <location filename="../editormanager/openeditorsview.cpp" line="252"/>
         <source>Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1400,7 +1400,7 @@
     <name>Core::Internal::OpenEditorsWidget</name>
     <message>
         <location filename="../editormanager/openeditorsview.cpp" line="89"/>
-        <location filename="../editormanager/openeditorsview.cpp" line="232"/>
+        <location filename="../editormanager/openeditorsview.cpp" line="237"/>
         <source>Open Documents</source>
         <translation type="unfinished"></translation>
     </message>

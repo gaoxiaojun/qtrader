@@ -24,14 +24,19 @@ Bar::Bar() :d(new Internal::BarPrivate())
 {
 }
 
-Bar::Bar(double open, double high, double low, double close, double volume)
-    : d(new Internal::BarPrivate(open, high, low, close, volume))
+Bar::Bar(double open, double high, double low, double close, double volume, double openint)
+    : d(new Internal::BarPrivate(open, high, low, close, volume, openint))
+{
+}
+
+Bar::Bar(const Bar &other) :
+    d(other.d)
 {
 }
 
 Bar::~Bar()
 {
-    delete d;
+    d = 0;
 }
 
 /*QDateTime Bar::begin() const
@@ -89,4 +94,34 @@ double Bar::median() const
 double Bar::weighted() const
 {
     return (d->m_high + d->m_low + 2* d->m_close) / 4;
+}
+
+Bar& Bar::operator=(const Bar &other)
+{
+    d = other.d;
+    return *this;
+}
+
+bool Bar::operator==(const Bar &other) const
+{
+    if(d == other.d)
+        return true;
+    return d->m_open == other.d->m_open &&
+            d->m_high == other.d->m_high &&
+            d->m_low == other.d->m_low &&
+            d->m_close == other.d->m_close &&
+            d->m_volume == other.d->m_volume;
+}
+
+QDebug operator<<(QDebug c, const OpenTrade::Bar &bar)
+{
+    c.nospace() << "Bar("
+                //<< "Time:" << bar.datetime()
+                << "Open:" << bar.open()
+                << "High:" << bar.high()
+                << "Low:" << bar.low()
+                << "Close:" << bar.close()
+                << "Volume:" << bar.volume()
+                <<')';
+    return c.space();
 }

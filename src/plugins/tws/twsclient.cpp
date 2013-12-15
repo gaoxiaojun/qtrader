@@ -188,7 +188,6 @@ void TwsClient::openOrderEnd()
 
 void TwsClient::winError( const IBString &str, int lastError)
 {
-    qDebug() << "[winError]" << QString::fromStdString (str) << " error]" << lastError;
 }
 
 void TwsClient::connectionClosed()
@@ -283,18 +282,20 @@ void TwsClient::error(const int id, const int errorCode, const IBString errorStr
         emit serverLost ();
         break;
     case 1101:
-        emit serverRestore ();
+        emit serverRestore ();  // 必须重新提交市场和账户数据订阅请求
         break;
     case 1102:
         emit serverRestoreWithData ();
         break;
     case 2103:
+    case 2108:
         emit mktDisconnected ();
         break;
     case 2104:
         emit mktConnected ();
         break;
     case 2105:
+    case 2107:
         emit hisDisconnected ();
         break;
     case 2106:

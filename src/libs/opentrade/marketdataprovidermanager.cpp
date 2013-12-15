@@ -22,6 +22,7 @@
 #include <extensionsystem/pluginmanager.h>
 
 using namespace OpenTrade;
+using namespace OpenTrade::Internal;
 
 static MarketDataProviderManager *m_instance = 0;
 

@@ -798,7 +798,9 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/plugins/tws/twsbackfillprovider.h \
     src/plugins/tws/twsexecutionprovider.h \
     src/libs/opentrade/iexecutionprovider.h \
-    src/libs/opentrade/executionprovidermanager.h
+    src/libs/opentrade/executionprovidermanager.h \
+    src/libs/opentrade/trade.h \
+    src/model/model.dsl
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1450,7 +1452,9 @@ SOURCES += src/app/gui/main.cpp \
     src/libs/opentrade/backfillprovidermanager.cpp \
     src/plugins/tws/twsbackfillprovider.cpp \
     src/libs/opentrade/executionprovidermanager.cpp \
-    src/plugins/tws/twsexecutionprovider.cpp
+    src/plugins/tws/twsexecutionprovider.cpp \
+    src/libs/opentrade/trade.cpp \
+    src/libs/opentrade2/symbol.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \

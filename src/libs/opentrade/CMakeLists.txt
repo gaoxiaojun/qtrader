@@ -9,6 +9,10 @@ account.h
 account.cpp
 accountmanager.h
 accountmanager.cpp
+quote.h
+quote.cpp
+trade.h
+trade.cpp
 bar.h
 bar_p.h
 barmanager.h
@@ -18,7 +22,6 @@ backfillprovidermanager.h
 ibackfillprovider.h
 imarketdataprovider.h
 instrument.h
-#instrumentmanager.h
 iexecutionprovider.h
 iprovider.h
 marketdataprovidermanager.h
@@ -32,11 +35,12 @@ barseries.cpp
 backfillrequest.cpp
 backfillprovidermanager.cpp
 instrument.cpp
-#instrumentmanager.cpp
 marketdataprovidermanager.cpp
 order.cpp
 orderbook.cpp
 executionprovidermanager.cpp
+#instrumentmanager.h
+#instrumentmanager.cpp
 )
 
 file (GLOB LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)

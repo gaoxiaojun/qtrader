@@ -13,64 +13,53 @@
 **
 ****************************************************************************/
 
-#ifndef __QUOTE_H__
-#define __QUOTE_H__
+#ifndef TRADE_H
+#define TRADE_H
 
 #include "opentrade_global.h"
 
 #include <QSharedDataPointer>
 #include <QMetaType>
-#include <QList>
 #include <QDateTime>
 #include <QDebug>
 
 namespace OpenTrade {
 
 namespace Internal {
-class QuotePrivate;
+class TradePrivate;
 }
 
-class  OPENTRADE_EXPORT Quote
+class  OPENTRADE_EXPORT Trade
 {
 public:
-    Quote(const QDateTime& dt, double bid, double bidSize, double ask, double askSize);
-    Quote(const Quote &other);
-    ~Quote();
+    Trade(const QDateTime& dt, double price, double size);
+    Trade(const Trade &other);
+    ~Trade();
 
-    Quote& operator=(const Quote &other);
-    void swap(Quote &other) { qSwap(d, other.d); }
+    Trade& operator=(const Trade &other);
+    void swap(Trade &other) { qSwap(d, other.d); }
 
 #ifdef Q_COMPILER_RVALUE_REFS
-    inline Quote &operator=(Quote &&other)
+    inline Trade &operator=(Trade &&other)
     { qSwap(d, other.d); return *this; }
 #endif
 
-    bool operator==(const Quote &other) const;
-    inline bool operator!=(const Quote &other) const { return !(operator==(other)); }
+    bool operator==(const Trade &other) const;
+    inline bool operator!=(const Trade &other) const { return !(operator==(other)); }
 
-    double ask() const;
-    double askSize() const;
-    double bid() const;
-    double bidSize() const;
+    double price() const;
+    double size() const;
     QDateTime datetime() const;
 
-    /*void setAsk(double ask);
-    void setBid(double bid);
-    void setAskSize(double askSize);
-    void setBidSize(double bidSize);
-    void setDateTime(const QDateTime& dt);
-    void setProviderId(unsigned int id);*/
-
 private:
-    QSharedDataPointer<Internal::QuotePrivate> d;
-    friend class Internal::QuotePrivate;
+    QSharedDataPointer<Internal::TradePrivate> d;
+    friend class Internal::TradePrivate;
 };
 
-QDebug OPENTRADE_EXPORT operator << (QDebug, const Quote &quote);
+QDebug OPENTRADE_EXPORT operator << (QDebug, const Trade &Trade);
 
 } // namespace OpenTrade
 
-Q_DECLARE_SHARED(OpenTrade::Quote)
+Q_DECLARE_SHARED(OpenTrade::Trade)
 
-
-#endif // __QUOTE_H__
+#endif // TRADE_H

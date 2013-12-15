@@ -20,7 +20,7 @@
 
 #include <QDateTime>
 #include <QVector>
-#include <qglobal.h>
+#include <QDebug>
 
 namespace OpenTrade {
 
@@ -35,8 +35,20 @@ class OPENTRADE_EXPORT Bar
 {
 public:
     Bar();
-    Bar(double open, double high, double low, double close, double volume);
+    Bar(double open, double high, double low, double close, double volume = 0, double openint = 0);
+    Bar(const Bar &other);
     ~Bar();
+
+    Bar& operator=(const Bar &other);
+    void swap(Bar &other) { qSwap(d, other.d); }
+
+#ifdef Q_COMPILER_RVALUE_REFS
+    inline Bar &operator=(Bar &&other)
+    { qSwap(d, other.d); return *this; }
+#endif
+
+    bool operator==(const Bar &other) const;
+    inline bool operator!=(const Bar &other) const { return !(operator==(other)); }
 
     //QDateTime begin() const;
     //QDateTime end() const;
@@ -54,14 +66,19 @@ public:
     double low() const;
     double close() const;
     double volume() const;
+    double openInt() const; // 未平仓量
 
 private:
-    Internal::BarPrivate *d;
+    QSharedDataPointer<Internal::BarPrivate> d;
+    friend class Internal::BarPrivate;
     friend class BarSeries;
 };
 
+QDebug OPENTRADE_EXPORT operator << (QDebug, const Bar &bar);
+
+
 } // namespace OpenTrade
 
-Q_DECLARE_TYPEINFO(OpenTrade::Bar, Q_MOVABLE_TYPE);
+Q_DECLARE_SHARED(OpenTrade::Bar)
 
 #endif // BAR_H

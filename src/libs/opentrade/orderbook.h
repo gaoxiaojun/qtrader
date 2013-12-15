@@ -17,6 +17,7 @@
 #define ORDERBOOK_H
 
 #include "opentrade_global.h"
+#include "quote.h"
 
 #include <QSharedDataPointer>
 #include <QMetaType>
@@ -53,13 +54,19 @@ public:
     bool operator==(const OrderBook &other) const;
     inline bool operator!=(const OrderBook &other) const { return !(operator==(other)); }
 
+    int count() const;
+    double getAskVolume();
+    double getAvgAskPrice();
+    double getAvgBidPrice();
+    double getBidVolume();
+    Quote getQuote(int level);
+
 private:
     QSharedDataPointer<Internal::OrderBookPrivate> d;
     friend class Internal::OrderBookPrivate;
 };
 
 QDebug OPENTRADE_EXPORT operator<<(QDebug, const OrderBook &ob);
-//Q_DECLARE_METATYPE(OrderBook)
 
 } // namespace OpenTrade
 

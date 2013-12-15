@@ -33,7 +33,6 @@ class Bar;
 class OPENTRADE_EXPORT ProviderInfo
 {
 public:
-    //~ProviderInfo();
     unsigned int id() const;
     QString description() const;
     QString name() const;
@@ -43,10 +42,6 @@ public:
     QString license() const;
     QString vendor() const;
     QString copyright() const;
-/*private:
-    ProviderInfo();
-    Internal::ProviderInfoPrivate *d;
-    friend class Internal::ProviderInfoPrivate;*/
 };
 
 class OPENTRADE_EXPORT IProvider : public QObject
@@ -70,7 +65,6 @@ signals:
     void connected();
     void disconnected();
 
-    void error(const QString& errorMessage);
     void error(int errorCode, const QString& errorMessage);
 
     /* For cases where you may require information on the sender of the signal,

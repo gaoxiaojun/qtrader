@@ -25,6 +25,12 @@ namespace OpenTrade {
 
 class Order;
 
+enum CommissionType {
+    PerShare	= 0,	 // per unit (implying shares, par, currency, etc)
+    Percent     = 1,	 // percentage
+    Absolute	= 2      //absolute (total monetary amount)
+};
+
 class OPENTRADE_EXPORT IOrderExecutionProvider : public IProvider
 {
     Q_OBJECT
@@ -46,7 +52,7 @@ signals:
     void orderPendingReplace(const Order& order);
     void orderReplaceReject(const Order& order, Order::OrderStatus status, const QString& message );
     void orderFilled(const Order& order, double price, int quantity );
-    //void orderFilled(const Order& order, double price, int quantity, CommissionType commissionType, double commission );
+    void orderFilled(const Order& order, double price, int quantity, CommissionType commissionType, double commission );
 };
 
 } // namespace OpenTrade

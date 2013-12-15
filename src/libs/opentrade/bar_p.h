@@ -16,6 +16,8 @@
 #ifndef BAR_P_H
 #define BAR_P_H
 
+#include <QSharedData>
+
 #include <float.h>
 #include <limits.h>
 
@@ -24,20 +26,21 @@ class BarSeries;
 
 namespace Internal {
 
-class BarPrivate {
+class BarPrivate : public QSharedData
+{
 public:
     BarPrivate()
         :m_open(DBL_MAX), m_high(DBL_MAX), m_low(DBL_MAX), m_close(DBL_MAX),
-          m_volume (DBL_MAX), m_series(0)
+          m_volume (DBL_MAX), m_openint(DBL_MAX), m_series(0)
     {}
 
-    BarPrivate(double open, double high, double low, double close, double volume)
-        :m_open(open), m_high(high), m_low(low), m_close(close), m_volume(volume), m_series(0)
+    BarPrivate(double open, double high, double low, double close, double volume, double openint)
+        :m_open(open), m_high(high), m_low(low), m_close(close), m_volume(volume), m_openint(opeint), m_series(0)
     {}
 
     inline bool isValid() const {
         if ((m_open == DBL_MAX) || (m_high == DBL_MAX) || (m_low == DBL_MAX) || (m_close == DBL_MAX)
-                || (m_volume == DBL_MAX))
+                || (m_volume == DBL_MAX) || (m_openint == DBL_MAX))
             return false;
         else
             return true;
@@ -50,6 +53,7 @@ public:
     double m_low;
     double m_close;
     double m_volume;
+    double m_openint;
     BarSeries* m_series;
 };
 
