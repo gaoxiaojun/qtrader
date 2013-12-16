@@ -12,16 +12,15 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
-#ifndef TRADE_H
-#define TRADE_H
+#ifndef __OPENTRADE_TRADE_H__
+#define __OPENTRADE_TRADE_H__
 
 #include "opentrade_global.h"
 
 #include <QSharedDataPointer>
-#include <QMetaType>
-#include <QDateTime>
 #include <QDebug>
+#include <QDateTime>
+
 
 namespace OpenTrade {
 
@@ -29,11 +28,11 @@ namespace Internal {
 class TradePrivate;
 }
 
-class  OPENTRADE_EXPORT Trade
+class OPENTRADE_EXPORT Trade
 {
 public:
-    Trade(const QDateTime& dt, double price, double size);
-    Trade(const Trade &other);
+
+    Trade(const QDateTime& dateTime, double price, int size);
     ~Trade();
 
     Trade& operator=(const Trade &other);
@@ -47,19 +46,23 @@ public:
     bool operator==(const Trade &other) const;
     inline bool operator!=(const Trade &other) const { return !(operator==(other)); }
 
+
+    QDateTime dateTime() const;
+
     double price() const;
-    double size() const;
-    QDateTime datetime() const;
+
+    int providerId() const;
+
+    int size() const;
 
 private:
     QSharedDataPointer<Internal::TradePrivate> d;
-    friend class Internal::TradePrivate;
 };
 
-QDebug OPENTRADE_EXPORT operator << (QDebug, const Trade &Trade);
+QDebug OPENTRADE_EXPORT operator << (QDebug, const Trade &trade);
 
 } // namespace OpenTrade
 
 Q_DECLARE_SHARED(OpenTrade::Trade)
 
-#endif // TRADE_H
+#endif // __OPENTRADE_TRADE_H__

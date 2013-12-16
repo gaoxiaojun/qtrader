@@ -800,7 +800,85 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/libs/opentrade/iexecutionprovider.h \
     src/libs/opentrade/executionprovidermanager.h \
     src/libs/opentrade/trade.h \
-    src/model/model.dsl
+    src/model/model.dsl \
+    src/libs/opentrade/altidgroup.h \
+    src/libs/opentrade/altidgrouplist.h \
+    src/libs/opentrade/appearance.h \
+    src/libs/opentrade/barfactory.h \
+    src/libs/opentrade/barrequest.h \
+    src/libs/opentrade/barrequestlist.h \
+    src/libs/opentrade/barseriesinfo.h \
+    src/libs/opentrade/barserieslist.h \
+    src/libs/opentrade/brokeraccount.h \
+    src/libs/opentrade/brokeraccountfield.h \
+    src/libs/opentrade/brokeraccountfieldlist.h \
+    src/libs/opentrade/brokeraccountlist.h \
+    src/libs/opentrade/brokerinfo.h \
+    src/libs/opentrade/brokerorder.h \
+    src/libs/opentrade/brokerorderfield.h \
+    src/libs/opentrade/brokerorderfieldlist.h \
+    src/libs/opentrade/brokerorderlist.h \
+    src/libs/opentrade/brokerposition.h \
+    src/libs/opentrade/brokerpositionfield.h \
+    src/libs/opentrade/brokerpositionfieldlist.h \
+    src/libs/opentrade/brokerpositionlist.h \
+    src/libs/opentrade/canvas.h \
+    src/libs/opentrade/chart.h \
+    src/libs/opentrade/clock.h \
+    src/libs/opentrade/datamanager.h \
+    src/libs/opentrade/datarequests.h \
+    src/libs/opentrade/engine_instrumentlist.h \
+    src/libs/opentrade/engine_parameter.h \
+    src/libs/opentrade/executionprovider.h \
+    src/libs/opentrade/historicaldataprovider.h \
+    src/libs/opentrade/historicaldatarequest.h \
+    src/libs/opentrade/ibex.h \
+    src/libs/opentrade/ide.h \
+    src/libs/opentrade/indicator.h \
+    src/libs/opentrade/instrumentlist.h \
+    src/libs/opentrade/instrumentprovider.h \
+    src/libs/opentrade/marketdatafilter.h \
+    src/libs/opentrade/marketdataprovider.h \
+    src/libs/opentrade/openquant.h \
+    src/libs/opentrade/opentrade_enum.h \
+    src/libs/opentrade/optimizationparameterattribute.h \
+    src/libs/opentrade/orderbookupdate.h \
+    src/libs/opentrade/orderlist.h \
+    src/libs/opentrade/parameterattribute.h \
+    src/libs/opentrade/parameterset.h \
+    src/libs/opentrade/performance.h \
+    src/libs/opentrade/portfolio.h \
+    src/libs/opentrade/portfolioaccount.h \
+    src/libs/opentrade/portfoliopricer.h \
+    src/libs/opentrade/position.h \
+    src/libs/opentrade/positionlist.h \
+    src/libs/opentrade/project.h \
+    src/libs/opentrade/projectinfo.h \
+    src/libs/opentrade/projectinfolist.h \
+    src/libs/opentrade/projectlist.h \
+    src/libs/opentrade/provider.h \
+    src/libs/opentrade/providererror.h \
+    src/libs/opentrade/providerlist.h \
+    src/libs/opentrade/providermanager.h \
+    src/libs/opentrade/providerproperty.h \
+    src/libs/opentrade/providerpropertylist.h \
+    src/libs/opentrade/quoteseries.h \
+    src/libs/opentrade/scenario.h \
+    src/libs/opentrade/script.h \
+    src/libs/opentrade/scriptinfo.h \
+    src/libs/opentrade/scriptsettings.h \
+    src/libs/opentrade/solution.h \
+    src/libs/opentrade/solutioninfo.h \
+    src/libs/opentrade/statistics.h \
+    src/libs/opentrade/stop.h \
+    src/libs/opentrade/strategy.h \
+    src/libs/opentrade/timeseries.h \
+    src/libs/opentrade/tradeseries.h \
+    src/libs/opentrade/transaction.h \
+    src/libs/opentrade/transactionlist.h \
+    src/libs/opentrade/usercommand.h \
+    src/libs/opentrade/userindicator.h \
+    src/libs/opentrade/userprovider.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1454,7 +1532,84 @@ SOURCES += src/app/gui/main.cpp \
     src/libs/opentrade/executionprovidermanager.cpp \
     src/plugins/tws/twsexecutionprovider.cpp \
     src/libs/opentrade/trade.cpp \
-    src/libs/opentrade2/symbol.cpp
+    src/libs/opentrade2/symbol.cpp \
+    src/libs/opentrade/altidgroup.cpp \
+    src/libs/opentrade/altidgrouplist.cpp \
+    src/libs/opentrade/appearance.cpp \
+    src/libs/opentrade/barfactory.cpp \
+    src/libs/opentrade/barrequest.cpp \
+    src/libs/opentrade/barrequestlist.cpp \
+    src/libs/opentrade/barseriesinfo.cpp \
+    src/libs/opentrade/barserieslist.cpp \
+    src/libs/opentrade/brokeraccount.cpp \
+    src/libs/opentrade/brokeraccountfield.cpp \
+    src/libs/opentrade/brokeraccountfieldlist.cpp \
+    src/libs/opentrade/brokeraccountlist.cpp \
+    src/libs/opentrade/brokerinfo.cpp \
+    src/libs/opentrade/brokerorder.cpp \
+    src/libs/opentrade/brokerorderfield.cpp \
+    src/libs/opentrade/brokerorderfieldlist.cpp \
+    src/libs/opentrade/brokerorderlist.cpp \
+    src/libs/opentrade/brokerposition.cpp \
+    src/libs/opentrade/brokerpositionfield.cpp \
+    src/libs/opentrade/brokerpositionfieldlist.cpp \
+    src/libs/opentrade/brokerpositionlist.cpp \
+    src/libs/opentrade/canvas.cpp \
+    src/libs/opentrade/chart.cpp \
+    src/libs/opentrade/clock.cpp \
+    src/libs/opentrade/datamanager.cpp \
+    src/libs/opentrade/datarequests.cpp \
+    src/libs/opentrade/engine_instrumentlist.cpp \
+    src/libs/opentrade/engine_parameter.cpp \
+    src/libs/opentrade/executionprovider.cpp \
+    src/libs/opentrade/historicaldataprovider.cpp \
+    src/libs/opentrade/historicaldatarequest.cpp \
+    src/libs/opentrade/ibex.cpp \
+    src/libs/opentrade/ide.cpp \
+    src/libs/opentrade/indicator.cpp \
+    src/libs/opentrade/instrumentlist.cpp \
+    src/libs/opentrade/instrumentprovider.cpp \
+    src/libs/opentrade/marketdatafilter.cpp \
+    src/libs/opentrade/marketdataprovider.cpp \
+    src/libs/opentrade/openquant.cpp \
+    src/libs/opentrade/optimizationparameterattribute.cpp \
+    src/libs/opentrade/orderbookupdate.cpp \
+    src/libs/opentrade/orderlist.cpp \
+    src/libs/opentrade/parameterattribute.cpp \
+    src/libs/opentrade/parameterset.cpp \
+    src/libs/opentrade/performance.cpp \
+    src/libs/opentrade/portfolio.cpp \
+    src/libs/opentrade/portfolioaccount.cpp \
+    src/libs/opentrade/portfoliopricer.cpp \
+    src/libs/opentrade/position.cpp \
+    src/libs/opentrade/positionlist.cpp \
+    src/libs/opentrade/project.cpp \
+    src/libs/opentrade/projectinfo.cpp \
+    src/libs/opentrade/projectinfolist.cpp \
+    src/libs/opentrade/projectlist.cpp \
+    src/libs/opentrade/provider.cpp \
+    src/libs/opentrade/providererror.cpp \
+    src/libs/opentrade/providerlist.cpp \
+    src/libs/opentrade/providermanager.cpp \
+    src/libs/opentrade/providerproperty.cpp \
+    src/libs/opentrade/providerpropertylist.cpp \
+    src/libs/opentrade/quoteseries.cpp \
+    src/libs/opentrade/scenario.cpp \
+    src/libs/opentrade/script.cpp \
+    src/libs/opentrade/scriptinfo.cpp \
+    src/libs/opentrade/scriptsettings.cpp \
+    src/libs/opentrade/solution.cpp \
+    src/libs/opentrade/solutioninfo.cpp \
+    src/libs/opentrade/statistics.cpp \
+    src/libs/opentrade/stop.cpp \
+    src/libs/opentrade/strategy.cpp \
+    src/libs/opentrade/timeseries.cpp \
+    src/libs/opentrade/tradeseries.cpp \
+    src/libs/opentrade/transaction.cpp \
+    src/libs/opentrade/transactionlist.cpp \
+    src/libs/opentrade/usercommand.cpp \
+    src/libs/opentrade/userindicator.cpp \
+    src/libs/opentrade/userprovider.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
@@ -1548,4 +1703,5 @@ OTHER_FILES += \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/UnderComp.java \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/Util.java \
     src/plugins/coreplugin/model/OpenTrade.json.in \
-    src/libs/opentrade/CMakeLists.txt
+    src/libs/opentrade/CMakeLists.txt \
+    src/model/dsl.txt

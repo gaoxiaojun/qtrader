@@ -12,31 +12,28 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
-#ifndef BAR_H
-#define BAR_H
+#ifndef __OPENTRADE_BAR_H__
+#define __OPENTRADE_BAR_H__
 
 #include "opentrade_global.h"
 
-#include <QDateTime>
-#include <QVector>
+#include <QSharedDataPointer>
 #include <QDebug>
+#include <QDateTime>
+
 
 namespace OpenTrade {
 
-class Instrument;
-class BarSeries;
-
 namespace Internal {
-  class BarPrivate;
+class BarPrivate;
 }
 
 class OPENTRADE_EXPORT Bar
 {
 public:
-    Bar();
-    Bar(double open, double high, double low, double close, double volume = 0, double openint = 0);
-    Bar(const Bar &other);
+
+    Bar(const QDateTime& dateTime, double open, double high, double low, double close, long volume, long size);
+    Bar(const Bar& bar);
     ~Bar();
 
     Bar& operator=(const Bar &other);
@@ -50,35 +47,49 @@ public:
     bool operator==(const Bar &other) const;
     inline bool operator!=(const Bar &other) const { return !(operator==(other)); }
 
-    //QDateTime begin() const;
-    //QDateTime end() const;
-    //QDateTime current() const;
 
-    bool isValid() const;
+    double average() const;
 
-    double average() const;   //平均值
-    double typical() const;   //典型值
-    double median() const;    //
-    double weighted() const;
+    QDateTime beginTime() const;
+
+    double close() const;
+
+    QDateTime dateTime() const;
+
+    qint64 duration() const;
+
+    QDateTime endTime() const;
+
+    double high() const;
+
+    bool isComplete() const;
+
+    double low() const;
+
+    double median() const;
 
     double open() const;
-    double high() const;
-    double low() const;
-    double close() const;
+
+    double openInt() const;
+
+    int size() const;
+
+    BarType type() const;
+
+    double typical() const;
+
     double volume() const;
-    double openInt() const; // 未平仓量
+
+    double weighted() const;
 
 private:
     QSharedDataPointer<Internal::BarPrivate> d;
-    friend class Internal::BarPrivate;
-    friend class BarSeries;
 };
 
 QDebug OPENTRADE_EXPORT operator << (QDebug, const Bar &bar);
-
 
 } // namespace OpenTrade
 
 Q_DECLARE_SHARED(OpenTrade::Bar)
 
-#endif // BAR_H
+#endif // __OPENTRADE_BAR_H__

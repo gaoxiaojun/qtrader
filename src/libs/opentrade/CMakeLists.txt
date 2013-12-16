@@ -1,53 +1,179 @@
 set(library_name opentrade)
-
 project( ${library_name} )
-
 cmake_minimum_required( VERSION 2.8.9 )
-
 set( LIB_SRC_FILES
-account.h
-account.cpp
-accountmanager.h
-accountmanager.cpp
-quote.h
-quote.cpp
-trade.h
-trade.cpp
-bar.h
-bar_p.h
-barmanager.h
-barseries.h
-backfillrequest.h
-backfillprovidermanager.h
-ibackfillprovider.h
-imarketdataprovider.h
-instrument.h
-iexecutionprovider.h
-iprovider.h
-marketdataprovidermanager.h
-opentrade_global.h
-order.h
-orderbook.h
-executionprovidermanager.h
-bar.cpp
-barmanager.cpp
-barseries.cpp
-backfillrequest.cpp
-backfillprovidermanager.cpp
-instrument.cpp
-marketdataprovidermanager.cpp
-order.cpp
-orderbook.cpp
-executionprovidermanager.cpp
-#instrumentmanager.h
-#instrumentmanager.cpp
+    altidgroup.h
+    altidgroup.cpp
+    altidgrouplist.h
+    altidgrouplist.cpp
+    bar.h
+    bar.cpp
+    barfactory.h
+    barfactory.cpp
+    barrequest.h
+    barrequest.cpp
+    barrequestlist.h
+    barrequestlist.cpp
+    barseries.h
+    barseries.cpp
+    barseriesinfo.h
+    barseriesinfo.cpp
+    barserieslist.h
+    barserieslist.cpp
+    brokeraccount.h
+    brokeraccount.cpp
+    brokeraccountfield.h
+    brokeraccountfield.cpp
+    brokeraccountfieldlist.h
+    brokeraccountfieldlist.cpp
+    brokeraccountlist.h
+    brokeraccountlist.cpp
+    brokerinfo.h
+    brokerinfo.cpp
+    brokerorder.h
+    brokerorder.cpp
+    brokerorderfield.h
+    brokerorderfield.cpp
+    brokerorderfieldlist.h
+    brokerorderfieldlist.cpp
+    brokerorderlist.h
+    brokerorderlist.cpp
+    brokerposition.h
+    brokerposition.cpp
+    brokerpositionfield.h
+    brokerpositionfield.cpp
+    brokerpositionfieldlist.h
+    brokerpositionfieldlist.cpp
+    brokerpositionlist.h
+    brokerpositionlist.cpp
+    canvas.h
+    canvas.cpp
+    chart.h
+    chart.cpp
+    clock.h
+    clock.cpp
+    datamanager.h
+    datamanager.cpp
+    datarequests.h
+    datarequests.cpp
+    engine_instrumentlist.h
+    engine_instrumentlist.cpp
+    engine_parameter.h
+    engine_parameter.cpp
+    executionprovider.h
+    executionprovider.cpp
+    historicaldataprovider.h
+    historicaldataprovider.cpp
+    historicaldatarequest.h
+    historicaldatarequest.cpp
+    ibex.h
+    ibex.cpp
+    ide.h
+    ide.cpp
+    indicator.h
+    indicator.cpp
+    instrument.h
+    instrument.cpp
+    instrumentlist.h
+    instrumentlist.cpp
+    instrumentmanager.h
+    instrumentmanager.cpp
+    instrumentprovider.h
+    instrumentprovider.cpp
+    marketdatafilter.h
+    marketdatafilter.cpp
+    marketdataprovider.h
+    marketdataprovider.cpp
+    openquant.h
+    openquant.cpp
+    optimizationparameterattribute.h
+    optimizationparameterattribute.cpp
+    order.h
+    order.cpp
+    orderbook.h
+    orderbook.cpp
+    orderbookupdate.h
+    orderbookupdate.cpp
+    orderlist.h
+    orderlist.cpp
+    parameterattribute.h
+    parameterattribute.cpp
+    parameterset.h
+    parameterset.cpp
+    performance.h
+    performance.cpp
+    portfolio.h
+    portfolio.cpp
+    portfolioaccount.h
+    portfolioaccount.cpp
+    portfoliopricer.h
+    portfoliopricer.cpp
+    position.h
+    position.cpp
+    positionlist.h
+    positionlist.cpp
+    project.h
+    project.cpp
+    projectinfo.h
+    projectinfo.cpp
+    projectinfolist.h
+    projectinfolist.cpp
+    projectlist.h
+    projectlist.cpp
+    provider.h
+    provider.cpp
+    providererror.h
+    providererror.cpp
+    providerlist.h
+    providerlist.cpp
+    providermanager.h
+    providermanager.cpp
+    providerproperty.h
+    providerproperty.cpp
+    providerpropertylist.h
+    providerpropertylist.cpp
+    quote.h
+    quote.cpp
+    quoteseries.h
+    quoteseries.cpp
+    scenario.h
+    scenario.cpp
+    script.h
+    script.cpp
+    scriptinfo.h
+    scriptinfo.cpp
+    scriptsettings.h
+    scriptsettings.cpp
+    solution.h
+    solution.cpp
+    solutioninfo.h
+    solutioninfo.cpp
+    statistics.h
+    statistics.cpp
+    stop.h
+    stop.cpp
+    strategy.h
+    strategy.cpp
+    timeseries.h
+    timeseries.cpp
+    trade.h
+    trade.cpp
+    tradeseries.h
+    tradeseries.cpp
+    transaction.h
+    transaction.cpp
+    transactionlist.h
+    transactionlist.cpp
+    usercommand.h
+    usercommand.cpp
+    userindicator.h
+    userindicator.cpp
+    userprovider.h
+    userprovider.cpp
 )
-
 file (GLOB LIB_UI_FILES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.ui)
 file (GLOB LIB_QRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} [^.]*.qrc)
-
 set(LIB_DEPEND_LIBS QtCore QtWidgets extensionsystem)
-
 MacroBuildLib(
     NAME ${library_name}
     SRC_FILES ${LIB_SRC_FILES}

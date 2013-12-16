@@ -12,10 +12,63 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
 #include "instrumentmanager.h"
 
-InstrumentManager::InstrumentManager(QObject *parent) :
-    QObject(parent)
+#include <QSharedData>
+
+namespace OpenTrade {
+
+namespace Internal {
+
+class InstrumentManagerPrivate : public QSharedData
 {
+public:
+    static m_instrumentList;
+};
+
+} // namespace Internal
+
+InstrumentManager::~InstrumentManager()
+{
+
+}
+
+InstrumentManager& InstrumentManager::operator=(const InstrumentManager &other)
+{
+    d = other.d;
+    return *this;
+}
+
+bool InstrumentManager::operator==(const InstrumentManager &other) const
+{
+    if(d == other.d)
+      return true;
+
+    return d->m_instrumentList == other.d->m_instrumentList;
+}
+
+void InstrumentManager::remove(const QString& symbol)
+{
+
+}
+
+void InstrumentManager::remove(const Instrument& instrument)
+{
+
+}
+
+static InstrumentManager::instrumentList() const
+{
+    return d->m_instrumentList;
+}
+
+
+} // namespace OpenTrade
+
+QDebug operator<<(QDebug c, const OpenTrade::InstrumentManager &instrumentmanager)
+{
+    c.nospace() << "InstrumentManager("
+                << "InstrumentList:" << instrumentmanager.instrumentList() 
+                <<')';
+    return c.space();
 }

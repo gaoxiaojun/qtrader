@@ -12,163 +12,145 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
-#ifndef ORDER_H
-#define ORDER_H
+#ifndef __OPENTRADE_ORDER_H__
+#define __OPENTRADE_ORDER_H__
 
 #include "opentrade_global.h"
+#include "ibex.h"
 #include "instrument.h"
 
-#include <QObject>
+#include <QSharedDataPointer>
+#include <QDebug>
+#include <QString>
+#include <QDateTime>
+
 
 namespace OpenTrade {
 
 namespace Internal {
-  class OrderPrivate;
+class OrderPrivate;
 }
 
-class OPENTRADE_EXPORT Order : public QObject
+class OPENTRADE_EXPORT Order
 {
-    Q_OBJECT
-
 public:
-    enum OrderStatus {
-        PendingNew      = 0,
-        New             = 1,
-        PartiallyFilled = 2,
-        Filled          = 3,
-        PendingCancel   = 4,
-        Cancelled       = 5,
-        Expired         = 6,
-        PendingReplace  = 7,
-        Replaced        = 8,
-        Rejected        = 9
-    };
 
-    enum OrderSide {
-        Buy  = 0,
-        Sell = 1
-    };
-
-    enum OrderType {
-        Market          = 0,
-        Limit           = 1,
-        Stop            = 2,
-        StopLimit       = 3,
-        Trail           = 4,
-        TrailLimit      = 5,
-        MarketOnClose   = 6
-    };
-
-    enum TimeInForce {
-        DAY = 0,
-        GTC = 1,
-        OPG = 2,
-        LOC = 3,
-        FOK = 4,
-        GTX = 5,
-        GTD = 6,
-        ATC = 7,
-        GFS = 8
-    };
-
-
-public:
-    explicit Order(const Instrument& inst, QObject *parent = 0);
     ~Order();
+
+    Order& operator=(const Order &other);
+    void swap(Order &other) { qSwap(d, other.d); }
+
+#ifdef Q_COMPILER_RVALUE_REFS
+    inline Order &operator=(Order &&other)
+    { qSwap(d, other.d); return *this; }
+#endif
+
+    bool operator==(const Order &other) const;
+    inline bool operator!=(const Order &other) const { return !(operator==(other)); }
 
     void cancel();
     void replace();
     void send();
 
-    QString account();
-    void setAccount(const QString& acct);
+    QString account() const;
+    void setAccount(const QString& account);
 
-    QString clientId();
-    void setClientId(const QString& id);
+    double avgPrice() const;
 
-    double avgPrice();
-    double cumQty();
-    QDateTime createTime();
+    QString clientID() const;
+    void setClientID(const QString& clientid);
 
-    unsigned int expireSeconds();
+    double cumQty() const;
 
-    QDateTime expireTime();
-    void setExpireTime(const QDateTime& expire);
+    QDateTime dateTime() const;
 
-    Instrument instrument();
+    int expireSeconds() const;
+    void setExpireSeconds(int expireseconds);
 
-    double lastPrice();
-    double lastQty();
-    double leavesQty();
+    QDateTime expireTime() const;
+    void setExpireTime(const QDateTime& expiretime);
 
-    QString ocaGroup();
-    void setOCAGroup(const QString& oca);
+    IBEx iB() const;
 
-    double price();
+    Instrument instrument() const;
+
+    bool isCancelled() const;
+
+    bool isDone() const;
+
+    bool isExpired() const;
+
+    bool isFilled() const;
+
+    bool isNew() const;
+
+    bool isPartiallyFilled() const;
+
+    bool isPendingCancel() const;
+
+    bool isPendingNew() const;
+
+    bool isPendingReplace() const;
+
+    bool isRejected() const;
+
+    double lastPrice() const;
+
+    double lastQty() const;
+
+    double leavesQty() const;
+
+    QString oCAGroup() const;
+    void setOCAGroup(const QString& ocagroup);
+
+    QString orderID() const;
+    void setOrderID(const QString& orderid);
+
+    double price() const;
     void setPrice(double price);
 
-    double qty();
+    double qty() const;
     void setQty(double qty);
 
-    OrderSide side();
-    void setSide(OrderSide side);
+    int route() const;
+    void setRoute(int route);
 
-    OrderStatus status();
-    void setStatus(OrderStatus status);
+    OrderSide side() const;
 
-    double stopPrice();
-    void setStopPrice(double price);
+    OrderStatus status() const;
 
-    bool strategyFill();
-    double strategyPrice();
+    double stopPrice() const;
+    void setStopPrice(double stopprice);
 
-    QString text();
+    bool strategyFill() const;
+    void setStrategyFill(const bool& strategyfill);
+
+    double strategyPrice() const;
+    void setStrategyPrice(double strategyprice);
+
+    QString text() const;
     void setText(const QString& text);
 
-    TimeInForce tif();
-    void setTIF(TimeInForce tif);
+    TimeInForce timeInForce() const;
+    void setTimeInForce(TimeInForce timeinforce);
 
-    double trailingAmt();
-    void setTrailingAmt(double amt);
+    int tradeVolumeDelay() const;
+    void setTradeVolumeDelay(int tradevolumedelay);
 
-    OrderType type();
-    void setOrderType(OrderType type);
+    double trailingAmt() const;
+    void setTrailingAmt(double trailingamt);
 
-    unsigned int route();
-    void setRoute(unsigned int route);
-
-    bool isCancelled();
-    bool isDone();
-    bool isExPired();
-    bool isFilled();
-    bool isNew();
-    bool isPartiallyFilled();
-    bool isPendingCancel();
-    bool isPendingNew();
-    bool isPendingReplace();
-    bool isRejected();
-
-signals:
-    void orderStatusChanged(OrderStatus oldStatus, OrderStatus newStatus);
-    void orderNew();
-    void orderPartiallyFilled();
-    void orderFilled();
-    void orderCancelled();
-    void orderExpired();
-    void orderReplace();
-    void orderRejected();
-    void orderCancelRejected();
-    void orderReplaceRejected();
-    void orderDone();
-
-public slots:
+    OrderType type() const;
+    void setType(OrderType type);
 
 private:
-    friend class Internal::OrderPrivate;
-    Internal::OrderPrivate *d;
+    QSharedDataPointer<Internal::OrderPrivate> d;
 };
+
+QDebug OPENTRADE_EXPORT operator << (QDebug, const Order &order);
 
 } // namespace OpenTrade
 
-#endif // ORDER_H
+Q_DECLARE_SHARED(OpenTrade::Order)
+
+#endif // __OPENTRADE_ORDER_H__

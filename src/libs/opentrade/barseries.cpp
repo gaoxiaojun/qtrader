@@ -12,119 +12,242 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
 #include "barseries.h"
 
-#include "bar.h"
-#include "bar_p.h"
-#include "instrument.h"
-#include "barmanager.h"
-
-#include <QVector>
-#include <QReadWriteLock>
+#include <QSharedData>
 
 namespace OpenTrade {
 
 namespace Internal {
 
-class BarSeriesPrivate {
+class BarSeriesPrivate : public QSharedData
+{
 public:
-    BarSeriesPrivate(const Instrument& inst, qint64 interval)
-        :m_instrument(inst), m_interval(interval)
-    {}
-
-    QReadWriteLock m_lock;
-    Instrument m_instrument;
-    qint64 m_interval;
-    QDateTime m_begin;
-
-    QVector<Bar> m_bars;
+    int m_count;
+    Bar m_first;
+    Bar m_last;
+    QString m_name;
 };
 
 } // namespace Internal
 
-
-BarSeries::BarSeries(QObject *parent, const Instrument& inst, qint64 interval)
-    :QObject(parent), d(new Internal::BarSeriesPrivate(inst, interval))
+BarSeries::BarSeries()
 {
+
+}
+
+BarSeries::BarSeries(const QString& name)
+{
+
+}
+
+BarSeries::BarSeries(const QString& name, const QString& title)
+{
+
 }
 
 BarSeries::~BarSeries()
 {
-    delete d;
+
 }
 
-const Bar& BarSeries::at(int i) const
+BarSeries& BarSeries::operator=(const BarSeries &other)
 {
-    d->m_lock.lockForRead ();
-    const Bar& bar = d->m_bars.at (i);
-    d->m_lock.unlock ();
-    return bar;
+    d = other.d;
+    return *this;
 }
 
-void BarSeries::add(const QDateTime& begin, const Bar& bar)
+bool BarSeries::operator==(const BarSeries &other) const
 {
-    d->m_lock.lockForWrite();
+    if(d == other.d)
+      return true;
 
-    if (Q_UNLIKELY(d->m_bars.isEmpty ())) {
-        d->m_bars.append (bar);
-        d->m_begin = begin;
-    }
-    else {
-        int pos = (begin.toMSecsSinceEpoch() -d->m_begin.toMSecsSinceEpoch() )/ d->m_interval;
-
-        if(pos >= 0) {
-            int count = d->m_bars.size();
-
-            if(pos > count)
-                d->m_bars.insert(count, pos-count, Bar());
-
-            d->m_bars.append (bar);
-        }
-        else {
-            d->m_bars.insert(0, abs(pos), Bar());
-            d->m_bars.replace (0, bar);
-        }
-    }
-    d->m_lock.unlock();
+    return d->m_count == other.d->m_count &&
+           d->m_first == other.d->m_first &&
+           d->m_last == other.d->m_last &&
+           d->m_name == other.d->m_name;
 }
 
-void BarSeries::add(const QDateTime& begin, double open, double high, double low, double close, double volume)
+void BarSeries::add(const Bar& bar)
 {
-    Bar bar(open, high, low, close, volume);
-    bar.d->m_series = this;
-    add (begin, bar);
+
 }
 
+void BarSeries::add(const QDateTime& datetime, double open, double high, double low, double close, long volume, long size)
+{
+
+}
+
+void BarSeries::add(BarType barType, long size, const QDateTime& beginTime, const QDateTime& endTime, double open, double high, double low, double close, long volume, long openInt)
+{
+
+}
+
+Bar BarSeries::ago(int n)
+{
+
+}
+
+void BarSeries::clear()
+{
+
+}
+
+BarSeries BarSeries::compress(long newBarSize)
+{
+
+}
+
+bool BarSeries::contains(const QDateTime& dateTime)
+{
+
+}
+
+bool BarSeries::contains(const Bar& bar)
+{
+
+}
+
+Cross BarSeries::crosses(const BarSeries& series, const Bar& bar)
+{
+
+}
+
+Cross BarSeries::crosses(const Indicator& indicator, const Bar& bar)
+{
+
+}
+
+Cross BarSeries::crosses(const TimeSeries& series, const QDateTime& dateTime)
+{
+
+}
+
+bool BarSeries::crossesAbove(const BarSeries& series, const Bar& bar)
+{
+
+}
+
+bool BarSeries::crossesAbove(const Indicator& indicator, const Bar& bar)
+{
+
+}
+
+bool BarSeries::crossesAbove(const TimeSeries& series, const QDateTime& dateTime)
+{
+
+}
+
+bool BarSeries::crossesBelow(const BarSeries& series, const Bar& bar)
+{
+
+}
+
+bool BarSeries::crossesBelow(const Indicator& indicator, const Bar& bar)
+{
+
+}
+
+bool BarSeries::crossesBelow(const TimeSeries& series, const QDateTime& dateTime)
+{
+
+}
+
+QDateTime BarSeries::getDateTime(int index)
+{
+
+}
+
+int BarSeries::getIndex(const QDateTime& dateTime)
+{
+
+}
+
+BarSeries BarSeries::getRange(const QDateTime& dateTime1, const QDateTime& dateTime2)
+{
+
+}
+
+double BarSeries::highestHigh()
+{
+
+}
+
+double BarSeries::highestHigh(int nBars)
+{
+
+}
+
+double BarSeries::highestHigh(const QDateTime& dateTime1, const QDateTime& dateTime2)
+{
+
+}
+
+double BarSeries::highestHigh(int index1, int index2)
+{
+
+}
+
+double BarSeries::lowestLow()
+{
+
+}
+
+double BarSeries::lowestLow(int nBars)
+{
+
+}
+
+double BarSeries::lowestLow(const QDateTime& dateTime1, const QDateTime& dateTime2)
+{
+
+}
+
+double BarSeries::lowestLow(int index1, int index2)
+{
+
+}
+
+void BarSeries::remove(const QDateTime& dateTime)
+{
+
+}
+
+void BarSeries::remove(int index)
+{
+
+}
 
 int BarSeries::count() const
 {
-    d->m_lock.lockForRead ();
-    int size = d->m_bars.size ();
-    d->m_lock.unlock ();
-    return size;
+    return d->m_count;
 }
 
-const QDateTime& BarSeries::begin() const
+Bar BarSeries::first() const
 {
-    d->m_lock.lockForRead ();
-    QDateTime& result = d->m_begin;
-    d->m_lock.unlock ();
-    return result;
+    return d->m_first;
 }
-qint64 BarSeries::interval() const
+
+Bar BarSeries::last() const
 {
-    d->m_lock.lockForRead ();
-    qint64 result = d->m_interval;
-    d->m_lock.unlock ();
-    return result;
+    return d->m_last;
 }
-const Instrument& BarSeries::instrument() const
+
+QString BarSeries::name() const
 {
-    d->m_lock.lockForRead ();
-    Instrument& result = d->m_instrument;
-    d->m_lock.unlock ();
-    return result;
+    return d->m_name;
 }
+
 
 } // namespace OpenTrade
+
+QDebug operator<<(QDebug c, const OpenTrade::BarSeries &barseries)
+{
+    c.nospace() << "BarSeries("
+                << "Count:" << barseries.count() 
+                << "First:" << barseries.first() 
+                << "Last:" << barseries.last() 
+                << "Name:" << barseries.name() 
+                <<')';
+    return c.space();
+}

@@ -3,8 +3,6 @@
 ** Copyright (C) 2013 Xiaojun Gao
 ** Contact: http://www.dailypips.org/legal
 **
-** This file is part of QTrader.
-**
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
 ** General Public License version 2.1 as published by the Free Software
@@ -13,16 +11,8 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** In addition, as a special exception, Digia gives you certain additional
-** rights.  These rights are described in the Digia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
 ****************************************************************************/
-
 #include "instrument.h"
-#include "bar.h"
-#include "orderbook.h"
-#include <qhash.h>
 
 #include <QSharedData>
 
@@ -33,56 +23,42 @@ namespace Internal {
 class InstrumentPrivate : public QSharedData
 {
 public:
-    InstrumentPrivate(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange) :
-        m_symbol(symbol), m_type(type), m_currency(currency),
-        m_description(QString()), m_exchange(exchange),
-        m_factory(1.0), m_group(QString()),
-        m_margin(0), m_maturity(QDateTime()), m_orderBook(OrderBook()),
-        m_priceFormat(QString(".5f")), m_putCall(Instrument::Put),
-        m_sector(QString()), m_stike(0), m_tickSize(0)
-    {}
-    InstrumentPrivate(Instrument::InstrumentType type, const QString &symbol)
-        :m_symbol(symbol), m_type(type)
-    {}
-
-    QString m_symbol;
-    Instrument::InstrumentType m_type;
-
+    AltIDGroupList m_altIDGroups;
+    Bar m_bar;
     QString m_currency;
     QString m_description;
     QString m_exchange;
-    double  m_factory;
+    double m_factor;
     QString m_group;
-    double  m_margin;
+    double m_margin;
     QDateTime m_maturity;
     OrderBook m_orderBook;
     QString m_priceFormat;
-    Instrument::PutCall m_putCall;
+    PutCall m_putCall;
+    Quote m_quote;
     QString m_sector;
-    double m_stike;
+    double m_strike;
+    QString m_symbol;
     double m_tickSize;
+    Trade m_trade;
+    InstrumentType m_type;
 };
 
 } // namespace Internal
 
-Instrument::Instrument(Instrument::InstrumentType type, const QString& symbol)
-    : d(new Internal::InstrumentPrivate(type, symbol))
+Instrument::Instrument(InstrumentType type, const QString& symbol)
 {
+
 }
 
-Instrument::Instrument(Instrument::InstrumentType type, const QString& symbol, const QString& currency, const QString& exchange)
-    : d(new Internal::InstrumentPrivate(type, symbol, currency, exchange))
+Instrument::Instrument(InstrumentType type, const QString& symbol, const QString& secutityExchange, const QString& currency)
 {
+
 }
 
-Instrument::Instrument(const Instrument &other)
-    :d(other.d)
+Instrument::~Instrument()
 {
-}
 
-Instrument::~Instrument ()
-{
-    d = 0;
 }
 
 Instrument& Instrument::operator=(const Instrument &other)
@@ -94,30 +70,52 @@ Instrument& Instrument::operator=(const Instrument &other)
 bool Instrument::operator==(const Instrument &other) const
 {
     if(d == other.d)
-        return true;
-    return d->m_symbol == other.d->m_symbol &&
-            d->m_type == other.d->m_type &&
-            d->m_exchange == other.d->m_exchange;
+      return true;
+
+    return d->m_altIDGroups == other.d->m_altIDGroups &&
+           d->m_bar == other.d->m_bar &&
+           d->m_currency == other.d->m_currency &&
+           d->m_description == other.d->m_description &&
+           d->m_exchange == other.d->m_exchange &&
+           d->m_factor == other.d->m_factor &&
+           d->m_group == other.d->m_group &&
+           d->m_margin == other.d->m_margin &&
+           d->m_maturity == other.d->m_maturity &&
+           d->m_orderBook == other.d->m_orderBook &&
+           d->m_priceFormat == other.d->m_priceFormat &&
+           d->m_putCall == other.d->m_putCall &&
+           d->m_quote == other.d->m_quote &&
+           d->m_sector == other.d->m_sector &&
+           d->m_strike == other.d->m_strike &&
+           d->m_symbol == other.d->m_symbol &&
+           d->m_tickSize == other.d->m_tickSize &&
+           d->m_trade == other.d->m_trade &&
+           d->m_type == other.d->m_type;
 }
 
-QString Instrument::symbol() const
+QString Instrument::getExchange(const QString& source)
 {
-    return d->m_symbol;
+
 }
 
-Instrument::InstrumentType Instrument::type() const
+QString Instrument::getSymbol(const QString& source)
 {
-    return d->m_type;
+
 }
 
-QString Instrument::exchange() const
+AltIDGroupList Instrument::altIDGroups() const
 {
-    return d->m_exchange;
+    return d->m_altIDGroups;
 }
 
-void Instrument::setExchange (const QString &exchange)
+void Instrument::setAltIDGroups(const AltIDGroupList& altidgroups)
 {
-    d->m_exchange = exchange;
+    d->m_altIDGroups = altidgroups;
+}
+
+Bar Instrument::bar() const
+{
+    return d->m_bar;
 }
 
 QString Instrument::currency() const
@@ -125,19 +123,39 @@ QString Instrument::currency() const
     return d->m_currency;
 }
 
-void Instrument::setCurrency (const QString &currency)
+void Instrument::setCurrency(const QString& currency)
 {
     d->m_currency = currency;
 }
 
-QString Instrument::description () const
+QString Instrument::description() const
 {
     return d->m_description;
 }
 
-void Instrument::setDescription (const QString &desc)
+void Instrument::setDescription(const QString& description)
 {
-    d->m_description = desc;
+    d->m_description = description;
+}
+
+QString Instrument::exchange() const
+{
+    return d->m_exchange;
+}
+
+void Instrument::setExchange(const QString& exchange)
+{
+    d->m_exchange = exchange;
+}
+
+double Instrument::factor() const
+{
+    return d->m_factor;
+}
+
+void Instrument::setFactor(double factor)
+{
+    d->m_factor = factor;
 }
 
 QString Instrument::group() const
@@ -145,19 +163,34 @@ QString Instrument::group() const
     return d->m_group;
 }
 
-void Instrument::setGroup (const QString &group)
+void Instrument::setGroup(const QString& group)
 {
     d->m_group = group;
 }
 
-QString Instrument::sector() const
+double Instrument::margin() const
 {
-    return d->m_sector;
+    return d->m_margin;
 }
 
-void Instrument::setSector (const QString &sector)
+void Instrument::setMargin(double margin)
 {
-    d->m_sector = sector;
+    d->m_margin = margin;
+}
+
+QDateTime Instrument::maturity() const
+{
+    return d->m_maturity;
+}
+
+void Instrument::setMaturity(const QDateTime& maturity)
+{
+    d->m_maturity = maturity;
+}
+
+OrderBook Instrument::orderBook() const
+{
+    return d->m_orderBook;
 }
 
 QString Instrument::priceFormat() const
@@ -165,96 +198,96 @@ QString Instrument::priceFormat() const
     return d->m_priceFormat;
 }
 
-void Instrument::setPriceFormat (const QString format)
+void Instrument::setPriceFormat(const QString& priceformat)
 {
-    d->m_priceFormat = format;
+    d->m_priceFormat = priceformat;
 }
 
-double Instrument::factor () const
-{
-    return d->m_factory;
-}
-
-void Instrument::setFactor (double factor)
-{
-    d->m_factory = factor;
-}
-
-double Instrument::margin () const
-{
-    return d->m_margin;
-}
-
-void Instrument::setMargin (double margin)
-{
-    d->m_margin = margin;
-}
-
-double Instrument::tickSize () const
-{
-    return d->m_tickSize;
-}
-
-QDateTime Instrument::maturity () const
-{
-    return d->m_maturity;
-}
-
-void Instrument::setMaturity (const QDateTime &date)
-{
-    d->m_maturity = date;
-}
-
-double Instrument::strike () const
-{
-    return d->m_stike;
-}
-
-void Instrument::setStrike (double strike)
-{
-    d->m_stike = strike;
-}
-
-Instrument::PutCall Instrument::putCall () const
+PutCall Instrument::putCall() const
 {
     return d->m_putCall;
 }
 
-void Instrument::setPutCall (PutCall putCall)
+void Instrument::setPutCall(PutCall putcall)
 {
-    d->m_putCall = putCall;
+    d->m_putCall = putcall;
 }
 
-OrderBook Instrument::orderBook ()
+Quote Instrument::quote() const
 {
-    return d->m_orderBook;
+    return d->m_quote;
 }
 
-/* TODO
-Bar Instrument::bar()
+QString Instrument::sector() const
 {
-
+    return d->m_sector;
 }
 
-Quote Instrument::quote()
+void Instrument::setSector(const QString& sector)
 {
+    d->m_sector = sector;
+}
 
-}*/
+double Instrument::strike() const
+{
+    return d->m_strike;
+}
+
+void Instrument::setStrike(double strike)
+{
+    d->m_strike = strike;
+}
+
+QString Instrument::symbol() const
+{
+    return d->m_symbol;
+}
+
+double Instrument::tickSize() const
+{
+    return d->m_tickSize;
+}
+
+void Instrument::setTickSize(double ticksize)
+{
+    d->m_tickSize = ticksize;
+}
+
+Trade Instrument::trade() const
+{
+    return d->m_trade;
+}
+
+InstrumentType Instrument::type() const
+{
+    return d->m_type;
+}
+
 
 } // namespace OpenTrade
 
-QDebug operator<<(QDebug s, const OpenTrade::Instrument &ins)
+QDebug operator<<(QDebug c, const OpenTrade::Instrument &instrument)
 {
-    s.nospace() << "Instrument(" << ins.symbol ()
-                   <<')';
-    return s.space();
+    c.nospace() << "Instrument("
+                << "AltIDGroups:" << instrument.altIDGroups() 
+                << "Bar:" << instrument.bar() 
+                << "Currency:" << instrument.currency() 
+                << "Description:" << instrument.description() 
+                << "Exchange:" << instrument.exchange() 
+                << "Factor:" << instrument.factor() 
+                << "Group:" << instrument.group() 
+                << "Margin:" << instrument.margin() 
+                << "Maturity:" << instrument.maturity() 
+                << "OrderBook:" << instrument.orderBook() 
+                << "PriceFormat:" << instrument.priceFormat() 
+                << "PutCall:" << instrument.putCall() 
+                << "Quote:" << instrument.quote() 
+                << "Sector:" << instrument.sector() 
+                << "Strike:" << instrument.strike() 
+                << "Symbol:" << instrument.symbol() 
+                << "TickSize:" << instrument.tickSize() 
+                << "Trade:" << instrument.trade() 
+                << "Type:" << instrument.type() 
+                <<')';
+    return c.space();
 }
-
-uint qHash(const OpenTrade::Instrument &inst, uint seed)
-{
-    return qHash(inst.symbol(), seed);
-}
-
-
-
-

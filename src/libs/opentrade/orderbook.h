@@ -12,64 +12,55 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
-#ifndef ORDERBOOK_H
-#define ORDERBOOK_H
+#ifndef __OPENTRADE_ORDERBOOK_H__
+#define __OPENTRADE_ORDERBOOK_H__
 
 #include "opentrade_global.h"
 #include "quote.h"
 
 #include <QSharedDataPointer>
-#include <QMetaType>
 #include <QDebug>
+
 
 namespace OpenTrade {
 
 namespace Internal {
-  class OrderBookPrivate;
+class OrderBookPrivate;
 }
 
 class OPENTRADE_EXPORT OrderBook
 {
 public:
-    enum OrderBookAction{
-        Insert = 0,
-        Update = 1,
-        Delete = 2,
-        Reset  = 3,
-        Undefined = 4
-    };
 
-    OrderBook();
-    OrderBook(const OrderBook& other);
     ~OrderBook();
 
-    OrderBook& operator=(const OrderBook& other);
-    void swap(OrderBook& other) { qSwap(d, other.d); }
+    OrderBook& operator=(const OrderBook &other);
+    void swap(OrderBook &other) { qSwap(d, other.d); }
 
 #ifdef Q_COMPILER_RVALUE_REFS
     inline OrderBook &operator=(OrderBook &&other)
     { qSwap(d, other.d); return *this; }
 #endif
+
     bool operator==(const OrderBook &other) const;
     inline bool operator!=(const OrderBook &other) const { return !(operator==(other)); }
 
-    int count() const;
-    double getAskVolume();
-    double getAvgAskPrice();
+    int getAskVolume();
+    ouble getAvgAskPrice();
     double getAvgBidPrice();
-    double getBidVolume();
+    int getBidVolume();
     Quote getQuote(int level);
+
+    int count() const;
 
 private:
     QSharedDataPointer<Internal::OrderBookPrivate> d;
-    friend class Internal::OrderBookPrivate;
 };
 
-QDebug OPENTRADE_EXPORT operator<<(QDebug, const OrderBook &ob);
+QDebug OPENTRADE_EXPORT operator << (QDebug, const OrderBook &orderbook);
 
 } // namespace OpenTrade
 
 Q_DECLARE_SHARED(OpenTrade::OrderBook)
 
-#endif // ORDERBOOK_H
+#endif // __OPENTRADE_ORDERBOOK_H__

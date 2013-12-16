@@ -12,17 +12,15 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
-#ifndef __QUOTE_H__
-#define __QUOTE_H__
+#ifndef __OPENTRADE_QUOTE_H__
+#define __OPENTRADE_QUOTE_H__
 
 #include "opentrade_global.h"
 
 #include <QSharedDataPointer>
-#include <QMetaType>
-#include <QList>
-#include <QDateTime>
 #include <QDebug>
+#include <QDateTime>
+
 
 namespace OpenTrade {
 
@@ -30,11 +28,11 @@ namespace Internal {
 class QuotePrivate;
 }
 
-class  OPENTRADE_EXPORT Quote
+class OPENTRADE_EXPORT Quote
 {
 public:
-    Quote(const QDateTime& dt, double bid, double bidSize, double ask, double askSize);
-    Quote(const Quote &other);
+
+    Quote(const QDateTime& dateTime, double bid, int bidSize, double ask, int askSize);
     ~Quote();
 
     Quote& operator=(const Quote &other);
@@ -48,22 +46,21 @@ public:
     bool operator==(const Quote &other) const;
     inline bool operator!=(const Quote &other) const { return !(operator==(other)); }
 
-    double ask() const;
-    double askSize() const;
-    double bid() const;
-    double bidSize() const;
-    QDateTime datetime() const;
 
-    /*void setAsk(double ask);
-    void setBid(double bid);
-    void setAskSize(double askSize);
-    void setBidSize(double bidSize);
-    void setDateTime(const QDateTime& dt);
-    void setProviderId(unsigned int id);*/
+    double ask() const;
+
+    int askSize() const;
+
+    double bid() const;
+
+    int bidSize() const;
+
+    QDateTime dateTime() const;
+
+    int providerId() const;
 
 private:
     QSharedDataPointer<Internal::QuotePrivate> d;
-    friend class Internal::QuotePrivate;
 };
 
 QDebug OPENTRADE_EXPORT operator << (QDebug, const Quote &quote);
@@ -72,5 +69,4 @@ QDebug OPENTRADE_EXPORT operator << (QDebug, const Quote &quote);
 
 Q_DECLARE_SHARED(OpenTrade::Quote)
 
-
-#endif // __QUOTE_H__
+#endif // __OPENTRADE_QUOTE_H__

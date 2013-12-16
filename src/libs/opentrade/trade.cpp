@@ -12,7 +12,6 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
-
 #include "trade.h"
 
 #include <QSharedData>
@@ -21,33 +20,25 @@ namespace OpenTrade {
 
 namespace Internal {
 
-class TradePrivate: public QSharedData
+class TradePrivate : public QSharedData
 {
 public:
-    inline TradePrivate(const QDateTime& dt, double price, double size) :
-        m_stamp(dt), m_price(price), m_size(size)
-    {}
-
-    QDateTime m_stamp;
+    QDateTime m_dateTime;
     double m_price;
-    double m_size;
+    int m_providerId;
+    int m_size;
 };
 
 } // namespace Internal
 
-Trade::Trade(const QDateTime& dt, double price, double size) :
-    d(new Internal::TradePrivate(dt, price, size))
+Trade::Trade(const QDateTime& dateTime, double price, int size)
 {
-}
 
-Trade::Trade(const Trade &other) :
-    d(other.d)
-{
 }
 
 Trade::~Trade()
 {
-    d = 0;
+
 }
 
 Trade& Trade::operator=(const Trade &other)
@@ -59,10 +50,17 @@ Trade& Trade::operator=(const Trade &other)
 bool Trade::operator==(const Trade &other) const
 {
     if(d == other.d)
-        return true;
-    return d->m_stamp == other.d->m_stamp &&
-            d->m_price == other.d->m_price &&
-            d->m_size == other.d->m_size;
+      return true;
+
+    return d->m_dateTime == other.d->m_dateTime &&
+           d->m_price == other.d->m_price &&
+           d->m_providerId == other.d->m_providerId &&
+           d->m_size == other.d->m_size;
+}
+
+QDateTime Trade::dateTime() const
+{
+    return d->m_dateTime;
 }
 
 double Trade::price() const
@@ -70,24 +68,26 @@ double Trade::price() const
     return d->m_price;
 }
 
-double Trade::size() const
+int Trade::providerId() const
+{
+    return d->m_providerId;
+}
+
+int Trade::size() const
 {
     return d->m_size;
 }
 
-QDateTime Trade::datetime() const
-{
-    return d->m_stamp;
-}
 
 } // namespace OpenTrade
 
-QDebug operator<<(QDebug c, const OpenTrade::Trade &Trade)
+QDebug operator<<(QDebug c, const OpenTrade::Trade &trade)
 {
     c.nospace() << "Trade("
-                << "Time:" << Trade.datetime()
-                << "Price:" << Trade.price()
-                << "Size:" << Trade.size()
+                << "DateTime:" << trade.dateTime() 
+                << "Price:" << trade.price() 
+                << "ProviderId:" << trade.providerId() 
+                << "Size:" << trade.size() 
                 <<')';
     return c.space();
 }

@@ -12,33 +12,53 @@
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ****************************************************************************/
+#ifndef __OPENTRADE_INSTRUMENTMANAGER_H__
+#define __OPENTRADE_INSTRUMENTMANAGER_H__
 
-#ifndef INSTRUMENTMANAGER_H
-#define INSTRUMENTMANAGER_H
+#include "opentrade_global.h"
+#include "instrument.h"
 
-#include <QObject>
+#include <QSharedDataPointer>
+#include <QDebug>
+#include <QString>
+
 
 namespace OpenTrade {
 
-class Instrument;
+namespace Internal {
+class InstrumentManagerPrivate;
+}
 
-class InstrumentManager : public QObject
+class OPENTRADE_EXPORT InstrumentManager
 {
-    Q_OBJECT
 public:
-    explicit InstrumentManager(QObject *parent = 0);
 
-    const Instrument& at(const QString& symbol) const;
+    ~InstrumentManager();
 
-    Instrument&	operator[](const QString& symbol);
-    const Instrument& operator[](const QString& symbol) const;
+    InstrumentManager& operator=(const InstrumentManager &other);
+    void swap(InstrumentManager &other) { qSwap(d, other.d); }
 
-signals:
+#ifdef Q_COMPILER_RVALUE_REFS
+    inline InstrumentManager &operator=(InstrumentManager &&other)
+    { qSwap(d, other.d); return *this; }
+#endif
 
-public slots:
+    bool operator==(const InstrumentManager &other) const;
+    inline bool operator!=(const InstrumentManager &other) const { return !(operator==(other)); }
 
+    void remove(const QString& symbol);
+    void remove(const Instrument& instrument);
+
+    static instrumentList() const;
+
+private:
+    QSharedDataPointer<Internal::InstrumentManagerPrivate> d;
 };
+
+QDebug OPENTRADE_EXPORT operator << (QDebug, const InstrumentManager &instrumentmanager);
 
 } // namespace OpenTrade
 
-#endif // INSTRUMENTMANAGER_H
+Q_DECLARE_SHARED(OpenTrade::InstrumentManager)
+
+#endif // __OPENTRADE_INSTRUMENTMANAGER_H__
