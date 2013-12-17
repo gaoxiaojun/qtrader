@@ -803,7 +803,6 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/model/model.dsl \
     src/libs/opentrade/altidgroup.h \
     src/libs/opentrade/altidgrouplist.h \
-    src/libs/opentrade/appearance.h \
     src/libs/opentrade/barfactory.h \
     src/libs/opentrade/barrequest.h \
     src/libs/opentrade/barrequestlist.h \
@@ -1535,7 +1534,6 @@ SOURCES += src/app/gui/main.cpp \
     src/libs/opentrade2/symbol.cpp \
     src/libs/opentrade/altidgroup.cpp \
     src/libs/opentrade/altidgrouplist.cpp \
-    src/libs/opentrade/appearance.cpp \
     src/libs/opentrade/barfactory.cpp \
     src/libs/opentrade/barrequest.cpp \
     src/libs/opentrade/barrequestlist.cpp \
