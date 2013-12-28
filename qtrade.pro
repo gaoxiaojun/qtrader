@@ -41,6 +41,7 @@ INCLUDEPATH += . \
                src/plugins/debugger/qml \
                src/plugins/tws/IBJts/shared \
                src/plugins/debugger/lldblib/guest \
+               /usr/local/include/luajit-2.0/
 
 # Input
 HEADERS += src/libs/extensionsystem/aggregate.h \
@@ -877,7 +878,47 @@ HEADERS += src/libs/extensionsystem/aggregate.h \
     src/libs/opentrade/transactionlist.h \
     src/libs/opentrade/usercommand.h \
     src/libs/opentrade/userindicator.h \
-    src/libs/opentrade/userprovider.h
+    src/libs/opentrade/userprovider.h \
+    src/libs/model/opentrade_global.h \
+    src/libs/model/opentrade_enum.h \
+    src/libs/model/opentrade.h \
+    src/libs/model/mkt/bar.h \
+    src/libs/model/mkt/barfactory.h \
+    src/libs/model/mkt/barrequest.h \
+    src/libs/model/mkt/barrequestlist.h \
+    src/libs/model/mkt/barseries.h \
+    src/libs/model/mkt/barseriesinfo.h \
+    src/libs/model/mkt/barserieslist.h \
+    src/libs/model/mkt/datamanager.h \
+    src/libs/model/mkt/datarequests.h \
+    src/libs/model/mkt/indicator.h \
+    src/libs/model/mkt/quote.h \
+    src/libs/model/mkt/quoteseries.h \
+    src/libs/model/mkt/timeseries.h \
+    src/libs/model/mkt/trade.h \
+    src/libs/model/mkt/tradeseries.h \
+    src/libs/model/mkt/userindicator.h \
+    src/libs/model/base/altidgroup.h \
+    src/libs/model/base/altidgrouplist.h \
+    src/libs/model/base/clock.h \
+    src/libs/model/base/instrument.h \
+    src/libs/model/base/instrumentlist.h \
+    src/libs/model/base/instrumentmanager.h \
+    src/libs/model/base/instrumentprovider.h \
+    src/libs/model/base/strategy.h \
+    src/libs/model/opentrade_lua.h \
+    src/libs/model/execution/order.h \
+    src/libs/model/execution/orderbook.h \
+    src/libs/model/execution/orderbookupdate.h \
+    src/libs/model/execution/orderlist.h \
+    src/libs/model/execution/portfolio.h \
+    src/libs/model/execution/portfolioaccount.h \
+    src/libs/model/execution/portfoliopricer.h \
+    src/libs/model/execution/position.h \
+    src/libs/model/execution/positionlist.h \
+    src/libs/model/execution/stop.h \
+    src/libs/model/execution/transaction.h \
+    src/libs/model/execution/transactionlist.h
 FORMS += src/libs/extensionsystem/plugindetailsview.ui \
          src/libs/extensionsystem/pluginerroroverview.ui \
          src/libs/extensionsystem/pluginerrorview.ui \
@@ -1531,7 +1572,6 @@ SOURCES += src/app/gui/main.cpp \
     src/libs/opentrade/executionprovidermanager.cpp \
     src/plugins/tws/twsexecutionprovider.cpp \
     src/libs/opentrade/trade.cpp \
-    src/libs/opentrade2/symbol.cpp \
     src/libs/opentrade/altidgroup.cpp \
     src/libs/opentrade/altidgrouplist.cpp \
     src/libs/opentrade/barfactory.cpp \
@@ -1607,7 +1647,45 @@ SOURCES += src/app/gui/main.cpp \
     src/libs/opentrade/transactionlist.cpp \
     src/libs/opentrade/usercommand.cpp \
     src/libs/opentrade/userindicator.cpp \
-    src/libs/opentrade/userprovider.cpp
+    src/libs/opentrade/userprovider.cpp \
+    src/libs/model/opentrade.cpp \
+    src/libs/model/mkt/bar.cpp \
+    src/libs/model/mkt/barfactory.cpp \
+    src/libs/model/mkt/barrequest.cpp \
+    src/libs/model/mkt/barrequestlist.cpp \
+    src/libs/model/mkt/barseries.cpp \
+    src/libs/model/mkt/barseriesinfo.cpp \
+    src/libs/model/mkt/barserieslist.cpp \
+    src/libs/model/mkt/datamanager.cpp \
+    src/libs/model/mkt/datarequests.cpp \
+    src/libs/model/mkt/indicator.cpp \
+    src/libs/model/mkt/quote.cpp \
+    src/libs/model/mkt/quoteseries.cpp \
+    src/libs/model/mkt/timeseries.cpp \
+    src/libs/model/mkt/trade.cpp \
+    src/libs/model/mkt/tradeseries.cpp \
+    src/libs/model/mkt/userindicator.cpp \
+    src/libs/model/base/altidgroup.cpp \
+    src/libs/model/base/altidgrouplist.cpp \
+    src/libs/model/base/clock.cpp \
+    src/libs/model/base/instrument.cpp \
+    src/libs/model/base/instrumentlist.cpp \
+    src/libs/model/base/instrumentmanager.cpp \
+    src/libs/model/base/instrumentprovider.cpp \
+    src/libs/model/base/strategy.cpp \
+    src/libs/model/opentrade_lua.cpp \
+    src/libs/model/execution/order.cpp \
+    src/libs/model/execution/orderbook.cpp \
+    src/libs/model/execution/orderbookupdate.cpp \
+    src/libs/model/execution/orderlist.cpp \
+    src/libs/model/execution/portfolio.cpp \
+    src/libs/model/execution/portfolioaccount.cpp \
+    src/libs/model/execution/portfoliopricer.cpp \
+    src/libs/model/execution/position.cpp \
+    src/libs/model/execution/positionlist.cpp \
+    src/libs/model/execution/stop.cpp \
+    src/libs/model/execution/transaction.cpp \
+    src/libs/model/execution/transactionlist.cpp
 RESOURCES += src/app/gui/application.qrc \
              src/libs/extensionsystem/pluginview.qrc \
              src/libs/utils/utils.qrc \
@@ -1702,4 +1780,5 @@ OTHER_FILES += \
     src/plugins/tws/IBJts/source/javaclient/com/ib/client/Util.java \
     src/plugins/coreplugin/model/OpenTrade.json.in \
     src/libs/opentrade/CMakeLists.txt \
-    src/model/dsl.txt
+    src/model/dsl.txt \
+    src/libs/model/CMakeLists.txt

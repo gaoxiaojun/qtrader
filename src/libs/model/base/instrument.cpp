@@ -13,7 +13,7 @@
 **
 ****************************************************************************/
 #include "instrument.h"
-
+#include "OrderBook.h"
 #include <QSharedData>
 
 namespace OpenTrade {

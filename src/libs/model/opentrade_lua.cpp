@@ -13,8 +13,8 @@
 **
 ****************************************************************************/
 
-#include "symbol.h"
+#include "opentrade_lua.h"
 
-Symbol::Symbol()
+opentrade_lua::opentrade_lua()
 {
 }

@@ -23,7 +23,6 @@ namespace Internal {
 class BarPrivate : public QSharedData
 {
 public:
-    double m_average;
     QDateTime m_beginTime;
     double m_close;
     QDateTime m_dateTime;
@@ -32,14 +31,11 @@ public:
     double m_high;
     bool m_isComplete;
     double m_low;
-    double m_median;
     double m_open;
     double m_openInt;
     int m_size;
     BarType m_type;
-    double m_typical;
     double m_volume;
-    double m_weighted;
 };
 
 } // namespace Internal
@@ -70,8 +66,7 @@ bool Bar::operator==(const Bar &other) const
     if(d == other.d)
       return true;
 
-    return d->m_average == other.d->m_average &&
-           d->m_beginTime == other.d->m_beginTime &&
+    return d->m_beginTime == other.d->m_beginTime &&
            d->m_close == other.d->m_close &&
            d->m_dateTime == other.d->m_dateTime &&
            d->m_duration == other.d->m_duration &&
@@ -79,14 +74,11 @@ bool Bar::operator==(const Bar &other) const
            d->m_high == other.d->m_high &&
            d->m_isComplete == other.d->m_isComplete &&
            d->m_low == other.d->m_low &&
-           d->m_median == other.d->m_median &&
            d->m_open == other.d->m_open &&
            d->m_openInt == other.d->m_openInt &&
            d->m_size == other.d->m_size &&
            d->m_type == other.d->m_type &&
-           d->m_typical == other.d->m_typical &&
-           d->m_volume == other.d->m_volume &&
-           d->m_weighted == other.d->m_weighted;
+           d->m_volume == other.d->m_volume;
 }
 
 double Bar::average() const

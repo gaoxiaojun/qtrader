@@ -45,10 +45,12 @@
  * Order        --0..* ---1--> Account
  *              --0..* ---1--> Instrument
  *              --0..* ---1--> Strategy         (????)
+ *
  * Transaction  --0..* ---1--> Strategy         (????)
  *              --0..* ---0..1--> Instrument
  *              --0..* ---0..1--> Account
  *              <--0..* ---0..1--> Position
+ *
  * Subscription <--0..* ---1--> Instrument
  *              --0..* ---1--> Strategy
  *
@@ -72,14 +74,24 @@
 
 
 /* User Case
+ *
+ * MarketData
+ *
+ * Bar -->
  * Quote -->
  * Trade -->
  * OrderBook -->
  * HistoryData -->
  *
+ * Execution
+ *
  * OrderFill -->
  * OrderPartialFill -->
  * OrderAccept -->
+ *
+ * PositionOpen -->
+ * PositionChanged -->
+ * PostionClose -->
  */
 
 //Value Object
