@@ -33,7 +33,10 @@ public:
 
 Trade::Trade(const QDateTime& dateTime, double price, int size)
 {
-
+    d = new TradePrivate();
+    d->m_price = price;
+    d->m_dateTime = dateTime;
+    d->m_size = size;
 }
 
 Trade::~Trade()

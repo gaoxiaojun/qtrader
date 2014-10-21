@@ -111,7 +111,8 @@ public:
     void setPriceFormat(const QString format);
 
     /* 因子 */
-    // For Derivatives: Contract Value Factor by which price must be adjusted to determine the true nominal value of one futures/options contract.
+    // For Derivatives: Contract Value Factor by which price must be adjusted to determine the true nominal value of
+    // one futures/options contract.
     // (Qty * Price) * Factor = Nominal Value
     double factor() const;
     void setFactor(double factor);

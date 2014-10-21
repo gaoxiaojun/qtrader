@@ -66,6 +66,7 @@ public:
     double low() const;
     double close() const;
     double volume() const;
+    double tickVol() const;
     double openInt() const; // 未平仓量
 
 private:

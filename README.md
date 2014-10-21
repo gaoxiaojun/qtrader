@@ -1,4 +1,4 @@
-QTrader - an open source trading platform 
+QTrader (WIP) - an open source trading platform 
 ====================================
 QTrader is an open-source cross-platform trading IDE. 
 
@@ -11,14 +11,14 @@ Get QTrader
 You can download QTrader from the official web page
 (http://www.dailypips.org) or using Git:
 
-    $ git clone git@www.dailypips.org:gxj/qtrader.git 
+    $ git clone https://github.com/gaoxiaojun/qtrader.git 
 
 
 Dependencies
 ------------
 - g++, make
-- cmake >= 2.8.9
-- Qt >= 5.2
+- cmake >= 3.0.2 
+- Qt >= 5.3.2
 
 Compilation
 -----------

@@ -20,7 +20,7 @@ set(PLUGINS_DEFAULT_COPYRIGHT "(c) Xiaojun Gao" CACHE INTERNAL "" FORCE)
 set(PLUGINS_DEFAULT_VENDOR "dailypips" CACHE INTERNAL "" FORCE)
 
 add_subdirectory(coreplugin)
-add_subdirectory(tws)
+#add_subdirectory(tws)
 #add_subdirectory(helloworld)
 #add_subdirectory(editmode)
 #add_subdirectory(find)

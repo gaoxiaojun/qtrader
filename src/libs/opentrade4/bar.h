@@ -31,7 +31,27 @@ class BarPrivate;
 class OPENTRADE_EXPORT Bar
 {
 public:
+    enum BarType {
+        TimeBar = 0,
+        TickBar = 1,
+        VolumeBar = 2,
+        RangeBar = 3
+    };
 
+    enum BarData {
+        Close = 0,
+        Open = 1,
+        High = 2,
+        Low = 3,
+        Median = 4,
+        Typical = 5,
+        Weighted = 6,
+        Average = 7,
+        Volume = 8,
+        OpenInt = 9
+    };
+
+public:
     Bar(const QDateTime& dateTime, double open, double high, double low, double close, long volume, long size);
     Bar(const Bar& bar);
     ~Bar();
@@ -47,6 +67,7 @@ public:
     bool operator==(const Bar &other) const;
     inline bool operator!=(const Bar &other) const { return !(operator==(other)); }
 
+    double operator[](BarData data) const;
 
     double average() const;
 

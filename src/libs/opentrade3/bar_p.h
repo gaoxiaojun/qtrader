@@ -54,6 +54,7 @@ public:
     double m_close;
     double m_volume;
     double m_openint;
+    double m_tickVol;
     BarSeries* m_series;
 };
 

@@ -37,6 +37,19 @@ class InstrumentPrivate;
 class OPENTRADE_EXPORT Instrument
 {
 public:
+    enum InstrumentType {
+        Stock = 0,
+        Futures = 1,
+        Option = 2,
+        FutOpt = 3,
+        Bond = 4,
+        Index = 5,
+        ETF = 6,
+        FX = 7,
+        MultiLeg = 8
+    };
+
+public:
 
     Instrument(InstrumentType type, const QString& symbol);
     Instrument(InstrumentType type, const QString& symbol, const QString& secutityExchange, const QString& currency);

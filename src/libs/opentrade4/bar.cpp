@@ -23,7 +23,6 @@ namespace Internal {
 class BarPrivate : public QSharedData
 {
 public:
-    double m_average;
     QDateTime m_beginTime;
     double m_close;
     QDateTime m_dateTime;
@@ -36,17 +35,22 @@ public:
     double m_open;
     double m_openInt;
     int m_size;
-    BarType m_type;
-    double m_typical;
+    Bar::BarType m_type;
     double m_volume;
-    double m_weighted;
 };
 
 } // namespace Internal
 
 Bar::Bar(const QDateTime& dateTime, double open, double high, double low, double close, long volume, long size)
+    :d(new BarPrivate)
 {
-
+    d->m_dateTime = dateTime;
+    d->m_open = open;
+    d->m_close = close;
+    d->m_high = high;
+    d->m_low = low;
+    d->m_volume = volume;
+    d->m_size = size;
 }
 
 Bar::Bar(const Bar& bar)
@@ -91,7 +95,7 @@ bool Bar::operator==(const Bar &other) const
 
 double Bar::average() const
 {
-    return d->m_average;
+    return (d->m_open + d->m_high + d->m_low + d->m_close) / 4.0;
 }
 
 QDateTime Bar::beginTime() const
@@ -154,14 +158,14 @@ int Bar::size() const
     return d->m_size;
 }
 
-BarType Bar::type() const
+Bar::BarType Bar::type() const
 {
     return d->m_type;
 }
 
 double Bar::typical() const
 {
-    return d->m_typical;
+    return (d->m_high + d->m_low + d->m_close) / 3.0;
 }
 
 double Bar::volume() const
@@ -171,9 +175,32 @@ double Bar::volume() const
 
 double Bar::weighted() const
 {
-    return d->m_weighted;
+    return (d->m_high + d->m_low + 2.0 * d->m_close) / 4.0;
 }
 
+double Bar::operator[](BarData data) const
+{
+    switch (data) {
+    case Close:
+        return d->m_close;
+    case Open:
+        return d->m_open;
+    case High:
+        return d->m_high;
+    case Low:
+        return d->m_low;
+    case Median:
+        return median();
+    case Typical:
+        return typical();
+    case Weighted:
+        return weighted();
+    case Volume:
+        return d->m_volume;
+    case OpenInt:
+        return d->m_openInt;
+    }
+}
 
 } // namespace OpenTrade
 

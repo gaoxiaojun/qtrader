@@ -71,6 +71,11 @@ double Bar::volume() const
     return d->m_volume;
 }
 
+double Bar::tickVol() const
+{
+    return d->m_tickVol;
+}
+
 bool Bar::isValid () const
 {
     return d->isValid ();

@@ -222,7 +222,7 @@ int main(int argc, char **argv)
 
     SharedTools::QtSingleApplication app((QLatin1String(Application::Constants::APPLICATION_NAME)), argc, argv);
 
-    if ((argc > 2) && (QLatin1String("--crash") == argv[1]))
+    if ((argc >= 2) && (QLatin1String("--crash") == argv[1]))
     {
         QString minidump = argc >= 3 ? QLatin1String(argv[2]) : QString();
         Utils::CrashReportDialog dialog(QLatin1String(Application::Constants::APPLICATION_CRASHREPORT_URL),
@@ -236,7 +236,7 @@ int main(int argc, char **argv)
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, 2 * threadCount));
 
-    //Utils::setupBreakPadCrashHandler(); // Display a backtrace once a serious signal is delivered.
+    Utils::setupBreakPadCrashHandler(); // Display a backtrace once a serious signal is delivered.
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 1)
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
